@@ -1,0 +1,191 @@
+{
+  "pages": {
+    "login": {
+      "title": "Войти в аккаунт",
+      "signin": "Войти",
+      "signup": "Зарегистирироваться",
+      "divider": "или",
+      "fields": {
+        "email": "Email",
+        "password": "Пароль"
+      },
+      "errors": {
+        "validEmail": "Неверный email адрес"
+      },
+      "buttons": {
+        "submit": "Войти",
+        "forgotPassword": "Забыли пароль?",
+        "noAccount": "Нет аккаунта?",
+        "rememberMe": "Запомнить меня"
+      }
+    },
+    "forgotPassword": {
+      "title": "Забыли пароль?",
+      "fields": {
+        "email": "Email"
+      },
+      "errors": {
+        "validEmail": "Неверный email адрес"
+      },
+      "buttons": {
+        "submit": "Отправить инструкцию по восстановлению"
+      }
+    },
+    "register": {
+      "title": "Зарегистрировать аккаунт",
+      "signin": "Войти",
+      "fields": {
+        "email": "Email",
+        "password": "Пароль"
+      },
+      "errors": {
+        "validEmail": "Неверный email адрес"
+      },
+      "buttons": {
+        "submit": "Зарегистрироваться",
+        "haveAccount": "Аккаунт уже существует?"
+      }
+    },
+    "updatePassword": {
+      "title": "Изменить пароль",
+      "fields": {
+        "password": "Новый пароль",
+        "confirmPassword": "Подтвердить новый пароль"
+      },
+      "errors": {
+        "confirmPasswordNotMatch": "Пароли не совпадают"
+      },
+      "buttons": {
+        "submit": "Изменить"
+      }
+    },
+    "error": {
+      "info": "You may have forgotten to add the {{action}} component to {{resource}} resource.",
+      "404": "Извините, эта страница не существует",
+      "resource404": "Страницы {{resource}} не существует",
+      "backHome": "Назад на главную"
+    }
+  },
+  "actions": {
+    "list": "Список",
+    "create": "Создать",
+    "edit": "Изменить",
+    "show": "Показать"
+  },
+  "buttons": {
+    "create": "Создать",
+    "save": "Сохранить",
+    "logout": "Выйти",
+    "delete": "Удалить",
+    "edit": "Изменить",
+    "cancel": "Отменить",
+    "confirm": "Вы уверены?",
+    "filter": "Фильтр",
+    "clear": "Очистить",
+    "refresh": "Перезагрузить",
+    "show": "Показать",
+    "undo": "Отменить",
+    "import": "Импорт",
+    "clone": "Клонировать",
+    "notAccessTitle": "У вас нет доступа"
+  },
+  "warnWhenUnsavedChanges": "Вы уверены, что хотите выйти? Есть несохранённые изменения.",
+  "notifications": {
+    "success": "Успешно",
+    "error": "Ошибка (код: {{statusCode}})",
+    "undoable": "У вас есть {{seconds}} секунд для отмены",
+    "createSuccess": "Успешно создано: {{resource}}",
+    "createError": "Ошибка при создании {{resource}} (код: {{statusCode}})",
+    "deleteSuccess": "Успешно удалено {{resource}}",
+    "deleteError": "Ошибка при удалении {{resource}} (код: {{statusCode}})",
+    "editSuccess": "Успешно изменено {{resource}}",
+    "editError": "Ошибка при редактировании {{resource}} (код: {{statusCode}})",
+    "importProgress": "Импортирование: {{processed}}/{{total}}"
+  },
+  "loading": "Загрузка",
+  "tags": {
+    "clone": "Клогировать"
+  },
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "users": {
+    "users": "Пользователи",
+    "email": "Email",
+    "fields": {
+      "password": "Пароль",
+      "email": "Email",
+      "id": "ID",
+      "role": "Роль",
+      "status": "Статус",
+      "type": "Тип",
+      "phone": "Телефон"
+    },
+    "titles": {
+      "create": "Создать пользователя",
+      "edit": "Изменить пользователя",
+      "list": "Пользователи",
+      "show": "Пользователь"
+    }
+  },
+  "accounts": {
+    "accounts": "Аккаунты",
+    "fields": {
+      "phone": "Телефон",
+      "type": "Тип",
+      "status": "Статус"
+    },
+    "titles": {
+      "create": "Создать аккаунт",
+      "edit": "Изменить аккаунт",
+      "list": "Аккаунты",
+      "show": "Аккаунт"
+    }
+  },
+  "groups": {
+    "groups": "Группы",
+    "fields": {
+      "name": "Название",
+      "username": "Username",
+      "status": "Статус"
+    },
+    "titles": {
+      "create": "Создать группу",
+      "edit": "Изменить группу",
+      "list": "Группы",
+      "show": "Группа"
+    }
+  },
+  "keywords": {
+    "keywords": "Ключевики",
+    "fields": {
+      "name": "Название",
+      "isActive": "Активен"
+    },
+    "titles": {
+      "create": "Создать ключевик",
+      "edit": "Изменить ключевик",
+      "list": "Ключевики",
+      "show": "Ключевик"
+    }
+  },
+  "table": {
+    "actions": "Действия"
+  },
+  "documentTitle": {
+    "default": "LeadPro",
+    "suffix": " | LeadPro",
+    "accounts": {
+      "list": "Аккаунты | LeadPro",
+      "show": "#{{id}} Показать аккаунт | LeadPro",
+      "edit": "#{{id}} Изменить аккаунт | LeadPro",
+      "create": "Создать новый аккаунт | LeadPro"
+    }
+  },
+  "autoSave": {
+    "success": "Сохранено",
+    "error": "Ошибка автосохранения",
+    "loading": "Сохранение...",
+    "idle": "Ожидание изменений"
+  }
+}

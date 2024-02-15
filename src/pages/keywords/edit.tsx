@@ -1,0 +1,26 @@
+import { Checkbox, TextInput } from '@mantine/core';
+import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { Edit, useForm } from '@refinedev/mantine';
+
+import { isEmpty } from '../../shared/validations/isEmpty';
+
+export const KeywordEdit: React.FC<IResourceComponentsProps> = () => {
+  const translate = useTranslate();
+  const { getInputProps, saveButtonProps } = useForm({
+    initialValues: { name: '', isActive: '' },
+    validate: {
+      name: (name) => (isEmpty(name) ? 'Название не может быть пустым' : null),
+    },
+  });
+
+  return (
+    <Edit saveButtonProps={saveButtonProps}>
+      <TextInput mt="sm" label={translate('keywords.fields.name')} {...getInputProps('name')} />
+      <Checkbox
+        mt="sm"
+        label={translate('keywords.fields.isActive')}
+        {...getInputProps('isActive', { type: 'checkbox' })}
+      />
+    </Edit>
+  );
+};

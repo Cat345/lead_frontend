@@ -1,0 +1,46 @@
+import { ResourceProps } from '@refinedev/core';
+import { IconLetterA, IconMailFast, IconUser, IconUserCircle } from '@tabler/icons';
+
+export const resourcesForUsers: ResourceProps[] = [
+  {
+    icon: <IconUserCircle />,
+    name: 'accounts',
+    list: '/accounts',
+    create: '/accounts/create',
+    edit: '/accounts/edit/:id',
+    show: '/accounts/show/:id',
+    meta: {
+      canDelete: true,
+    },
+  },
+  {
+    icon: <IconMailFast />,
+    name: 'groups',
+    list: '/groups',
+    create: '/groups/create',
+    edit: '/groups/edit/:id',
+    show: '/groups/show/:id',
+    meta: {
+      canDelete: true,
+    },
+  },
+  {
+    icon: <IconLetterA />,
+    name: 'keywords',
+    list: '/keywords',
+    create: '/keywords/create',
+    edit: '/keywords/edit/:id',
+    show: '/keywords/show/:id',
+    meta: {
+      canDelete: true,
+    },
+  },
+  {
+    name: 'Профиль',
+    list: '/profile',
+    meta: {
+      label: 'Профиль',
+      icon: <IconUser />,
+    },
+  },
+];
