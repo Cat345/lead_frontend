@@ -1,4 +1,3 @@
-// import { ThemedTitle } from '@components';
 import {
   Anchor,
   Box,
@@ -17,7 +16,6 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core';
-import { Flex } from '@mantine/core';
 import {
   LoginFormTypes,
   LoginPageProps,
@@ -31,7 +29,7 @@ import {
 import { FormContext, FormPropsType, ThemedTitleV2 } from '@refinedev/mantine';
 import React from 'react';
 
-// import { FormPropsType } from '../..';
+import { Tour } from '../../components/Tour/Tour';
 import { cardStyles, layoutStyles, pageTitleStyles, titleStyles } from './cardStyles';
 
 type LoginProps = LoginPageProps<BoxProps, CardProps, FormPropsType>;
@@ -42,8 +40,6 @@ type LoginProps = LoginPageProps<BoxProps, CardProps, FormPropsType>;
  */
 export const LoginPage: React.FC<LoginProps> = ({
   providers,
-  registerLink,
-  forgotPasswordLink,
   rememberMe,
   contentProps,
   wrapperProps,
@@ -96,6 +92,7 @@ export const LoginPage: React.FC<LoginProps> = ({
             {providers.map((provider) => {
               return (
                 <Button
+                  id="button-login"
                   key={provider.name}
                   variant="default"
                   fullWidth
@@ -136,12 +133,14 @@ export const LoginPage: React.FC<LoginProps> = ({
           })}
         >
           <TextInput
+            id="input-email"
             name="email"
             label={translate('pages.login.fields.email', 'Email')}
             placeholder={translate('pages.login.fields.email', 'Email')}
             {...getInputProps('email')}
           />
           <PasswordInput
+            id="input-password"
             name="password"
             mt="md"
             label={translate('pages.login.fields.password', 'Password')}
@@ -158,6 +157,7 @@ export const LoginPage: React.FC<LoginProps> = ({
           >
             {rememberMe ?? (
               <Checkbox
+                id="button-remember-me"
                 label={translate('pages.login.buttons.rememberMe', 'Запомнить меня')}
                 size="xs"
                 {...getInputProps('remember', {
@@ -165,40 +165,37 @@ export const LoginPage: React.FC<LoginProps> = ({
                 })}
               />
             )}
-            {/* {forgotPasswordLink ?? (
-              <Anchor component={ActiveLink as any} to="/forgot-password" size="xs">
-                {translate('pages.login.buttons.forgotPassword', 'Забыли пароль?')}
-              </Anchor>
-            )} */}
           </Box>
-          <Button mt="md" fullWidth size="md" type="submit" loading={isLoading}>
+          <Button id="button-enter" mt="md" fullWidth size="md" type="submit" loading={isLoading}>
             {translate('pages.login.signin', 'Войти')}
           </Button>
         </form>
       </FormProvider>
 
-      {/* <Flex justify="space-between">
-        {registerLink ?? (
-          <Text mt="md" size="xs" align="center">
-            <Anchor component={ActiveLink as any} to="/update-password" weight={700}>
-              {translate('pages.updatePassword.title', 'Изменить пароль')}
-            </Anchor>
-          </Text>
-        )} */}
-      {registerLink ?? (
-        <Text mt="md" size="xs" align="center">
+      <Group mt="md">
+        <Text size="xs">
+          <Anchor
+            id="button-forgot-password"
+            component={ActiveLink as any}
+            to="/forgot-password"
+            weight={700}
+          >
+            {translate('pages.login.forgotPassword', 'Забыли пароль?')}
+          </Anchor>
+        </Text>
+        <Text size="xs">
           {translate('pages.login.buttons.noAccount')}{' '}
-          <Anchor component={ActiveLink as any} to="/register" weight={700}>
+          <Anchor id="button-register" component={ActiveLink as any} to="/register" weight={700}>
             {translate('pages.login.signup', 'Зарегистрироваться')}
           </Anchor>
         </Text>
-      )}
-      {/* </Flex> */}
+      </Group>
     </Card>
   );
 
   return (
     <Box style={layoutStyles} {...(wrapperProps ?? {})}>
+      <Tour />
       {renderContent ? (
         renderContent(CardContent, PageTitle)
       ) : (

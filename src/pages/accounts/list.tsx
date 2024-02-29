@@ -1,16 +1,41 @@
-import { Box, Group, Pagination, Table, Text } from '@mantine/core';
-import { useTranslate } from '@refinedev/core';
-import { CreateButton, DeleteButton, EditButton, List, ShowButton } from '@refinedev/mantine';
+import { Group, Pagination, Table, Text } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+import { CanAccess, useTranslate, useUpdate } from '@refinedev/core';
+import { CreateButton, DeleteButton, EditButton, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
-import { ColumnDef, flexRender } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 
+import { Tour } from '../../components/Tour/Tour';
 import { statusesRowVariants } from '../../constants/statuses';
-import { ImportButton } from '../../features/import';
-import { ColumnSorter } from '../../refine/table/ColumnSorter';
+import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
+import { RestartButton } from './RestartButton';
 
 export const AccountList: React.FC = () => {
   const translate = useTranslate();
+  const isMobile = useMediaQuery('(max-width: 600px)');
+
+  const { mutate: restartAccount } = useUpdate();
+  const handleClickRestart = (id: number) => {
+    restartAccount({
+      values: {
+        status: 'active',
+      },
+      id,
+      resource: 'accounts',
+      successNotification: {
+        message: 'Аккаунт перезагружен',
+        type: 'success',
+        description: 'Успешно',
+      },
+      errorNotification: {
+        message: 'Аккаунт не может быть перезагружен',
+        type: 'error',
+        description: 'Ошибка',
+      },
+    });
+  };
+
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
@@ -46,12 +71,29 @@ export const AccountList: React.FC = () => {
         id: 'actions',
         accessorKey: 'id',
         header: translate('table.actions'),
-        cell: function render({ getValue }) {
+        cell: function render({ getValue, row }) {
+          const { index } = row;
           return (
             <Group spacing="xs" noWrap>
-              {/* <ShowButton hideText recordItemId={getValue() as string} /> */}
-              <EditButton hideText recordItemId={getValue() as string} />
-              <DeleteButton hideText recordItemId={getValue() as string} />
+              <EditButton
+                id={`edit-button-${index}`}
+                hideText
+                recordItemId={getValue() as string}
+              />
+              <DeleteButton
+                id={`delete-button-${index}`}
+                hideText
+                recordItemId={getValue() as string}
+              />
+              <RestartButton
+                id={`restart-button-${index}`}
+                meta={{
+                  id: getValue(),
+                }}
+                onClick={handleClickRestart}
+                hideText
+                recordItemId={getValue() as string}
+              />
             </Group>
           );
         },
@@ -68,59 +110,47 @@ export const AccountList: React.FC = () => {
     getRowModel,
     refineCore: { setCurrent, pageCount, current },
   } = useTable({
-    refineCoreProps: {
-      resource: 'accounts',
-    },
     columns,
+    initialState: {
+      pagination: {
+        pageSize: 100,
+      },
+    },
   });
 
-  return (
-    <div style={{ padding: '4px' }}>
-      <List headerButtons={[<ImportButton />, <CreateButton>Создать</CreateButton>]}>
-        <Table highlightOnHover>
-          <thead>
-            {getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <th key={header.id}>
-                      {!header.isPlaceholder && (
-                        <Group spacing="xs" noWrap>
-                          <Box>
-                            {flexRender(header.column.columnDef.header, header.getContext())}
-                          </Box>
-                          <Group spacing="xs" noWrap>
-                            <ColumnSorter column={header.column} />
+  const headerGroups = getHeaderGroups();
+  const rowModel = getRowModel();
 
-                            {/* <ColumnFilter column={header.column} /> */}
-                          </Group>
-                        </Group>
-                      )}
-                    </th>
-                  );
-                })}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {getRowModel().rows.map((row) => {
-              return (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <td key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-        <br />
-        <Pagination position="right" total={pageCount} page={current} onChange={setCurrent} />
-      </List>
-    </div>
+  return (
+    <CanAccess
+      resource="accounts"
+      action="list"
+      params={{ id: 1 }}
+      fallback={<h3>У вас нет доступа</h3>}
+    >
+      <Tour />
+      <div style={{ padding: '4px', paddingBottom: '50px' }}>
+        <List headerButtons={[<CreateButton>Создать</CreateButton>]}>
+          {isMobile ? (
+            <Table highlightOnHover>
+              <TableBodyMobile rowModel={rowModel} />
+            </Table>
+          ) : (
+            <Table>
+              <TableHeader headerGroups={headerGroups} />
+              <TableBody rowModel={rowModel} />
+            </Table>
+          )}
+          <br />
+          <Pagination
+            id="pagination"
+            position="right"
+            total={pageCount}
+            page={current}
+            onChange={setCurrent}
+          />
+        </List>
+      </div>
+    </CanAccess>
   );
 };

@@ -1,5 +1,5 @@
 import { ActionIcon } from '@mantine/core';
-import { IconChevronDown, IconSelector, IconChevronUp } from '@tabler/icons';
+import { IconChevronDown, IconChevronUp,IconSelector } from '@tabler/icons';
 import { Column } from '@tanstack/react-table';
 
 export interface ColumnButtonProps {

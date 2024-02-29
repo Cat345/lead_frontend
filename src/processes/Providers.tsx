@@ -7,7 +7,7 @@ import {
 } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { NotificationsProvider } from '@mantine/notifications';
-import { DocumentTitleHandler, UnsavedChangesNotifier } from '@refinedev/react-router-v6';
+import { UnsavedChangesNotifier } from '@refinedev/react-router-v6';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import { Box, Flex } from '@mantine/core';
+import { Flex } from '@mantine/core';
 import React from 'react';
 
 import FullLogoSvg from '../assets/logo-full.svg';

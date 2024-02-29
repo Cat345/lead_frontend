@@ -1,16 +1,22 @@
 // import { AuthPage } from '@refinedev/mantine';
 
-import { Logo } from '../../shared/ui/Logo';
+import { ForgotPasswordPage } from '../forgotPassword';
+import { RegisterPage } from '../register/RegisterPage';
+import { UpdatePasswordPage } from '../updatePassword';
 import { LoginPage } from './LoginPage';
 
-export const Login = () => {
-  return (
-    // <AuthPage
-    //   type="login"
-    //   formProps={{
-    //     initialValues: { email: 'test@test.test', password: 'test' },
-    //   }}
-    // />
-    <LoginPage title={<Logo />} />
-  );
+type LoginPageProps = {
+  type?: 'register' | 'forgotPassword' | 'updatePassword';
+};
+export const Login = ({ type }: LoginPageProps) => {
+  switch (type) {
+    case 'register':
+      return <RegisterPage />;
+    case 'forgotPassword':
+      return <ForgotPasswordPage />;
+    case 'updatePassword':
+      return <UpdatePasswordPage />;
+    default:
+      return <LoginPage />;
+  }
 };

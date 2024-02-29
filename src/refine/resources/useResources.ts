@@ -3,5 +3,4 @@ import { resourcesForUsers } from './resourcesForUsers';
 
 export const useResources = () => {
   return [...resourcesForUsers, ...resourcesForAdmins];
-  // return resourcesForUsers;
 };

@@ -1,5 +1,12 @@
 import { ResourceProps } from '@refinedev/core';
-import { IconLetterA, IconMailFast, IconUser, IconUserCircle } from '@tabler/icons';
+import {
+  IconCandy,
+  IconEraser,
+  IconLetterA,
+  IconMailFast,
+  IconUser,
+  IconUserCircle,
+} from '@tabler/icons';
 
 export const resourcesForUsers: ResourceProps[] = [
   {
@@ -36,11 +43,30 @@ export const resourcesForUsers: ResourceProps[] = [
     },
   },
   {
+    icon: <IconEraser />,
+    name: 'stopwords',
+    list: '/stopwords',
+    create: '/stopwords/create',
+    edit: '/stopwords/edit/:id',
+    show: '/stopwords/show/:id',
+    meta: {
+      canDelete: true,
+    },
+  },
+  {
     name: 'Профиль',
     list: '/profile',
     meta: {
       label: 'Профиль',
       icon: <IconUser />,
+    },
+  },
+  {
+    name: 'Подписка',
+    list: '/pricing',
+    meta: {
+      label: 'Подписка',
+      icon: <IconCandy />,
     },
   },
 ];

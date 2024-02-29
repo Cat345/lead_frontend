@@ -4,7 +4,7 @@ import { flexRender, HeaderGroup } from '@tanstack/react-table';
 import { ColumnSorter } from '../refine/table/ColumnSorter';
 
 type TableHeaderProps = {
-  headerGroups: HeaderGroup<any>[];
+  headerGroups: HeaderGroup<unknown>[];
 };
 
 export const TableHeader: React.FC<TableHeaderProps> = ({ headerGroups }) => {

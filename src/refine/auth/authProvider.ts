@@ -7,6 +7,7 @@ import {
 import { decodeToken } from 'react-jwt';
 
 import { api } from '../../shared/api';
+import { TokenPayload } from './TokenPayload';
 
 export type AuthBindings = {
   login: (params: any) => Promise<AuthActionResponse>;
@@ -14,7 +15,7 @@ export type AuthBindings = {
   check: (params?: any) => Promise<CheckResponse>;
   onError: (error: any) => Promise<OnErrorResponse>;
   register?: (params: any) => Promise<AuthActionResponse>;
-  forgotPassword?: (params: any) => Promise<AuthActionResponse>;
+  forgotPassword: (params: any) => Promise<AuthActionResponse>;
   updatePassword?: (params: any) => Promise<AuthActionResponse>;
   getPermissions?: (params?: any) => Promise<PermissionResponse>;
   getIdentity: (params?: any) => any;
@@ -97,19 +98,73 @@ export const authProvider: AuthBindings = {
       redirectTo: '/login',
     };
   },
-  updatePassword: async (...args: any) => {
+  updatePassword: async ({ password, confirmPassword, uuid }) => {
+    const response = await api.post(BASE_URL + 'auth/update-password', {
+      password,
+      confirmPassword,
+      uuid,
+    });
+    const tokenKey = response.data?.access_token;
+
+    if (tokenKey) {
+      api.defaults.headers.common = {
+        Authorization: `Bearer ${tokenKey}`,
+      };
+      localStorage.setItem(TOKEN_KEY, tokenKey);
+      return {
+        success: true,
+        redirectTo: '/',
+      };
+    }
     return {
       success: false,
+      error: {
+        name: 'Ошибка',
+        message: 'Непредвиденная ошибка, попробуйте позже',
+      },
     };
   },
   getPermissions: async () => null,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  getIdentity: () => {
+  getIdentity: async () => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) return null;
+    const userToken = decodeToken<TokenPayload>(token);
+    if (!userToken) return null;
 
-    return decodeToken(token);
+    const { data: user } = await api.get(BASE_URL + `users/${userToken.sub}`);
+    console.log(user?.groupsCount, 'from server');
+    return user;
+  },
+
+  forgotPassword: async (payload: { email: string }) => {
+    const response = await api.post(BASE_URL + 'auth/forgot-password', payload);
+    console.log(response, 'response');
+    if (response.status === 404) {
+      return {
+        success: false,
+        error: {
+          name: 'Ошибка',
+          message: 'Такой email не зарегистрирован',
+        },
+      };
+    }
+    if (response.status === 201) {
+      return {
+        success: true,
+        redirectTo: '/forgot-password',
+      };
+    }
+    return {
+      success: false,
+      error: {
+        name: 'Ошибка',
+        message: 'Неизвестная ошибка, попробуйте позже',
+      },
+    };
+
+    // if request is not successful
   },
   onError: async (error) => {
     return { error };

@@ -2,6 +2,7 @@ import { Checkbox, TextInput } from '@mantine/core';
 import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
 import { Edit, useForm } from '@refinedev/mantine';
 
+import { Tour } from '../../components/Tour/Tour';
 import { isEmpty } from '../../shared/validations/isEmpty';
 
 export const KeywordEdit: React.FC<IResourceComponentsProps> = () => {
@@ -15,8 +16,15 @@ export const KeywordEdit: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
-      <TextInput mt="sm" label={translate('keywords.fields.name')} {...getInputProps('name')} />
+      <Tour />
+      <TextInput
+        id="input-name"
+        mt="sm"
+        label={translate('keywords.fields.name')}
+        {...getInputProps('name')}
+      />
       <Checkbox
+        id="checkbox-is-active"
         mt="sm"
         label={translate('keywords.fields.isActive')}
         {...getInputProps('isActive', { type: 'checkbox' })}

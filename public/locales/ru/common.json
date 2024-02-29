@@ -21,6 +21,8 @@
     },
     "forgotPassword": {
       "title": "Забыли пароль?",
+      "haveAccount": "Аккаунт уже существует?",
+      "signin": "Войти",
       "fields": {
         "email": "Email"
       },
@@ -28,7 +30,7 @@
         "validEmail": "Неверный email адрес"
       },
       "buttons": {
-        "submit": "Отправить инструкцию по восстановлению"
+        "submit": "Отправить инструкцию"
       }
     },
     "register": {
@@ -147,6 +149,7 @@
     "fields": {
       "name": "Название",
       "username": "Username",
+      "conversionRate": "Конверсионность",
       "status": "Статус"
     },
     "titles": {
@@ -160,6 +163,7 @@
     "keywords": "Ключевики",
     "fields": {
       "name": "Название",
+      "conversionRate": "Конверсионность",
       "isActive": "Активен"
     },
     "titles": {
@@ -167,6 +171,19 @@
       "edit": "Изменить ключевик",
       "list": "Ключевики",
       "show": "Ключевик"
+    }
+  },
+  "stopwords": {
+    "stopwords": "Стоп-слова",
+    "fields": {
+      "name": "Название",
+      "isActive": "Активен"
+    },
+    "titles": {
+      "create": "Создать стоп-слово",
+      "edit": "Изменить стоп-слово",
+      "list": "Стоп-слова",
+      "show": "Стоп-слово"
     }
   },
   "table": {

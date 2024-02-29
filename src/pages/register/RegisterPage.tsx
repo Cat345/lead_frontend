@@ -30,6 +30,7 @@ import {
 import { FormContext, FormPropsType, ThemedTitleV2 } from '@refinedev/mantine';
 import React from 'react';
 
+import { Tour } from '../../components/Tour/Tour';
 // import { FormPropsType } from '../..';
 import { cardStyles, layoutStyles, pageTitleStyles, titleStyles } from './styles';
 
@@ -88,6 +89,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             {providers.map((provider) => {
               return (
                 <Button
+                  id="register"
                   key={provider.name}
                   variant="default"
                   fullWidth
@@ -128,19 +130,28 @@ export const RegisterPage: React.FC<RegisterProps> = ({
           })}
         >
           <TextInput
+            id="input-email"
             name="email"
             label={translate('pages.register.fields.email', 'Email')}
             placeholder={translate('pages.register.fields.email', 'Email')}
             {...getInputProps('email')}
           />
           <PasswordInput
+            id="input-password"
             mt="md"
             name="password"
             label={translate('pages.register.fields.password', 'Password')}
             placeholder="●●●●●●●●"
             {...getInputProps('password')}
           />
-          <Button mt="md" fullWidth size="md" type="submit" loading={isLoading}>
+          <Button
+            id="button-register"
+            mt="md"
+            fullWidth
+            size="md"
+            type="submit"
+            loading={isLoading}
+          >
             {translate('pages.register.buttons.submit', 'Sign up')}
           </Button>
 
@@ -148,7 +159,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             <Group mt="md" position="center">
               <Text size="xs">
                 {translate('pages.register.buttons.haveAccount', 'Have an account?')}{' '}
-                <Anchor component={ActiveLink as any} to="/login" weight={700}>
+                <Anchor id="button-login" component={ActiveLink as any} to="/login" weight={700}>
                   {translate('pages.register.signin', 'Sign in')}
                 </Anchor>
               </Text>
@@ -161,6 +172,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
 
   return (
     <Box style={layoutStyles} {...(wrapperProps ?? {})}>
+      <Tour />
       {renderContent ? (
         renderContent(CardContent, PageTitle)
       ) : (

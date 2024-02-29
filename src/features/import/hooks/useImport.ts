@@ -1,25 +1,14 @@
 import { FileWithPath } from '@mantine/dropzone';
-import { useCreate, useNotification } from '@refinedev/core';
+import { useCreate, useNotification, useResource } from '@refinedev/core';
 import { useState } from 'react';
-import readXlsxFile from 'read-excel-file';
+import readXlsxFile, { Schema } from 'read-excel-file';
 
-import { CustomSchema, Schema } from '../../../shared/types/CustomSchema';
-
-export const useImport = (initialSchema: CustomSchema) => {
-  const { mutate } = useCreate();
+export const useImport = (schema: Schema, handleSetUserGroupsCount: (number: number) => void) => {
+  const { resource } = useResource();
+  const { mutateAsync, isSuccess } = useCreate();
 
   const [isLoading, setIsLoading] = useState(false);
   const notification = useNotification();
-
-  const schema: Schema = {};
-  for (const row of initialSchema) {
-    if (!row.isInImport) continue;
-    schema[row.header] = {
-      required: row.required,
-      prop: row.prop,
-      type: row.type,
-    };
-  }
 
   const handleImport = (file: FileWithPath) => {
     setIsLoading(true);
@@ -27,17 +16,18 @@ export const useImport = (initialSchema: CustomSchema) => {
     readXlsxFile(file, { schema, trim: true })
       .then((readedSheet) => {
         const { rows, errors } = readedSheet;
-        console.log({ rows, errors });
+
         if (!errors.length) {
-          rows.forEach((row) => {
-            mutate({
-              resource: 'keywords',
-              successNotification: {
-                message: 'Создан',
-                type: 'success',
-              },
-              values: row,
-            });
+          mutateAsync({
+            resource: resource!.name,
+            successNotification: {
+              message: 'Создан',
+              type: 'success',
+            },
+            values: rows,
+          }).then((res) => {
+            console.log(res.data, 'res data');
+            handleSetUserGroupsCount(res.data);
           });
         }
 
@@ -53,12 +43,11 @@ export const useImport = (initialSchema: CustomSchema) => {
       })
       .catch((error) => {
         setIsLoading(error);
-        console.log(error);
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
 
-  return { handleImport, isLoading };
+  return { handleImport, isLoading, isSuccess };
 };

@@ -1,29 +1,17 @@
 // import { mapButtonVariantToActionIconVariant } from '@definitions/button';
-import { ActionIcon, Anchor, Button } from '@mantine/core';
-import {
-  AccessControlContext,
-  useCan,
-  useLink,
-  useNavigation,
-  useResource,
-  useRouterContext,
-  useRouterType,
-  useTranslate,
-} from '@refinedev/core';
+import { ActionIcon } from '@mantine/core';
+import { AccessControlContext, useCan, useResource, useTranslate } from '@refinedev/core';
 import { mapButtonVariantToActionIconVariant, ShowButtonProps } from '@refinedev/mantine';
 import { RefineButtonClassNames, RefineButtonTestIds } from '@refinedev/ui-types';
-import { IconEye, IconRefresh } from '@tabler/icons';
+import { IconRefresh } from '@tabler/icons';
 import React, { useContext } from 'react';
 
 export const RestartButton: React.FC<ShowButtonProps> = ({
   resource: resourceNameFromProps,
   resourceNameOrRouteName,
   recordItemId,
-  hideText = false,
   accessControl,
   svgIconProps,
-  meta,
-  children,
   onClick,
   ...rest
 }) => {
@@ -34,12 +22,6 @@ export const RestartButton: React.FC<ShowButtonProps> = ({
 
   const hideIfUnauthorized =
     accessControl?.hideIfUnauthorized ?? accessControlContext.options.buttons.hideIfUnauthorized;
-  const { showUrl: generateShowUrl } = useNavigation();
-  const routerType = useRouterType();
-  const Link = useLink();
-  const { Link: LegacyLink } = useRouterContext();
-
-  const ActiveLink = routerType === 'legacy' ? LegacyLink : Link;
 
   const translate = useTranslate();
 
@@ -60,20 +42,14 @@ export const RestartButton: React.FC<ShowButtonProps> = ({
     else return translate('buttons.notAccessTitle', "You don't have permission to access");
   };
 
-  const showUrl =
-    resource && (recordItemId || id) ? generateShowUrl(resource, recordItemId! ?? id!, meta) : '';
-
-  const { variant, styles, ...commonProps } = rest;
+  const { variant } = rest;
 
   if (accessControlEnabled && hideIfUnauthorized && !data?.can) {
     return null;
   }
-
   return (
     <ActionIcon
-      onClick={(e) => {
-        console.log(resource, resourceNameOrRouteName);
-      }}
+      onClick={() => onClick!(rest.meta.id)}
       {...(variant
         ? {
             variant: mapButtonVariantToActionIconVariant(variant),
@@ -83,7 +59,6 @@ export const RestartButton: React.FC<ShowButtonProps> = ({
       title={disabledTitle()}
       data-testid={RefineButtonTestIds.ShowButton}
       className={RefineButtonClassNames.ShowButton}
-      {...commonProps}
     >
       <IconRefresh size={18} {...svgIconProps} />
     </ActionIcon>

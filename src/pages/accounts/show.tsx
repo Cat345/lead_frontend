@@ -2,6 +2,8 @@ import { Title } from '@mantine/core';
 import { IResourceComponentsProps, useShow, useTranslate } from '@refinedev/core';
 import { Show, TextField } from '@refinedev/mantine';
 
+import { Tour } from '../../components/Tour/Tour';
+
 export const AccountShow: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
   const { queryResult } = useShow();
@@ -11,18 +13,19 @@ export const AccountShow: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Show isLoading={isLoading}>
+      <Tour />
       <Title my="xs" order={5}>
         {translate('accounts.fields.phone')}
       </Title>
-      <TextField value={record?.phone} />
+      <TextField value={record?.phone} id="input-phone" />
       <Title my="xs" order={5}>
         {translate('accounts.fields.type')}
       </Title>
-      <TextField value={record?.type} />
+      <TextField value={record?.type} id="input-phone" />
       <Title my="xs" order={5}>
         {translate('accounts.fields.status')}
       </Title>
-      <TextField value={record?.status} />
+      <TextField value={record?.status} id="input-phone" />
     </Show>
   );
 };

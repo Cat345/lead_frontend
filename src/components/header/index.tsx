@@ -1,27 +1,32 @@
 import {
   ActionIcon,
-  Avatar,
   Flex,
   Group,
   Header as MantineHeader,
   Sx,
-  Title,
+  Text,
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
 import { useGetIdentity } from '@refinedev/core';
-import { HamburgerMenu, RefineThemedLayoutV2HeaderProps } from '@refinedev/mantine';
+import { RefineThemedLayoutV2HeaderProps } from '@refinedev/mantine';
 import { IconMoonStars, IconSun } from '@tabler/icons';
 import React from 'react';
 
-type IUser = {
-  id: number;
-  name: string;
-  avatar: string;
-};
+import { User } from '../../models/User';
+import { HamburgerMenu } from './HamburgerMenu/HamburgerMenu';
 
 export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({ sticky }) => {
-  const { data: user } = useGetIdentity<IUser>();
+  const { data: user } = useGetIdentity<User>();
+  const remainingDays = user?.remainingSubscribeDays;
+
+  const remainingDaysString =
+    remainingDays && remainingDays > 0
+      ? new Intl.RelativeTimeFormat('ru', {
+          style: 'long',
+          numeric: 'auto',
+        }).format(remainingDays, 'days')
+      : null;
 
   const theme = useMantineTheme();
 
@@ -41,12 +46,12 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({ sticky }) =>
 
   return (
     <MantineHeader
-      zIndex={199}
       height={64}
       py={6}
       px="sm"
       sx={{
         borderBottom: `1px solid ${borderColor}`,
+        zIndex: 400,
         ...stickyStyles,
       }}
     >
@@ -58,7 +63,12 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({ sticky }) =>
         }}
       >
         <HamburgerMenu />
-        <Group>
+        <Group id="subscribe-expiring">
+          {remainingDaysString ? (
+            <Text>Подписка закончится {remainingDaysString}</Text>
+          ) : (
+            <Text>Подписка не активна</Text>
+          )}
           <ActionIcon
             variant="outline"
             color={dark ? 'yellow' : 'primary'}
@@ -67,12 +77,6 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({ sticky }) =>
           >
             {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
           </ActionIcon>
-          {(user?.name || user?.avatar) && (
-            <Group spacing="xs">
-              {user?.name && <Title order={6}>{user?.name}</Title>}
-              <Avatar src={user?.avatar} alt={user?.name} radius="xl" />
-            </Group>
-          )}
         </Group>
       </Flex>
     </MantineHeader>

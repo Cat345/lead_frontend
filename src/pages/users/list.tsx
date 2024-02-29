@@ -1,14 +1,17 @@
-import { Box, Group, Pagination, Table } from '@mantine/core';
+import { Group, Pagination, Table } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
-import { DeleteButton, EditButton, EmailField, List, ShowButton } from '@refinedev/mantine';
+import { DeleteButton, EditButton, EmailField, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
-import { ColumnDef, flexRender } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 
-import { ColumnSorter } from '../../refine/table/ColumnSorter';
+import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 
 export const UserList: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
+  const isMobile = useMediaQuery('(max-width: 600px)');
+
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
@@ -63,51 +66,30 @@ export const UserList: React.FC<IResourceComponentsProps> = () => {
     },
   }));
 
+  const headerGroups = getHeaderGroups();
+  const rowModel = getRowModel();
+
   return (
-    <div style={{ padding: '4px' }}>
+    <div style={{ padding: '4px', paddingBottom: '50px' }}>
       <List>
-        <Table highlightOnHover>
-          <thead>
-            {getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <th key={header.id}>
-                      {!header.isPlaceholder && (
-                        <Group spacing="xs" noWrap>
-                          <Box>
-                            {flexRender(header.column.columnDef.header, header.getContext())}
-                          </Box>
-                          <Group spacing="xs" noWrap>
-                            <ColumnSorter column={header.column} />
-                            {/* <ColumnFilter column={header.column} /> */}
-                          </Group>
-                        </Group>
-                      )}
-                    </th>
-                  );
-                })}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {getRowModel().rows.map((row) => {
-              return (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <td key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+        {isMobile ? (
+          <Table highlightOnHover>
+            <TableBodyMobile rowModel={rowModel} />
+          </Table>
+        ) : (
+          <Table>
+            <TableHeader headerGroups={headerGroups} />
+            <TableBody rowModel={rowModel} />
+          </Table>
+        )}
         <br />
-        <Pagination position="right" total={pageCount} page={current} onChange={setCurrent} />
+        <Pagination
+          id="pagination"
+          position="right"
+          total={pageCount}
+          page={current}
+          onChange={setCurrent}
+        />
       </List>
     </div>
   );

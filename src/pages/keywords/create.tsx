@@ -2,6 +2,7 @@ import { Checkbox, TextInput } from '@mantine/core';
 import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
 import { Create, useForm } from '@refinedev/mantine';
 
+import { Tour } from '../../components/Tour/Tour';
 import { isEmpty } from '../../shared/validations/isEmpty';
 
 const DEFAULT_IS_ACTIVE = true;
@@ -21,7 +22,9 @@ export const KeywordCreate: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Create isLoading={formLoading} saveButtonProps={saveButtonProps}>
+      <Tour />
       <TextInput
+        id="input-name"
         mt="sm"
         label={translate('keywords.fields.name')}
         {...getInputProps('name')}
@@ -29,6 +32,7 @@ export const KeywordCreate: React.FC<IResourceComponentsProps> = () => {
       />
 
       <Checkbox
+        id="checkbox-is-active"
         defaultChecked={DEFAULT_IS_ACTIVE}
         mt="sm"
         label={translate('keywords.fields.isActive')}

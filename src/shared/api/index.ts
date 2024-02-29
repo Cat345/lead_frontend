@@ -2,8 +2,9 @@ import { HttpError } from '@refinedev/core'; //TODO: Rewrite to axios-jwt after 
 import axios from 'axios';
 // import { IAuthTokens, TokenRefreshRequest, applyAuthTokenInterceptor } from 'axios-jwt';
 
-// const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 export const api = axios.create({
+  baseURL: BASE_URL,
   headers: {
     Authorization: `Bearer ${localStorage.getItem('auth')}`,
   },
@@ -11,7 +12,6 @@ export const api = axios.create({
 
 api.interceptors.response.use(
   (response) => {
-    console.log(response);
     return response;
   },
   (error) => {
@@ -25,11 +25,3 @@ api.interceptors.response.use(
     return Promise.reject(customError);
   }
 );
-
-// const requestRefresh: TokenRefreshRequest = async (
-//   refresh_token: string
-// ): Promise<IAuthTokens | string> => {
-//   const response = await axios.post(`${BASE_URL}/auth/refresh`, { token: refresh_token });
-//   return response.data.access_token;
-// };
-// applyAuthTokenInterceptor(api, { requestRefresh });

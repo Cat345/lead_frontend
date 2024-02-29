@@ -2,6 +2,7 @@ import { Select, TextInput } from '@mantine/core';
 import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
 import { Edit, useForm } from '@refinedev/mantine';
 
+import { Tour } from '../../components/Tour/Tour';
 import { statusesRowVariants } from '../../constants/statuses';
 import { isEmpty } from '../../shared/validations/isEmpty';
 
@@ -17,13 +18,21 @@ export const GroupEdit: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
-      <TextInput mt="sm" label={translate('groups.fields.name')} {...getInputProps('name')} />
+      <Tour />
       <TextInput
+        id="input-name"
+        mt="sm"
+        label={translate('groups.fields.name')}
+        {...getInputProps('name')}
+      />
+      <TextInput
+        id="input-username"
         mt="sm"
         label={translate('groups.fields.username')}
         {...getInputProps('username')}
       />
       <Select
+        id="select-statuss"
         label={translate('groups.fields.status')}
         data={statusesRowVariants}
         {...getInputProps('status')}

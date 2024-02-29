@@ -1,0 +1,28 @@
+{
+  "/groups": [
+    {
+      "selector": ".refine-create-button",
+      "description": "Можно создать новую группу"
+    },
+    {
+      "selector": "#import-button",
+      "description": "Можно импортировать сразу список групп в excel формате"
+    },
+    {
+      "selector": "a[href=\"/keywords\"]",
+      "description": "Перейти в ключевики"
+    }
+  ],
+  "/keywords": [
+    {
+      "selector": ".refine-create-button",
+      "description": "Можно добавить новое ключевое слово"
+    }
+  ],
+  "/accounts": [
+    {
+      "selector": ".refine-create-button",
+      "description": "Можно добавить новый аккаунт"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import {
   Box,
   Drawer,
@@ -41,7 +42,6 @@ const defaultNavIcon = <IconList size={20} />;
 export const SiderWrapper: React.FC<RefineThemedLayoutV2SiderProps> = ({
   render,
   meta,
-  bottomItems,
   Title: TitleFromProps,
   activeItemDisabled = false,
 }) => {
@@ -98,7 +98,7 @@ export const SiderWrapper: React.FC<RefineThemedLayoutV2SiderProps> = ({
   };
 
   const renderTreeView = (tree: ITreeMenu[], selectedKey?: string) => {
-    return tree.map((item) => {
+    return tree.map((item, index) => {
       const { icon, label, route, name, children } = item;
 
       const isSelected = item.key === selectedKey;
@@ -120,6 +120,7 @@ export const SiderWrapper: React.FC<RefineThemedLayoutV2SiderProps> = ({
         >
           <Tooltip label={label} {...commonTooltipProps}>
             <NavLink
+              id={`navlink-${index}`}
               key={item.key}
               label={siderCollapsed && !mobileSiderOpen ? null : label}
               icon={icon ?? defaultNavIcon}

@@ -6,9 +6,10 @@ import { RefineThemes } from '@refinedev/mantine';
 import routerBindings from '@refinedev/react-router-v6';
 import { useTranslation } from 'react-i18next';
 
+import { Tour } from './components/Tour-old/Tour';
 import { Providers } from './processes/Providers';
 import { Router } from './processes/Router';
-import { getAccessControlProvider } from './refine/accessControl/getAcessControlProvider';
+import { useAccessControlProvider } from './refine/accessControl/useAcessControlProvider';
 import { authProvider } from './refine/auth/authProvider';
 import { dataProvider } from './refine/data/dataProvider';
 import { notificationProvider } from './refine/notificationProvider';
@@ -16,7 +17,7 @@ import { useResources } from './refine/resources/useResources';
 import { api } from './shared/api';
 
 function App() {
-  const accessControlProvider = getAccessControlProvider();
+  const accessControlProvider = useAccessControlProvider();
   const { t, i18n } = useTranslation();
   const resources = useResources();
 
@@ -50,7 +51,7 @@ function App() {
       <Refine
         accessControlProvider={accessControlProvider}
         i18nProvider={i18nProvider}
-        dataProvider={dataProvider(import.meta.env.VITE_BACKEND_URL, api)}
+        dataProvider={dataProvider('', api)}
         notificationProvider={notificationProvider}
         routerProvider={routerBindings}
         authProvider={authProvider}
@@ -60,6 +61,7 @@ function App() {
           warnWhenUnsavedChanges: true,
           useNewQueryKeys: true,
           projectId: 'nOZiSu-KRKJsd-WEJrDY',
+          disableTelemetry: true,
         }}
       >
         <Router />

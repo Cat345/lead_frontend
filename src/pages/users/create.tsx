@@ -27,13 +27,24 @@ export const UserCreate: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Create isLoading={formLoading} saveButtonProps={saveButtonProps}>
-      <TextInput mt="sm" label={translate('users.fields.email')} {...getInputProps('email')} />
       <TextInput
+        id="input-email"
+        mt="sm"
+        label={translate('users.fields.email')}
+        {...getInputProps('email')}
+      />
+      <TextInput
+        id="input-password"
         mt="sm"
         label={translate('users.fields.password')}
         {...getInputProps('password')}
       />
-      <TextInput mt="sm" label={translate('users.fields.role')} {...getInputProps('role')} />
+      <TextInput
+        id="input-role"
+        mt="sm"
+        label={translate('users.fields.role')}
+        {...getInputProps('role')}
+      />
     </Create>
   );
 };

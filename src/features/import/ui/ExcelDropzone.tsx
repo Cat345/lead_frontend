@@ -2,22 +2,33 @@ import { Group, Text } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { IconListCheck, IconUpload, IconX } from '@tabler/icons';
 import React from 'react';
+import { Schema } from 'read-excel-file';
 
-import { CustomSchema } from '../../../shared/types/CustomSchema';
 import { useImport } from '../hooks/useImport';
 
 type ExcelDropzoneProps = {
-  schema: CustomSchema;
+  schema: Schema;
+  handleCloseModal: () => void;
+  handleSetUserGroupsCount: (number: number) => void;
 };
-export const ExcelDropzone: React.FC<ExcelDropzoneProps> = ({ schema }) => {
-  const { handleImport, isLoading } = useImport(schema);
+export const ExcelDropzone: React.FC<ExcelDropzoneProps> = ({
+  handleCloseModal,
+  schema,
+  handleSetUserGroupsCount,
+  ...props
+}) => {
+  const { handleImport, isLoading } = useImport(schema, handleSetUserGroupsCount);
   return (
     <Dropzone
+      id="import-dropzone"
+      {...props}
       loading={isLoading}
       onDrop={([file]) => {
         handleImport(file);
+        handleCloseModal();
+        console.log('here');
       }}
-      onReject={(files) => console.log('rejected files', files)}
+      onReject={(files) => files}
       maxSize={5 * 1024 ** 2}
       accept={[MIME_TYPES.xlsx]}
     >
