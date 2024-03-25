@@ -1,10 +1,9 @@
 import './styles.css';
 
 import { Carousel } from '@mantine/carousel';
-import { Box, Center, Text, Title, useMantineTheme } from '@mantine/core';
+import { Box, Center, Title, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { openConfirmModal } from '@mantine/modals';
-import { useCreate, useGetIdentity, useList } from '@refinedev/core';
+import { useGetIdentity, useList } from '@refinedev/core';
 
 import { Tour } from '../../components/Tour/Tour';
 import { Tariff } from '../../models/Tariff';
@@ -13,7 +12,10 @@ import { Loading } from '../../shared/ui/Loading';
 import { CommonPricingCard } from './PricingCard/CommonPricingCard';
 
 export const PricingPage = () => {
-  const { mutateAsync } = useCreate();
+  // const handleChangeContact = (e: ChangeEvent<HTMLInputElement>) => {
+  //   console.log(contact, e.target.value);
+  //   setContact(e.target.value);
+  // };
   const isMobile = useMediaQuery('(max-width: 600px)');
 
   const { data: user } = useGetIdentity<User>();
@@ -24,30 +26,6 @@ export const PricingPage = () => {
   });
   const otherTariffs =
     currentTariffId === 3 ? tariffs?.data?.filter((tariff) => tariff.id === 3) : tariffs?.data;
-
-  const openModal = (tariff: Tariff) =>
-    openConfirmModal({
-      title: 'Продолжить покупку',
-      children: <Text size="sm">{tariff.description}</Text>,
-      labels: { confirm: 'Подтвердить', cancel: 'Отменить' },
-      onCancel: () => console.log('cancel'),
-      onConfirm: () => {
-        mutateAsync({
-          resource: '/purchase',
-          values: {
-            tariffId: tariff.id,
-          },
-          successNotification: {
-            message: 'Заявка отправлена',
-            type: 'success',
-          },
-          errorNotification: {
-            message: 'Произошла ошибка при отправке заявки',
-            type: 'error',
-          },
-        });
-      },
-    });
 
   if (isLoading) {
     return <Loading />;
@@ -84,7 +62,6 @@ export const PricingPage = () => {
                 isActive={currentTariffId === tariff.id}
                 tariff={tariff}
                 theme={theme}
-                handleOpenModal={openModal}
                 key={tariff.id}
               />
             </Carousel.Slide>
