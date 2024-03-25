@@ -5,7 +5,7 @@ import { Tariff } from '../../../models/Tariff';
 export type PricingCardProps = {
   tariff: Tariff;
   theme: MantineTheme;
-  handleOpenModal: (description: string) => void;
+  handleOpenModal: (tariff: Tariff) => void;
   isActive: boolean;
 
   isFirstChild?: boolean;

@@ -69,11 +69,7 @@ export const CommonPricingCard = ({
         </Title>
         <TariffBenefits benefits={tariff.benefits} theme={theme} />
         <Text sx={{ textAlign: 'center' }}>{tariff.description}</Text>
-        <Button
-          onClick={isActive ? () => {} : () => handleOpenModal(tariff.description)}
-          fullWidth
-          variant="light"
-        >
+        <Button onClick={() => handleOpenModal(tariff)} fullWidth variant="light">
           {isActive ? 'Активен' : 'Подписаться'}
         </Button>
       </Stack>

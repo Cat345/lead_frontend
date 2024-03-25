@@ -173,6 +173,19 @@
       "show": "Ключевик"
     }
   },
+  "leads": {
+    "leads": "Лиды",
+    "fields": {
+      "name": "Название",
+      "keywords": "Ключевики"
+    },
+    "titles": {
+      "create": "Создать лид",
+      "edit": "Изменить лид",
+      "list": "Лиды",
+      "show": "Лид"
+    }
+  },
   "stopwords": {
     "stopwords": "Стоп-слова",
     "fields": {

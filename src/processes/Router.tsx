@@ -10,6 +10,10 @@ import { AccountCreate, AccountEdit, AccountList, AccountShow } from '../pages/a
 import { ForgotPasswordPage } from '../pages/forgotPassword';
 import { GroupCreate, GroupEdit, GroupList, GroupShow } from '../pages/groups';
 import { KeywordCreate, KeywordEdit, KeywordList, KeywordShow } from '../pages/keywords';
+import { LeadsCreate } from '../pages/leads/create';
+import { LeadEdit } from '../pages/leads/edit';
+import { LeadList } from '../pages/leads/list';
+import { LeadShow } from '../pages/leads/show';
 import { LoginPage } from '../pages/login/LoginPage';
 import { PricingPage } from '../pages/pricing/PricingPage';
 import { ProfilePage } from '../pages/profile/ProfilePage';
@@ -68,6 +72,12 @@ export const Router = () => {
           <Route path="create" element={<StopwordCreate />} />
           <Route path="edit/:id" element={<StopwordEdit />} />
           <Route path="show/:id" element={<StopwordShow />} />
+        </Route>
+        <Route path="/leads">
+          <Route index element={<LeadList />} />
+          <Route path="create" element={<LeadsCreate />} />
+          <Route path="edit/:id" element={<LeadEdit />} />
+          <Route path="show/:id" element={<LeadShow />} />
         </Route>
         <Route path="/subscribe" element={<SubscribePage />} />
         <Route path="/profile" element={<ProfilePage />} />
