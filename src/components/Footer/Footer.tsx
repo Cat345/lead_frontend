@@ -24,7 +24,7 @@ export const Footer = () => {
         <TelegramLogo />
       </span>
       <a
-        href="https://t.me/lead_pro_service"
+        href="https://t.me/leadpro_service"
         style={{ textDecoration: 'none', color: 'inherit' }}
         target="_blank"
       >
