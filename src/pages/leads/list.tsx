@@ -1,34 +1,46 @@
 import { Group, Pagination, Table } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
-import { CreateButton, DeleteButton, EditButton, List } from '@refinedev/mantine';
+import { DeleteButton, EditButton, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
-import { IconFileImport } from '@tabler/icons';
 import { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 
 import { Tour } from '../../components/Tour/Tour';
-import { ImportButton } from '../../features/import';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
-import { leadsSchema } from './leadsSchema';
 
 export const LeadList: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
-  // const columns = useColumns(schema);
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
-        id: 'name',
-        accessorKey: 'name',
-        header: translate('leads.fields.name'),
+        id: 'text',
+        accessorKey: 'text',
+        header: translate('leads.fields.text'),
         meta: {
           filterOperator: 'contains',
         },
       },
       {
-        id: 'keywords',
-        accessorKey: 'keywords',
-        header: translate('leads.fields.keywords'),
+        id: 'channelId',
+        accessorKey: 'channelId',
+        header: translate('leads.fields.channelId'),
+        meta: {
+          filterOperator: 'contains',
+        },
+      },
+      {
+        id: 'date',
+        accessorKey: 'date',
+        header: translate('leads.fields.date'),
+        meta: {
+          filterOperator: 'contains',
+        },
+      },
+      {
+        id: 'keyword',
+        accessorKey: 'keyword.name',
+        header: translate('leads.fields.keyword'),
         meta: {
           filterOperator: 'contains',
         },
@@ -72,21 +84,25 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
       },
     },
   });
+  console.log(getHeaderGroups(), 'header groups');
+  console.log(getRowModel(), 'row model');
 
   const headerGroups = getHeaderGroups();
   const rowModel = getRowModel();
+
   return (
     <div style={{ padding: '4px', paddingBottom: '50px' }}>
       <Tour />
       <List
-        headerButtons={[
-          <ImportButton
-            variant="outline"
-            schema={leadsSchema}
-            leftIcon={<IconFileImport size="1rem" />}
-          />,
-          <CreateButton>Создать</CreateButton>,
-        ]}
+        canCreate={false}
+        // headerButtons={[
+        //   <ImportButton
+        //     variant="outline"
+        //     schema={leadsSchema}
+        //     leftIcon={<IconFileImport size="1rem" />}
+        //   />,
+        //   <CreateButton>Создать</CreateButton>,
+        // ]}
       >
         {isMobile ? (
           <Table highlightOnHover>

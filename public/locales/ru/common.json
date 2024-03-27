@@ -176,8 +176,10 @@
   "leads": {
     "leads": "Лиды",
     "fields": {
-      "name": "Название",
-      "keywords": "Ключевики"
+      "text": "Текст",
+      "channelId": "ID канала",
+      "date": "Дата",
+      "keyword": "Ключевик"
     },
     "titles": {
       "create": "Создать лид",

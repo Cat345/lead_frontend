@@ -54,17 +54,17 @@ export const resourcesForUsers: ResourceProps[] = [
       canDelete: true,
     },
   },
-  // {
-  //   icon: <IconUsers />,
-  //   name: 'leads',
-  //   list: '/leads',
-  //   create: '/leads/create',
-  //   edit: '/leads/edit/:id',
-  //   show: '/leads/show/:id',
-  //   meta: {
-  //     canDelete: true,
-  //   },
-  // },
+  {
+    icon: <IconUsers />,
+    name: 'leads',
+    list: '/leads',
+    create: '/leads/create',
+    edit: '/leads/edit/:id',
+    show: '/leads/show/:id',
+    meta: {
+      canDelete: true,
+    },
+  },
   {
     name: 'Профиль',
     list: '/profile',

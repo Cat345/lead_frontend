@@ -65,6 +65,7 @@ export const dataProvider = (
         },
       }
     );
+    console.log(data, 'data');
 
     return {
       data: data.list,
@@ -104,6 +105,7 @@ export const dataProvider = (
         ...getAuthorization(),
       },
     });
+    console.log(data, 'data');
 
     return {
       data,
