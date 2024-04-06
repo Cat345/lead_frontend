@@ -23,6 +23,7 @@ export const dataProvider = (
     const { headers: headersFromMeta, method } = meta ?? {};
     const requestMethod = (method as MethodTypes) ?? 'get';
 
+    //@ts-ignore
     const queryFilters = generateFilter(filters);
 
     // const query: {
@@ -56,15 +57,13 @@ export const dataProvider = (
     }
 
     const auth = getAuthorization();
-    const { data } = await httpClient[requestMethod](
-      `${url}?${stringify(query)}&${stringify(queryFilters)}`,
-      {
-        headers: {
-          ...auth,
-          ...headersFromMeta,
-        },
-      }
-    );
+    console.log(`${url}?${stringify(query)}&${queryFilters}`);
+    const { data } = await httpClient[requestMethod](`${url}?${stringify(query)}&${queryFilters}`, {
+      headers: {
+        ...auth,
+        ...headersFromMeta,
+      },
+    });
     console.log(data, 'data');
 
     return {

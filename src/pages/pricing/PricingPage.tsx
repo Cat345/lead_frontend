@@ -12,10 +12,6 @@ import { Loading } from '../../shared/ui/Loading';
 import { CommonPricingCard } from './PricingCard/CommonPricingCard';
 
 export const PricingPage = () => {
-  // const handleChangeContact = (e: ChangeEvent<HTMLInputElement>) => {
-  //   console.log(contact, e.target.value);
-  //   setContact(e.target.value);
-  // };
   const isMobile = useMediaQuery('(max-width: 600px)');
 
   const { data: user } = useGetIdentity<User>();

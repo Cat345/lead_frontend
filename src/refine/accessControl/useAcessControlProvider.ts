@@ -6,7 +6,6 @@ export const useAccessControlProvider = () => {
   const accessControlProvider: AccessControlProvider = {
     can: async ({ resource }) => {
       const user = await authProvider.getIdentity();
-      console.log(user, 'user');
       if (resource === 'профиль' || resource === 'подписка') {
         return {
           can: true,

@@ -1,6 +1,7 @@
 import { Box, Group } from '@mantine/core';
 import { flexRender, HeaderGroup } from '@tanstack/react-table';
 
+import { ColumnFilter } from '../refine/table/ColumnFilter';
 import { ColumnSorter } from '../refine/table/ColumnSorter';
 
 type TableHeaderProps = {
@@ -20,6 +21,7 @@ export const TableHeader: React.FC<TableHeaderProps> = ({ headerGroups }) => {
                     <Box>{flexRender(header.column.columnDef.header, header.getContext())}</Box>
                     <Group spacing="xs" noWrap>
                       <ColumnSorter column={header.column} />
+                      <ColumnFilter column={header.column} />
                     </Group>
                   </Group>
                 )}

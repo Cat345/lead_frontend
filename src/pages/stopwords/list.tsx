@@ -21,17 +21,14 @@ export const StopwordList: React.FC<IResourceComponentsProps> = () => {
         id: 'name',
         accessorKey: 'name',
         header: translate('stopwords.fields.name'),
-        meta: {
-          filterOperator: 'contains',
-        },
+        enableColumnFilter: false,
       },
       {
         id: 'isActive',
         accessorKey: 'isActive',
         header: translate('stopwords.fields.isActive'),
-        meta: {
-          filterOperator: 'eq',
-        },
+        enableColumnFilter: false,
+
         cell: ({ getValue, row }: { getValue: any; row: any }) => {
           const { index } = row;
           return (

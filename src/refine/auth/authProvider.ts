@@ -134,13 +134,11 @@ export const authProvider: AuthBindings = {
     if (!userToken) return null;
 
     const { data: user } = await api.get(BASE_URL + `users/${userToken.sub}`);
-    console.log(user?.groupsCount, 'from server');
     return user;
   },
 
   forgotPassword: async (payload: { email: string }) => {
     const response = await api.post(BASE_URL + 'auth/forgot-password', payload);
-    console.log(response, 'response');
     if (response.status === 404) {
       return {
         success: false,

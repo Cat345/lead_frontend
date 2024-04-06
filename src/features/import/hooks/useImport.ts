@@ -26,7 +26,6 @@ export const useImport = (schema: Schema, handleSetUserGroupsCount: (number: num
             },
             values: rows,
           }).then((res) => {
-            console.log(res.data, 'res data');
             handleSetUserGroupsCount(res.data);
           });
         }

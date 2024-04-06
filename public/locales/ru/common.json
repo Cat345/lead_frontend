@@ -177,7 +177,6 @@
     "leads": "Лиды",
     "fields": {
       "text": "Текст",
-      "channelId": "ID канала",
       "date": "Дата",
       "keyword": "Ключевик"
     },

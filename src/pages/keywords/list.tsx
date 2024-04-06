@@ -1,9 +1,9 @@
-import { Center, Group, Pagination, RingProgress, Table, Text } from '@mantine/core';
+import { Anchor, Group, Pagination, RingProgress, Table, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
 import { BooleanField, CreateButton, DeleteButton, EditButton, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
-import { IconArrowUpRightCircle, IconCheck, IconFileImport, IconX } from '@tabler/icons';
+import { IconCheck, IconFileImport, IconX } from '@tabler/icons';
 import { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 
@@ -24,13 +24,25 @@ export const KeywordList: React.FC<IResourceComponentsProps> = () => {
         meta: {
           filterOperator: 'contains',
         },
+        cell({ getValue }) {
+          const value = getValue<string>();
+          return (
+            <Anchor
+              sx={{ color: 'inherit' }}
+              target="_blank"
+              href={`/leads?pageSize=100&current=1&filters[0][field]=keyword.name&filters[0][operator]=contains&filters[0][value]=${value}`}
+            >
+              {value}
+            </Anchor>
+          );
+        },
       },
       {
         id: 'conversionRate',
         header: translate('keywords.fields.conversionRate'),
         accessorKey: 'conversionRate',
         meta: {
-          filterOperator: 'contains',
+          filterOperator: 'eq',
         },
         cell: ({ getValue }) => {
           const value = getValue() as number;
@@ -54,9 +66,7 @@ export const KeywordList: React.FC<IResourceComponentsProps> = () => {
         id: 'isActive',
         accessorKey: 'isActive',
         header: translate('keywords.fields.isActive'),
-        meta: {
-          filterOperator: 'eq',
-        },
+        enableColumnFilter: false,
         cell: ({ getValue, row }: { getValue: any; row: any }) => {
           const { index } = row;
           return (

@@ -9,8 +9,6 @@ export const useCanCreateGroup = () => {
   useEffect(() => {
     authProvider.getIdentity().then(setUser);
   }, []);
-  console.log(user);
-  console.log(user?.groupsCount, user?.tariff.maxGroups);
 
   return user?.groupsCount < user?.tariff?.maxGroups;
 };

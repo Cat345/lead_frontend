@@ -22,25 +22,25 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
         },
       },
       {
-        id: 'channelId',
-        accessorKey: 'channelId',
-        header: translate('leads.fields.channelId'),
-        meta: {
-          filterOperator: 'contains',
-        },
-      },
-      {
         id: 'date',
         accessorKey: 'date',
         header: translate('leads.fields.date'),
         meta: {
+          filterOperator: 'eq',
+        },
+      },
+      {
+        id: 'keyword.name',
+        accessorKey: 'keyword.name',
+        header: translate('keywords.titles.show'),
+        meta: {
           filterOperator: 'contains',
         },
       },
       {
-        id: 'keyword',
-        accessorKey: 'keyword.name',
-        header: translate('leads.fields.keyword'),
+        id: 'group.name',
+        accessorKey: 'group.name',
+        header: translate('groups.titles.show'),
         meta: {
           filterOperator: 'contains',
         },
@@ -84,8 +84,6 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
       },
     },
   });
-  console.log(getHeaderGroups(), 'header groups');
-  console.log(getRowModel(), 'row model');
 
   const headerGroups = getHeaderGroups();
   const rowModel = getRowModel();

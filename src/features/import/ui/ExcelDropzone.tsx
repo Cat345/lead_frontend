@@ -26,7 +26,6 @@ export const ExcelDropzone: React.FC<ExcelDropzoneProps> = ({
       onDrop={([file]) => {
         handleImport(file);
         handleCloseModal();
-        console.log('here');
       }}
       onReject={(files) => files}
       maxSize={5 * 1024 ** 2}

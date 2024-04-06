@@ -22,7 +22,6 @@ export const Tour = () => {
     )
   );
   useEffect(() => {
-    console.log(ls[pathname], 'here');
     if (!ls[pathname]) return;
 
     const steps = tour[pathname];

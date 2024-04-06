@@ -17,7 +17,6 @@ export const GroupList: React.FC = () => {
   const [isUserCanCreateGroup, setIsUserCanCreateGroup] = useState(true);
   const fetchUser = async () => {
     const user = await authProvider.getIdentity();
-    console.log(user, 'user');
     setIsUserCanCreateGroup(user.groupsCount < user.tariff.maxGroups);
   };
   useEffect(() => {
@@ -31,25 +30,20 @@ export const GroupList: React.FC = () => {
       id: 'name',
       header: translate('groups.fields.name'),
       accessorKey: 'name',
-      meta: {
-        filterOperator: 'contains',
-      },
+      enableColumnFilter: false,
     },
     {
       id: 'username',
       header: translate('groups.fields.username'),
       accessorKey: 'username',
-      meta: {
-        filterOperator: 'contains',
-      },
+      enableColumnFilter: false,
     },
     {
       id: 'conversionRate',
       header: translate('groups.fields.conversionRate'),
       accessorKey: 'conversionRate',
-      meta: {
-        filterOperator: 'contains',
-      },
+      enableColumnFilter: false,
+
       cell: ({ getValue }) => {
         const value = getValue() as number;
         return (
@@ -77,9 +71,7 @@ export const GroupList: React.FC = () => {
         const translatedValue = statusesRowVariants.find((status) => status.value === value);
         return translatedValue?.label || 'Статус не найден';
       },
-      meta: {
-        filterOperator: 'eq',
-      },
+      enableColumnFilter: false,
     },
     {
       id: 'actions',
@@ -95,16 +87,13 @@ export const GroupList: React.FC = () => {
               hideText
               recordItemId={getValue() as string}
               onSuccess={() => {
-                console.log('deleted?');
                 fetchUser();
               }}
             />
           </Group>
         );
       },
-      meta: {
-        filterOperator: false,
-      },
+      enableColumnFilter: false,
     },
   ];
 
@@ -124,7 +113,6 @@ export const GroupList: React.FC = () => {
   const headerGroups = getHeaderGroups();
   const rowModel = getRowModel();
 
-  console.log(isUserCanCreateGroup, 'is user can create group');
   const headerButtons = isUserCanCreateGroup
     ? [
         <ImportButton

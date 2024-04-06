@@ -11,8 +11,6 @@ export const JoyrideTooltip = ({
   disableTour,
   closeTour,
 }: WalktourLogic & { disableTour: () => void; closeTour: () => {} }) => {
-  console.log(stepIndex, 'step index');
-
   return (
     <Box p="xl" bg="white" color="black" sx={{ borderRadius: '7px', zIndex: 1000 }}>
       <Text color="#333">{stepContent.description}</Text>

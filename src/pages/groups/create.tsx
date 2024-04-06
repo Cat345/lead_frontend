@@ -18,7 +18,6 @@ export const GroupCreate: React.FC<IResourceComponentsProps> = () => {
     validate: {
       name: (name) => (isEmpty(name) ? 'Название не может быть пустым' : null),
       username: (username) => {
-        console.log(username, isGroupLinkValid(username));
         if (isEmpty(username)) return 'Название не может быть пустым';
         if (!isGroupLinkValid(username))
           return 'Ссылка должна быть вида https://t.me/lead_pro_service';
