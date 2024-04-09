@@ -33,6 +33,7 @@ export const RestartButton: React.FC<ShowButtonProps> = ({
     params: { id: recordItemId ?? id, resource },
     queryOptions: {
       enabled: accessControlEnabled,
+      cacheTime: 0,
     },
   });
 

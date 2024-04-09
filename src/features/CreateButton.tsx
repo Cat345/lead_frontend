@@ -48,6 +48,7 @@ export const CreateButton: React.FC<CreateButtonProps> = ({
     action: 'create',
     queryOptions: {
       enabled: accessControlEnabled,
+      cacheTime: 0,
     },
     params: {
       resource,

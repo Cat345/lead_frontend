@@ -58,6 +58,7 @@ export const EditButton: React.FC<EditButtonProps> = ({
     params: { id: recordItemId ?? id, resource },
     queryOptions: {
       enabled: accessControlEnabled,
+      cacheTime: 0,
     },
   });
 
