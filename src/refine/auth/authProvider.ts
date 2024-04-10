@@ -42,9 +42,6 @@ export const authProvider: AuthBindings = {
       password,
     });
 
-    api.defaults.headers.common = {
-      Authorization: `Bearer ${tokenKey}`,
-    };
     localStorage.setItem(TOKEN_KEY, tokenKey);
     return {
       success: true,
@@ -69,9 +66,6 @@ export const authProvider: AuthBindings = {
       password,
     });
 
-    api.defaults.headers.common = {
-      Authorization: `Bearer ${tokenKey}`,
-    };
     localStorage.setItem(TOKEN_KEY, tokenKey);
     return {
       success: true,
@@ -107,9 +101,6 @@ export const authProvider: AuthBindings = {
     const tokenKey = response.data?.access_token;
 
     if (tokenKey) {
-      api.defaults.headers.common = {
-        Authorization: `Bearer ${tokenKey}`,
-      };
       localStorage.setItem(TOKEN_KEY, tokenKey);
       return {
         success: true,

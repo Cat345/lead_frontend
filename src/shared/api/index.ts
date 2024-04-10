@@ -1,13 +1,19 @@
-import { HttpError } from '@refinedev/core'; //TODO: Rewrite to axios-jwt after backend
+import { HttpError } from '@refinedev/core';
 import axios from 'axios';
-// import { IAuthTokens, TokenRefreshRequest, applyAuthTokenInterceptor } from 'axios-jwt';
+
+import { TOKEN_KEY } from '../../refine/auth/authProvider';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 export const api = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('auth')}`,
-  },
+});
+
+api.interceptors.request.use((request) => {
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (request.headers) {
+    request.headers.Authorization = `Bearer ${token}`;
+  }
+  return request;
 });
 
 api.interceptors.response.use(
