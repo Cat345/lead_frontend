@@ -53,11 +53,11 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
           const { index } = row;
           return (
             <Group spacing="xs" noWrap>
-              <EditButton
+              {/* <EditButton
                 id={`button-edit-${index}`}
                 hideText
                 recordItemId={getValue() as string}
-              />
+              /> */}
               <DeleteButton
                 id={`button-delete-${index}`}
                 hideText
