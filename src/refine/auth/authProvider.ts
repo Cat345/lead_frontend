@@ -24,7 +24,7 @@ export type AuthBindings = {
 export const TOKEN_KEY = 'auth';
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 export const authProvider: AuthBindings = {
-  register: async ({ email, password }) => {
+  register: async ({ email, password, utm, referral }) => {
     if (!(email && password)) {
       return {
         success: false,
@@ -40,6 +40,8 @@ export const authProvider: AuthBindings = {
     } = await api.post(BASE_URL + 'auth/register', {
       email,
       password,
+      utm,
+      referral
     });
 
     localStorage.setItem(TOKEN_KEY, tokenKey);

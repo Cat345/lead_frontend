@@ -31,6 +31,7 @@ import { FormContext, FormPropsType, ThemedTitleV2 } from '@refinedev/mantine';
 import React from 'react';
 
 import { Tour } from '../../components/Tour/Tour';
+import { useUtmStore } from '../../features/utm/useUtmStore';
 // import { FormPropsType } from '../..';
 import { cardStyles, layoutStyles, pageTitleStyles, titleStyles } from './styles';
 
@@ -45,6 +46,9 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   providers,
   title,
 }) => {
+  const utm = useUtmStore((store) => store.utm);
+  const referral = useUtmStore((store) => store.referral);
+
   const theme = useMantineTheme();
   const { useForm, FormProvider } = FormContext;
   const { onSubmit: onSubmitProp, ...useFormProps } = formProps || {};
@@ -123,10 +127,15 @@ export const RegisterPage: React.FC<RegisterProps> = ({
       <FormProvider form={form}>
         <form
           onSubmit={onSubmit((values: any) => {
+            const registerValues = {
+              ...values,
+              utm,
+              referral,
+            };
             if (onSubmitProp) {
-              return onSubmitProp(values);
+              return onSubmitProp(registerValues);
             }
-            return register(values);
+            return register(registerValues);
           })}
         >
           <TextInput

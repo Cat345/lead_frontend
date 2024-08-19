@@ -6,7 +6,7 @@ import { RefineThemes } from '@refinedev/mantine';
 import routerBindings from '@refinedev/react-router-v6';
 import { useTranslation } from 'react-i18next';
 
-import { Tour } from './components/Tour-old/Tour';
+import { useSaveUtmAndReferral } from './features/utm/lib/useSaveUtmAndReferral';
 import { Providers } from './processes/Providers';
 import { Router } from './processes/Router';
 import { useAccessControlProvider } from './refine/accessControl/useAcessControlProvider';
@@ -17,6 +17,8 @@ import { useResources } from './refine/resources/useResources';
 import { api } from './shared/api';
 
 function App() {
+  useSaveUtmAndReferral();
+
   const accessControlProvider = useAccessControlProvider();
   const { t, i18n } = useTranslation();
   const resources = useResources();

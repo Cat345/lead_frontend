@@ -30,7 +30,7 @@ export const KeywordList: React.FC<IResourceComponentsProps> = () => {
             <Anchor
               sx={{ color: 'inherit' }}
               target="_blank"
-              href={`/leads?pageSize=100&current=1&filters[0][field]=keyword.name&filters[0][operator]=contains&filters[0][value]=${value}`}
+              href={`/leads?pageSize=100&current=1&filters[0][field]=text&filters[0][operator]=contains&filters[0][value]=${value}`}
             >
               {value}
             </Anchor>
