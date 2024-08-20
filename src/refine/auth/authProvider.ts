@@ -7,6 +7,7 @@ import {
 import { decodeToken } from 'react-jwt';
 
 import { api } from '../../shared/api';
+import { getConfig } from '../../shared/getConfig';
 import { TokenPayload } from './TokenPayload';
 
 export type AuthBindings = {
@@ -22,7 +23,7 @@ export type AuthBindings = {
 };
 
 export const TOKEN_KEY = 'auth';
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+const BASE_URL = getConfig().BACKEND_URL;
 export const authProvider: AuthBindings = {
   register: async ({ email, password, utm, referral }) => {
     if (!(email && password)) {
@@ -41,7 +42,7 @@ export const authProvider: AuthBindings = {
       email,
       password,
       utm,
-      referral
+      referral,
     });
 
     localStorage.setItem(TOKEN_KEY, tokenKey);

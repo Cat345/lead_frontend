@@ -1,15 +1,16 @@
 import { Avatar, Button, Card, Center, Divider, Flex, Group, Stack, Text } from '@mantine/core';
-import { useGetIdentity, useUpdate } from '@refinedev/core';
+import { useCreate, useGetIdentity } from '@refinedev/core';
 import { IconUserCircle } from '@tabler/icons';
 import { Link } from 'react-router-dom';
 import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
 
 import { Tour } from '../../components/Tour/Tour';
 import { User } from '../../models/User';
+import { getConfig } from '../../shared/getConfig';
 
 export const ProfilePage = () => {
-  const { mutate } = useUpdate();
-  const { data: user } = useGetIdentity<User>();
+  const { mutateAsync: createOrUpdateTgAccount } = useCreate();
+  const { data: user, refetch: refetchUser } = useGetIdentity<User>();
   // const navigate = useNavigate();
   if (!user || !user.tariff) {
     return null;
@@ -27,13 +28,17 @@ export const ProfilePage = () => {
 
       username: username,
       photoUrl: photo_url,
-    };
-    mutate({
-      id: user.id,
-      resource: 'users',
-      values: {
-        telegramAccount,
+
+      user: {
+        id: user.id,
       },
+    };
+
+    createOrUpdateTgAccount({
+      // id: user.id,
+      resource: 'telegram-account',
+      values: telegramAccount,
+
       successNotification: {
         type: 'success',
         message: 'Аккаунт добавлен!',
@@ -47,7 +52,7 @@ export const ProfilePage = () => {
           description: 'Ошибка',
         };
       },
-    });
+    }).then(() => refetchUser());
   };
 
   return (
@@ -110,9 +115,10 @@ export const ProfilePage = () => {
           </Text>
           <div id="butotn-telegram-login">
             <TelegramLoginButton
+              requestAccess={true}
               buttonSize="large"
               dataOnauth={addTelegramAccountToDb}
-              botName="leadtestingsbot"
+              botName={getConfig().TG_BOT_USERNAME}
             />
           </div>
         </Stack>
