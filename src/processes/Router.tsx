@@ -6,6 +6,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 // import { ForgotPassword } from '../pages/forgotPassword';
 import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/header';
+import { ForRegisteredInBot } from '../features/forRegisteredInBot/ui/ForRegisteredInBot';
 import { AccountCreate, AccountEdit, AccountList, AccountShow } from '../pages/accounts';
 import { ForgotPasswordPage } from '../pages/forgotPassword';
 import { GroupCreate, GroupEdit, GroupList, GroupShow } from '../pages/groups';
@@ -43,38 +44,80 @@ export const Router = () => {
       >
         <Route index element={<NavigateToResource resource="groups" />} />
         <Route path="/users">
-          <Route index element={<UserList />} />
+          <Route
+            index
+            element={
+              <ForRegisteredInBot>
+                <UserList />
+              </ForRegisteredInBot>
+            }
+          />
           <Route path="create" element={<UserCreate />} />
           <Route path="edit/:id" element={<UserEdit />} />
           <Route path="show/:id" element={<UserShow />} />
         </Route>
 
         <Route path="/accounts">
-          <Route index element={<AccountList />} />
+          <Route
+            index
+            element={
+              <ForRegisteredInBot>
+                <AccountList />
+              </ForRegisteredInBot>
+            }
+          />
           <Route path="create" element={<AccountCreate />} />
           <Route path="edit/:id" element={<AccountEdit />} />
           <Route path="show/:id" element={<AccountShow />} />
         </Route>
         <Route path="/groups">
-          <Route index element={<GroupList />} />
+          <Route
+            index
+            element={
+              <ForRegisteredInBot>
+                <GroupList />
+              </ForRegisteredInBot>
+            }
+          />
           <Route path="create" element={<GroupCreate />} />
           <Route path="edit/:id" element={<GroupEdit />} />
           <Route path="show/:id" element={<GroupShow />} />
         </Route>
         <Route path="/keywords">
-          <Route index element={<KeywordList />} />
+          <Route
+            index
+            element={
+              <ForRegisteredInBot>
+                <KeywordList />
+              </ForRegisteredInBot>
+            }
+          />
           <Route path="create" element={<KeywordCreate />} />
           <Route path="edit/:id" element={<KeywordEdit />} />
           <Route path="show/:id" element={<KeywordShow />} />
         </Route>
         <Route path="/stopwords">
-          <Route index element={<StopwordList />} />
+          <Route
+            index
+            element={
+              <ForRegisteredInBot>
+                <StopwordList />
+              </ForRegisteredInBot>
+            }
+          />
           <Route path="create" element={<StopwordCreate />} />
           <Route path="edit/:id" element={<StopwordEdit />} />
           <Route path="show/:id" element={<StopwordShow />} />
         </Route>
         <Route path="/leads">
-          <Route index element={<LeadList />} />
+          <Route
+            index
+            element={
+              <ForRegisteredInBot>
+                <LeadList />
+              </ForRegisteredInBot>
+            }
+          />
           <Route path="create" element={<LeadsCreate />} />
           <Route path="edit/:id" element={<LeadEdit />} />
           <Route path="show/:id" element={<LeadShow />} />

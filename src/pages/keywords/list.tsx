@@ -1,6 +1,15 @@
-import { Anchor, Group, Pagination, RingProgress, Table, Text } from '@mantine/core';
+import {
+  Anchor,
+  Button,
+  Checkbox,
+  Group,
+  Pagination,
+  RingProgress,
+  Table,
+  Text,
+} from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { IResourceComponentsProps, useDeleteMany, useTranslate } from '@refinedev/core';
 import { BooleanField, CreateButton, DeleteButton, EditButton, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
 import { IconCheck, IconFileImport, IconX } from '@tabler/icons';
@@ -14,9 +23,68 @@ import { keywordsSchema } from './keywordsSchema';
 
 export const KeywordList: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
-  // const columns = useColumns(schema);
+  const { mutate } = useDeleteMany();
+
+  const deleteSelectedItems = (ids: number[]) => {
+    mutate(
+      {
+        resource: 'keywords',
+        ids,
+      },
+      {
+        onSuccess: () => {
+          resetRowSelection();
+        },
+      }
+    );
+  };
+
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
+      {
+        id: 'id',
+        accessorKey: 'id',
+        enableSorting: false,
+        enableColumnFilter: false,
+        header: function render({ table }) {
+          return (
+            <Group noWrap>
+              <Checkbox
+                checked={table.getIsAllRowsSelected()}
+                indeterminate={table.getIsSomeRowsSelected()}
+                onChange={table.getToggleAllRowsSelectedHandler()}
+              />
+
+              {(table.getIsSomeRowsSelected() || table.getIsAllPageRowsSelected()) && (
+                <Button
+                  id="delete-selected"
+                  size="xs"
+                  color="red"
+                  variant="outline"
+                  onClick={() => {
+                    console.log(table.getSelectedRowModel().flatRows);
+                    const ids = table.getSelectedRowModel().flatRows.map((row) => +row.id);
+                    deleteSelectedItems(ids);
+                  }}
+                >
+                  Удалить
+                </Button>
+              )}
+            </Group>
+          );
+        },
+        cell: function render({ row }) {
+          return (
+            <Group noWrap>
+              <Checkbox
+                checked={row.getIsSelected()}
+                indeterminate={row.getIsSomeSelected()}
+                onChange={row.getToggleSelectedHandler()}
+              />
+            </Group>
+          );
+        },
+      },
       {
         id: 'name',
         accessorKey: 'name',
@@ -112,7 +180,9 @@ export const KeywordList: React.FC<IResourceComponentsProps> = () => {
     getHeaderGroups,
     getRowModel,
     refineCore: { setCurrent, pageCount, current },
+    resetRowSelection,
   } = useTable({
+    getRowId: (originalRow) => originalRow.id.toString(),
     columns,
     initialState: {
       pagination: {
@@ -123,16 +193,21 @@ export const KeywordList: React.FC<IResourceComponentsProps> = () => {
 
   const headerGroups = getHeaderGroups();
   const rowModel = getRowModel();
+
   return (
     <div style={{ padding: '4px', paddingBottom: '50px' }}>
       <Tour />
       <List
         headerButtons={[
+          // <ExportButton onClick={() => handleDownload('keywords', 'keywords_export.xlsx')}>
+          //   Экспортировть
+          // </ExportButton>,
           <ImportButton
             variant="outline"
             schema={keywordsSchema}
             leftIcon={<IconFileImport size="1rem" />}
           />,
+
           <CreateButton>Создать</CreateButton>,
         ]}
       >

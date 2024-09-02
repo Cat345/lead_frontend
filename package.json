@@ -26,6 +26,7 @@
     "chroma-js": "^2.4.2",
     "date-fns": "^3.3.1",
     "embla-carousel-react": "^8.0.0-rc21",
+    "exceljs": "^4.4.0",
     "i18next": "^23.7.7",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-http-backend": "^2.4.2",
@@ -41,7 +42,8 @@
     "read-excel-file": "^5.7.1",
     "telegram-login-button": "^0.1.0",
     "use-local-storage": "^3.0.0",
-    "walktour": "^5.2.0"
+    "walktour": "^5.2.0",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/node": "^18.16.2",

@@ -159,6 +159,22 @@
       "show": "Группа"
     }
   },
+  "messageSenders": {
+    "messageSenders": "Отправители",
+    "fields": {
+      "name": "Название",
+      "username": "Username",
+      "firstName": "Имя",
+      "lastName": "Фамилия",
+      "phone": "Телефон"
+    },
+    "titles": {
+      "create": "Создать отправителя",
+      "edit": "Изменить отправителя",
+      "list": "Отправители",
+      "show": "Отправитель"
+    }
+  },
   "keywords": {
     "keywords": "Ключевики",
     "fields": {

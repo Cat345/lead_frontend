@@ -1,6 +1,6 @@
-import { Group, Pagination, Table } from '@mantine/core';
+import { Button, Checkbox, Group, Pagination, Table } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { IResourceComponentsProps, useDeleteMany, useTranslate } from '@refinedev/core';
 import { BooleanField, CreateButton, DeleteButton, EditButton, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
 import { IconCheck, IconFileImport, IconX } from '@tabler/icons';
@@ -14,9 +14,67 @@ import { stopwordsSchema } from './stopwordsSchema';
 
 export const StopwordList: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
-  // const columns = useColumns(schema);
+  const { mutate } = useDeleteMany();
+
+  const deleteSelectedItems = (ids: number[]) => {
+    mutate(
+      {
+        resource: 'stopwords',
+        ids,
+      },
+      {
+        onSuccess: () => {
+          resetRowSelection();
+        },
+      }
+    );
+  };
+
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
+      {
+        id: 'id',
+        accessorKey: 'id',
+        enableSorting: false,
+        enableColumnFilter: false,
+        header: function render({ table }) {
+          return (
+            <Group noWrap>
+              <Checkbox
+                checked={table.getIsAllRowsSelected()}
+                indeterminate={table.getIsSomeRowsSelected()}
+                onChange={table.getToggleAllRowsSelectedHandler()}
+              />
+
+              {(table.getIsSomeRowsSelected() || table.getIsAllPageRowsSelected()) && (
+                <Button
+                  id="delete-selected"
+                  size="xs"
+                  color="red"
+                  variant="outline"
+                  onClick={() => {
+                    const ids = table.getSelectedRowModel().flatRows.map((row) => +row.id);
+                    deleteSelectedItems(ids);
+                  }}
+                >
+                  Удалить
+                </Button>
+              )}
+            </Group>
+          );
+        },
+        cell: function render({ row }) {
+          return (
+            <Group noWrap>
+              <Checkbox
+                checked={row.getIsSelected()}
+                indeterminate={row.getIsSomeSelected()}
+                onChange={row.getToggleSelectedHandler()}
+              />
+            </Group>
+          );
+        },
+      },
       {
         id: 'name',
         accessorKey: 'name',
@@ -74,7 +132,9 @@ export const StopwordList: React.FC<IResourceComponentsProps> = () => {
     getHeaderGroups,
     getRowModel,
     refineCore: { setCurrent, pageCount, current },
+    resetRowSelection,
   } = useTable({
+    getRowId: (originalRow) => originalRow.id.toString(),
     columns,
     initialState: {
       pagination: {

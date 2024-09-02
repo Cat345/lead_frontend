@@ -1,59 +1,23 @@
 import { Avatar, Button, Card, Center, Divider, Flex, Group, Stack, Text } from '@mantine/core';
-import { useCreate, useGetIdentity } from '@refinedev/core';
+import { useGetIdentity } from '@refinedev/core';
 import { IconUserCircle } from '@tabler/icons';
 import { Link } from 'react-router-dom';
-import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
+import TelegramLoginButton from 'telegram-login-button';
 
 import { Tour } from '../../components/Tour/Tour';
+import { useAddTelegramAccountToDb } from '../../features/telegram/lib/useAddTelegramAccountToDb';
 import { User } from '../../models/User';
 import { getConfig } from '../../shared/getConfig';
 
 export const ProfilePage = () => {
-  const { mutateAsync: createOrUpdateTgAccount } = useCreate();
   const { data: user, refetch: refetchUser } = useGetIdentity<User>();
-  // const navigate = useNavigate();
+  const addTelegramAccountToDb = useAddTelegramAccountToDb(user);
   if (!user || !user.tariff) {
     return null;
   }
 
   const { keywordsCount, groupsCount, accountsCount } = user;
   const { maxGroups } = user.tariff;
-
-  const addTelegramAccountToDb = (userFromTelegram: TelegramUser) => {
-    const { first_name, auth_date, id, photo_url, username } = userFromTelegram;
-    const telegramAccount = {
-      firstName: first_name,
-      authDate: auth_date,
-      tgId: id,
-
-      username: username,
-      photoUrl: photo_url,
-
-      user: {
-        id: user.id,
-      },
-    };
-
-    createOrUpdateTgAccount({
-      // id: user.id,
-      resource: 'telegram-account',
-      values: telegramAccount,
-
-      successNotification: {
-        type: 'success',
-        message: 'Аккаунт добавлен!',
-        description: 'Telegram аккаунт добавлен',
-      },
-      errorNotification(error, values) {
-        console.error(error, values);
-        return {
-          type: 'error',
-          message: 'Не удалось добавить Telegram аккаунт',
-          description: 'Ошибка',
-        };
-      },
-    }).then(() => refetchUser());
-  };
 
   return (
     <Center
@@ -117,7 +81,7 @@ export const ProfilePage = () => {
             <TelegramLoginButton
               requestAccess={true}
               buttonSize="large"
-              dataOnauth={addTelegramAccountToDb}
+              dataOnauth={(user) => addTelegramAccountToDb(user).then(() => refetchUser())}
               botName={getConfig().TG_BOT_USERNAME}
             />
           </div>
