@@ -1,4 +1,16 @@
-import { Avatar, Button, Card, Center, Divider, Flex, Group, Stack, Text } from '@mantine/core';
+import {
+  Avatar,
+  Button,
+  Card,
+  Center,
+  Divider,
+  Flex,
+  Group,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
+import { openModal } from '@mantine/modals';
 import { useGetIdentity } from '@refinedev/core';
 import { IconUserCircle } from '@tabler/icons';
 import { Link } from 'react-router-dom';
@@ -19,6 +31,33 @@ export const ProfilePage = () => {
   const { keywordsCount, groupsCount, accountsCount } = user;
   const { maxGroups } = user.tariff;
 
+  const openSettingsModal = () =>
+    openModal({
+      // title: 'Настройки',
+      children: (
+        <Stack align="center">
+          <div>
+            <Title order={5} mb="sm" sx={{ textAlign: 'center' }}>
+              Уведомления
+            </Title>
+            <Text>
+              {user.telegramAccount
+                ? `Аккаунт @${user.telegramAccount.username} уже привязан, но его можно изменить`
+                : 'Привязать Telegram аккаунт для получения уведомлений'}
+            </Text>
+            <TelegramLoginButton
+              requestAccess={true}
+              buttonSize="large"
+              dataOnauth={(tgUser) =>
+                addTelegramAccountToDb(tgUser, user.id).then(() => refetchUser())
+              }
+              botName={getConfig().TG_BOT_USERNAME}
+            />
+          </div>
+        </Stack>
+      ),
+    });
+
   return (
     <Center
       mih="70dvh"
@@ -26,7 +65,7 @@ export const ProfilePage = () => {
         flexDirection: 'column',
       }}
     >
-      <Tour />
+      {/* <Tour /> */}
       <Card shadow="xl" p="xl">
         <Stack align="center">
           <Avatar id="avatar" size="xl" src={null} sx={{ borderRadius: '50%' }}>
@@ -74,17 +113,9 @@ export const ProfilePage = () => {
           <Button id="button-subscribe" component={Link} to="/pricing" fullWidth>
             Оформить подписку
           </Button>
-          <Text>
-            {user.telegramAccount ? 'Войти с другим аккаунтом' : 'Войти для получения уведомлений'}
-          </Text>
-          <div id="butotn-telegram-login">
-            <TelegramLoginButton
-              requestAccess={true}
-              buttonSize="large"
-              dataOnauth={(user) => addTelegramAccountToDb(user).then(() => refetchUser())}
-              botName={getConfig().TG_BOT_USERNAME}
-            />
-          </div>
+          <Button onClick={openSettingsModal} variant="outline" fullWidth>
+            Настройки
+          </Button>
         </Stack>
       </Card>
     </Center>

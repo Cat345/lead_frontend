@@ -1,13 +1,13 @@
 import { Paper, Stack, Text } from '@mantine/core';
 import { useGetIdentity } from '@refinedev/core';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
 
-import { User } from '../../../models/User';
-import { getConfig } from '../../../shared/getConfig';
-import { useAddTelegramAccountToDb } from '../../telegram/lib/useAddTelegramAccountToDb';
+import { useAddTelegramAccountToDb } from '../features/telegram/lib/useAddTelegramAccountToDb';
+import { User } from '../models/User';
+import { getConfig } from '../shared/getConfig';
 
-export const ForRegisteredInBot = ({ children }: { children: ReactNode }) => {
+export const ForRegisteredInBot: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { data: user, refetch } = useGetIdentity<User>();
   const addTelegramAccountToDb = useAddTelegramAccountToDb();
 
@@ -56,7 +56,7 @@ export const ForRegisteredInBot = ({ children }: { children: ReactNode }) => {
               </Stack>
             </Paper>
           </div>
-          <div style={{ filter: 'blur(2.5px)' }}>{children}</div>
+          <div style={{ filter: 'blur(2.5px)', pointerEvents: 'none' }}>{children}</div>
         </div>
       </>
     );

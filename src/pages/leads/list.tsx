@@ -1,4 +1,4 @@
-import { Anchor, Button, Checkbox, Group, Pagination, Table } from '@mantine/core';
+import { Anchor, Button, Checkbox, Group, Pagination, Table, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { IResourceComponentsProps, useDeleteMany, useTranslate } from '@refinedev/core';
 import { DeleteButton, ExportButton, List, useSelect } from '@refinedev/mantine';
@@ -91,7 +91,40 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
         meta: {
           filterOperator: 'contains',
         },
+        cell: function render({ getValue, row }) {
+          const value = getValue() as string;
+          if (!row.original.link) {
+            return <Text>{value}</Text>;
+          }
+          return (
+            <Text>
+              <Anchor
+                href={row.original.link}
+                target="_blank"
+                sx={{ textDecoration: 'underline', color: 'inherit' }}
+              >
+                {value}
+              </Anchor>
+            </Text>
+          );
+        },
       },
+      // {
+      //   id: 'link',
+      //   accessorKey: 'link',
+      //   header: translate('leads.fields.link'),
+      //   meta: {
+      //     filterOperator: 'contains',
+      //   },
+      //   cell: function render({ getValue }) {
+      //     const value = getValue() as string;
+      //     return (
+      //       <Anchor href={value} target="_blank">
+      //         {value}
+      //       </Anchor>
+      //     );
+      //   },
+      // },
       {
         id: 'date',
         accessorKey: 'date',
@@ -124,10 +157,13 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
           filterOperator: 'contains',
         },
         cell: function render({ getValue }) {
+          const value = getValue() as string;
+          if (!value) return <Text>Неизвестен</Text>;
+
           return (
             <Anchor
               sx={{ color: 'inherit', textDecoration: 'underline' }}
-              href={`https://t.me/${getValue()}`}
+              href={`https://t.me/${value}`}
               target="_blank"
             >
               {getValue() as string}

@@ -6,7 +6,6 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 // import { ForgotPassword } from '../pages/forgotPassword';
 import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/header';
-import { ForRegisteredInBot } from '../features/forRegisteredInBot/ui/ForRegisteredInBot';
 import { AccountCreate, AccountEdit, AccountList, AccountShow } from '../pages/accounts';
 import { ForgotPasswordPage } from '../pages/forgotPassword';
 import { GroupCreate, GroupEdit, GroupList, GroupShow } from '../pages/groups';
@@ -24,6 +23,7 @@ import { SubscribePage } from '../pages/subscribe/SubscribePage';
 import { UpdatePasswordPage } from '../pages/updatePassword';
 import { UserCreate, UserEdit, UserList, UserShow } from '../pages/users';
 import { Logo } from '../shared/ui/Logo';
+import { ForRegisteredInBot } from '../widgets';
 import { Sider } from '../widgets/Sider';
 
 export const Router = () => {
