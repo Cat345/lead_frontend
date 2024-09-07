@@ -1,5 +1,6 @@
 import { Tariff } from './Tariff';
 import { TelegramAccount } from './TelegramAccount';
+import { UserSetting } from './UserSetting';
 
 export type User = {
   id: number;
@@ -14,4 +15,6 @@ export type User = {
   remainingSubscribeDays: number;
 
   telegramAccount: TelegramAccount | null;
+
+  userSetting: UserSetting;
 };
