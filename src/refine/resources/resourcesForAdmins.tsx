@@ -1,7 +1,12 @@
 import { ResourceProps } from '@refinedev/core';
-import { IconUsers } from '@tabler/icons';
+import { IconRobot, IconUsers } from '@tabler/icons';
 
 export const resourcesForAdmins: ResourceProps[] = [
+  {
+    icon: <IconRobot />,
+    name: 'bots',
+    list: '/bots',
+  },
   {
     icon: <IconUsers />,
     name: 'users',

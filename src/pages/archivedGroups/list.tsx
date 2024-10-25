@@ -1,18 +1,24 @@
-import { Badge, Button, Checkbox, Group, HoverCard, Pagination, Table, Text } from '@mantine/core';
+import { Button, Checkbox, Group, Pagination, Table } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IResourceComponentsProps, useDeleteMany, useTranslate } from '@refinedev/core';
-import { CreateButton, DeleteButton, EditButton, List } from '@refinedev/mantine';
+import {
+  IResourceComponentsProps,
+  useDeleteMany,
+  useInvalidate,
+  useTranslate,
+} from '@refinedev/core';
+import { DeleteButton, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
 import { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 
 import { Tour } from '../../components/Tour/Tour';
+import { UnarchiveButton } from '../../features/unarchive/ui/UnarchiveButton';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
-import { mapStatus } from './lib/mapStatus';
 
-export const GroupList: React.FC<IResourceComponentsProps> = () => {
+export const ArchivedGroupList: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
   const { mutate } = useDeleteMany();
+  const invalidate = useInvalidate();
 
   const deleteSelectedItems = (ids: number[]) => {
     mutate(
@@ -82,31 +88,6 @@ export const GroupList: React.FC<IResourceComponentsProps> = () => {
         },
       },
       {
-        id: 'status',
-        accessorKey: 'status',
-        header: translate('groups.fields.status'),
-        cell: function render({ getValue, row }) {
-          const values = row.original;
-          return (
-            <HoverCard width={280} shadow="md">
-              <HoverCard.Target>
-                <Badge
-                  color={getValue() === 'active' ? 'green' : 'red'}
-                  style={{ cursor: 'default' }}
-                >
-                  {mapStatus(getValue() as string)}
-                </Badge>
-              </HoverCard.Target>
-              {values.errorReason && (
-                <HoverCard.Dropdown>
-                  <Text size="sm">{values.errorReason}</Text>
-                </HoverCard.Dropdown>
-              )}
-            </HoverCard>
-          );
-        },
-      },
-      {
         id: 'actions',
         accessorKey: 'id',
         header: translate('table.actions'),
@@ -114,12 +95,20 @@ export const GroupList: React.FC<IResourceComponentsProps> = () => {
           const { index } = row;
           return (
             <Group spacing="xs" noWrap>
-              <EditButton
-                id={`button-edit-${index}`}
-                hideText
+              <UnarchiveButton
+                id={`button-unarchive-${index}`}
+                resource="groups"
                 recordItemId={getValue() as string}
               />
+              {/* <ShowButton
+                id={`button-show-${index}`}
+                hideText
+                recordItemId={getValue() as string}
+              /> */}
               <DeleteButton
+                onSuccess={() => invalidate({ resource: 'groups', invalidates: ['all'] })}
+                confirmTitle="При удалении группы удалятся все связанные с ней лиды"
+                resource="groups"
                 id={`button-delete-${index}`}
                 hideText
                 recordItemId={getValue() as string}
@@ -156,14 +145,16 @@ export const GroupList: React.FC<IResourceComponentsProps> = () => {
     <div style={{ padding: '4px', paddingBottom: '50px' }}>
       <Tour />
       <List
-        headerButtons={[
-          // <ImportButton
-          //   variant="outline"
-          //   schema={groupsSchema}
-          //   leftIcon={<IconFileImport size="1rem" />}
-          // />,
-          <CreateButton>Создать</CreateButton>,
-        ]}
+        headerButtons={
+          [
+            // <ImportButton
+            //   variant="outline"
+            //   schema={groupsSchema}
+            //   leftIcon={<IconFileImport size="1rem" />}
+            // />,
+            // <CreateButton>Создать</CreateButton>,
+          ]
+        }
       >
         {isMobile ? (
           <Table highlightOnHover>

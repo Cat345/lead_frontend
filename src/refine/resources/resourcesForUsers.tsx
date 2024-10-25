@@ -33,6 +33,15 @@ export const resourcesForUsers: ResourceProps[] = [
     },
   },
   {
+    icon: <IconMailFast />,
+    name: 'groups/archived',
+    list: '/groups/archived',
+    show: '/groups/show/:id',
+    meta: {
+      canDelete: true,
+    },
+  },
+  {
     icon: <IconLetterA />,
     name: 'keywords',
     list: '/keywords',

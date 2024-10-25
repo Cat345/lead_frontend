@@ -7,6 +7,9 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/header';
 import { AccountCreate, AccountEdit, AccountList, AccountShow } from '../pages/accounts';
+import { ArchivedGroupList, ArchivedGroupShow } from '../pages/archivedGroups';
+import { BotsList } from '../pages/bots';
+import { EditBot } from '../pages/bots/edit';
 import { ForgotPasswordPage } from '../pages/forgotPassword';
 import { GroupCreate, GroupEdit, GroupList, GroupShow } from '../pages/groups';
 import { KeywordCreate, KeywordEdit, KeywordList, KeywordShow } from '../pages/keywords';
@@ -57,6 +60,11 @@ export const Router = () => {
           <Route path="show/:id" element={<UserShow />} />
         </Route>
 
+        <Route path="/bots">
+          <Route index element={<BotsList />} />
+          <Route path="edit/:id" element={<EditBot />} />
+        </Route>
+
         <Route path="/accounts">
           <Route
             index
@@ -82,6 +90,17 @@ export const Router = () => {
           <Route path="create" element={<GroupCreate />} />
           <Route path="edit/:id" element={<GroupEdit />} />
           <Route path="show/:id" element={<GroupShow />} />
+        </Route>
+        <Route path="/groups/archived">
+          <Route
+            index
+            element={
+              <ForRegisteredInBot>
+                <ArchivedGroupList />
+              </ForRegisteredInBot>
+            }
+          />
+          <Route path="show/:id" element={<ArchivedGroupShow />} />
         </Route>
         <Route path="/keywords">
           <Route

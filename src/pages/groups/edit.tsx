@@ -9,10 +9,10 @@ import { isEmpty } from '../../shared/validations/isEmpty';
 export const GroupEdit: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
   const { getInputProps, saveButtonProps } = useForm({
-    initialValues: { name: '', username: '', status: statusesRowVariants[0].value },
+    initialValues: { name: '', status: statusesRowVariants[0].value },
     validate: {
       name: (name) => (isEmpty(name) ? 'Название не может быть пустым' : null),
-      username: (username) => (isEmpty(username) ? 'Название не может быть пустым' : null),
+      // username: (username) => (isEmpty(username) ? 'Название не может быть пустым' : null),
     },
   });
 
@@ -25,16 +25,16 @@ export const GroupEdit: React.FC<IResourceComponentsProps> = () => {
         label={translate('groups.fields.name')}
         {...getInputProps('name')}
       />
-      <TextInput
+      {/* <TextInput
         id="input-username"
         mt="sm"
         label={translate('groups.fields.username')}
         {...getInputProps('username')}
-      />
+      /> */}
       <Select
         id="select-statuss"
         label={translate('groups.fields.status')}
-        data={statusesRowVariants}
+        data={statusesRowVariants.filter((variant) => variant.value !== 'error')}
         {...getInputProps('status')}
       />
     </Edit>

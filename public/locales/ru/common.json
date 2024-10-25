@@ -159,6 +159,21 @@
       "show": "Группа"
     }
   },
+  "groups/archived": {
+    "groups/archived": "Архивные группы",
+    "fields": {
+      "name": "Название",
+      "username": "Username",
+      "conversionRate": "Конверсионность",
+      "status": "Статус"
+    },
+    "titles": {
+      "create": "Создать группу",
+      "edit": "Изменить группу",
+      "list": "Архивные группы",
+      "show": "Архивная группа"
+    }
+  },
   "messageSenders": {
     "messageSenders": "Отправители",
     "fields": {
@@ -173,6 +188,19 @@
       "edit": "Изменить отправителя",
       "list": "Отправители",
       "show": "Отправитель"
+    }
+  },
+  "bots": {
+    "bots": "Боты",
+    "fields": {
+      "limitation": "Лимит групп",
+      "link": "Ссылка"
+    },
+    "titles": {
+      "create": "Создать бота",
+      "edit": "Изменить бота",
+      "list": "Боты",
+      "show": "Бот"
     }
   },
   "keywords": {

@@ -1,9 +1,8 @@
-import { Select, TextInput } from '@mantine/core';
+import { TextInput } from '@mantine/core';
 import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
 import { Create, useForm } from '@refinedev/mantine';
 
 import { Tour } from '../../components/Tour/Tour';
-import { statusesRowVariants } from '../../constants/statuses';
 import { isEmpty } from '../../shared/validations/isEmpty';
 import { isGroupLinkValid } from '../../shared/validations/isGroupLinkValid';
 
@@ -14,7 +13,7 @@ export const GroupCreate: React.FC<IResourceComponentsProps> = () => {
     saveButtonProps,
     refineCore: { formLoading },
   } = useForm({
-    initialValues: { name: '', username: '', status: statusesRowVariants[0].value },
+    initialValues: { name: '', username: '' },
     validate: {
       name: (name) => (isEmpty(name) ? 'Название не может быть пустым' : null),
       username: (username) => {
@@ -40,12 +39,6 @@ export const GroupCreate: React.FC<IResourceComponentsProps> = () => {
         mt="sm"
         label="Ссылка на группу"
         {...getInputProps('username')}
-      />
-      <Select
-        id="select-status"
-        label={translate('groups.fields.status')}
-        data={statusesRowVariants}
-        {...getInputProps('status')}
       />
     </Create>
   );
