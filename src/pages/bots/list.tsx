@@ -1,12 +1,14 @@
 import { ActionIcon, Box, Group, Table, Text } from '@mantine/core';
-import { useList } from '@refinedev/core';
+import { useCreate, useList } from '@refinedev/core';
 import { IconEdit, IconRefresh } from '@tabler/icons';
 import { Link } from 'react-router-dom';
 
+import { Bot } from '../../models/Bot';
 import { Loading } from '../../shared/ui/Loading';
 
 export const BotsList = () => {
-  const botsQuery = useList({
+  const { mutate } = useCreate();
+  const botsQuery = useList<Bot>({
     resource: 'bots',
   });
 
@@ -14,8 +16,22 @@ export const BotsList = () => {
     return <Loading />;
   }
 
-  const restartBot = (id: number) => {
-    console.log('restartBot', id);
+  const handleRestartBot = (link: string, id: number) => {
+    mutate({
+      resource: `${link}restart-bot/${id}`,
+      values: {},
+      successNotification(data, values, resource) {
+        console.log('successNotification', data, values, resource);
+        return {
+          message: 'Бот перезапущен',
+          type: 'success',
+        };
+        // return {
+        //   title: 'Успешно',
+        //   description: 'Бот перезапущен',
+        // };
+      },
+    });
   };
 
   const rows = botsQuery.data?.data?.map((bot) => (
@@ -25,7 +41,11 @@ export const BotsList = () => {
       <td>{bot.limitation}</td>
       <td>
         <Group spacing="xs">
-          <ActionIcon variant="outline" size="xs">
+          <ActionIcon
+            variant="outline"
+            size="xs"
+            onClick={() => handleRestartBot(bot.link, bot.id)}
+          >
             <IconRefresh />
           </ActionIcon>
           <ActionIcon component={Link} to={`/bots/edit/${bot.id}`} variant="outline" size="xs">

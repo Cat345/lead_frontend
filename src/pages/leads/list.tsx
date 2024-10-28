@@ -213,7 +213,7 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
         canCreate={false}
         headerButtons={[
           <ExportButton onClick={() => handleDownload('leads', 'leads_export.xlsx')}>
-            Экспортировтьировть
+            Экспортировать
           </ExportButton>,
         ]}
       >
