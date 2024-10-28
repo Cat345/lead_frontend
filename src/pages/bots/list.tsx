@@ -23,14 +23,14 @@ export const BotsList = () => {
       successNotification(data, values, resource) {
         console.log('successNotification', data, values, resource);
         return {
-          message: 'Бот перезапущен',
+          message: data?.data?.message || 'Бот перезапущен',
           type: 'success',
         };
       },
       errorNotification(error, values, resource) {
         console.log('errorNotification', error, values, resource);
         return {
-          message: 'Ошибка при перезапуске бота',
+          message: error?.response?.data?.message || 'Ошибка при перезапуске бота',
           type: 'error',
         };
       },
