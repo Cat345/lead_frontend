@@ -18,7 +18,7 @@ export const BotsList = () => {
 
   const handleRestartBot = (link: string, id: number) => {
     mutate({
-      resource: `${link}restart-bot/${id}`,
+      resource: `bots/restart-bot/${id}`,
       values: {},
       successNotification(data, values, resource) {
         console.log('successNotification', data, values, resource);
@@ -26,10 +26,13 @@ export const BotsList = () => {
           message: 'Бот перезапущен',
           type: 'success',
         };
-        // return {
-        //   title: 'Успешно',
-        //   description: 'Бот перезапущен',
-        // };
+      },
+      errorNotification(error, values, resource) {
+        console.log('errorNotification', error, values, resource);
+        return {
+          message: 'Ошибка при перезапуске бота',
+          type: 'error',
+        };
       },
     });
   };
