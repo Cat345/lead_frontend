@@ -29,7 +29,7 @@ export const useAccessControlProvider = () => {
           can: false,
         };
       }
-      if (resource === 'users' && user?.role !== 'admin') {
+      if ((resource === 'users' || resource === 'bots') && user?.role !== 'admin') {
         return {
           can: false,
           reason: 'Unauthorized',
