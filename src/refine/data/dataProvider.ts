@@ -66,6 +66,9 @@ export const dataProvider = (
     });
     console.log(data, 'data');
 
+    if (!('list' in data)) {
+      return data;
+    }
     return {
       data: data.list,
       total: data.total || data.length,

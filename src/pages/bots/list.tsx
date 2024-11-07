@@ -1,12 +1,12 @@
 import { ActionIcon, Box, Group, Table, Text } from '@mantine/core';
 import { useCreate, useList } from '@refinedev/core';
-import { IconEdit, IconRefresh } from '@tabler/icons';
+import { IconEdit, IconEye, IconRefresh } from '@tabler/icons';
 import { Link } from 'react-router-dom';
 
 import { Bot } from '../../models/Bot';
 import { Loading } from '../../shared/ui/Loading';
 
-export const BotsList = () => {
+export const BotsListPage = () => {
   const { mutate } = useCreate();
   const botsQuery = useList<Bot>({
     resource: 'bots',
@@ -46,13 +46,16 @@ export const BotsList = () => {
         <Group spacing="xs">
           <ActionIcon
             variant="outline"
-            size="xs"
+            size="md"
             onClick={() => handleRestartBot(bot.link, bot.id)}
           >
-            <IconRefresh />
+            <IconRefresh width={16} height={16} />
           </ActionIcon>
-          <ActionIcon component={Link} to={`/bots/edit/${bot.id}`} variant="outline" size="xs">
+          <ActionIcon component={Link} to={`/bots/edit/${bot.id}`} variant="outline" size="md">
             <IconEdit />
+          </ActionIcon>
+          <ActionIcon component={Link} to={`/bots/show/${bot.id}`} variant="outline" size="md">
+            <IconEye />
           </ActionIcon>
         </Group>
       </td>

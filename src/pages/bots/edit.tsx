@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-export const EditBot = () => {
+export const EditBotPage = () => {
   const { id } = useParams();
   return <div>EditBot {id}</div>;
 };

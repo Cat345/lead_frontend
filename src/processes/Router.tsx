@@ -8,8 +8,7 @@ import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/header';
 import { AccountCreate, AccountEdit, AccountList, AccountShow } from '../pages/accounts';
 import { ArchivedGroupList, ArchivedGroupShow } from '../pages/archivedGroups';
-import { BotsList } from '../pages/bots';
-import { EditBot } from '../pages/bots/edit';
+import { BotsListPage, EditBotPage, ShowBotPage } from '../pages/bots';
 import { ForgotPasswordPage } from '../pages/forgotPassword';
 import { GroupCreate, GroupEdit, GroupList, GroupShow } from '../pages/groups';
 import { KeywordCreate, KeywordEdit, KeywordList, KeywordShow } from '../pages/keywords';
@@ -61,8 +60,9 @@ export const Router = () => {
         </Route>
 
         <Route path="/bots">
-          <Route index element={<BotsList />} />
-          <Route path="edit/:id" element={<EditBot />} />
+          <Route index element={<BotsListPage />} />
+          <Route path="edit/:id" element={<EditBotPage />} />
+          <Route path="show/:id" element={<ShowBotPage />} />
         </Route>
 
         <Route path="/accounts">
