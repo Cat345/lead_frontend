@@ -1,9 +1,10 @@
 import { ResourceProps } from '@refinedev/core';
 import {
-  IconCandy,
-  IconEraser,
-  IconLetterA,
-  IconMailFast,
+  IconCoins,
+  IconFishHook,
+  IconFishHookOff,
+  IconRipple,
+  IconRippleOff,
   IconUser,
   IconUserCircle,
   IconUsers,
@@ -22,7 +23,7 @@ export const resourcesForUsers: ResourceProps[] = [
     },
   },
   {
-    icon: <IconMailFast />,
+    icon: <IconRipple />,
     name: 'groups',
     list: '/groups',
     create: '/groups/create',
@@ -33,7 +34,7 @@ export const resourcesForUsers: ResourceProps[] = [
     },
   },
   {
-    icon: <IconMailFast />,
+    icon: <IconRippleOff />,
     name: 'groups/archived',
     list: '/groups/archived',
     show: '/groups/show/:id',
@@ -42,7 +43,7 @@ export const resourcesForUsers: ResourceProps[] = [
     },
   },
   {
-    icon: <IconLetterA />,
+    icon: <IconFishHook />,
     name: 'keywords',
     list: '/keywords',
     create: '/keywords/create',
@@ -53,7 +54,7 @@ export const resourcesForUsers: ResourceProps[] = [
     },
   },
   {
-    icon: <IconEraser />,
+    icon: <IconFishHookOff />,
     name: 'stopwords',
     list: '/stopwords',
     create: '/stopwords/create',
@@ -87,7 +88,7 @@ export const resourcesForUsers: ResourceProps[] = [
     list: '/pricing',
     meta: {
       label: 'Подписка',
-      icon: <IconCandy />,
+      icon: <IconCoins />,
     },
   },
 ];
