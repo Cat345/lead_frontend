@@ -91,7 +91,13 @@ export const GroupList: React.FC<IResourceComponentsProps> = () => {
             <HoverCard width={280} shadow="md">
               <HoverCard.Target>
                 <Badge
-                  color={getValue() === 'active' ? 'green' : 'red'}
+                  color={
+                    getValue() === 'active'
+                      ? 'green'
+                      : getValue() === 'request_sent'
+                      ? 'blue'
+                      : 'red'
+                  }
                   style={{ cursor: 'default' }}
                 >
                   {mapStatus(getValue() as string)}

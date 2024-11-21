@@ -18,6 +18,7 @@ export const Footer = () => {
         position: 'fixed',
         bottom: '16px',
         right: '16px',
+        zIndex: 1000,
       }}
     >
       <span style={{ height: '20px', width: '20px', marginRight: '5px' }}>

@@ -1,17 +1,19 @@
 import { Anchor, Button, Checkbox, Group, Pagination, Table, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IResourceComponentsProps, useDeleteMany, useTranslate } from '@refinedev/core';
+import { IResourceComponentsProps, useDeleteMany, useTranslate, useUpdate } from '@refinedev/core';
 import { DeleteButton, ExportButton, List, useSelect } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
 import { ColumnDef } from '@tanstack/react-table';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Tour } from '../../components/Tour/Tour';
+import { TreePositionedToggler } from '../../shared/ui/TreePositionedToggler';
 import { handleDownload } from '../../utils/downloadResource';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 
 export const LeadList: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
+  const { mutate: updateLead } = useUpdate();
 
   const { mutate } = useDeleteMany();
 
@@ -32,6 +34,20 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
   const { selectProps: filterSelectProps } = useSelect({
     resource: 'leads',
   });
+
+  const handleChangeQuality = useCallback(
+    (id: number, quality: string) => {
+      updateLead({
+        resource: 'leads',
+        id,
+        values: { quality },
+        invalidates: [],
+        mutationMode: 'optimistic',
+        successNotification: false,
+      });
+    },
+    [updateLead]
+  );
 
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
@@ -172,6 +188,23 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
         },
       },
       {
+        id: 'quality',
+        accessorKey: 'quality',
+        header: translate('leads.fields.quality'),
+        meta: {
+          filterOperator: 'eq',
+        },
+        cell: function render({ getValue, row }) {
+          const value = getValue() as string;
+          return (
+            <TreePositionedToggler
+              value={value}
+              onChange={(value) => handleChangeQuality(row.original.id, value)}
+            />
+          );
+        },
+      },
+      {
         id: 'actions',
         accessorKey: 'id',
         header: translate('table.actions'),
@@ -184,7 +217,7 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
         },
       },
     ],
-    [filterSelectProps.data]
+    [filterSelectProps.data, handleChangeQuality]
   );
   const isMobile = useMediaQuery('(max-width: 600px)');
 

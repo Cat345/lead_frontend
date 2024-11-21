@@ -1,6 +1,7 @@
 import { ActionIcon, Box, Group, Table, Text } from '@mantine/core';
 import { useCreate, useList } from '@refinedev/core';
 import { IconEdit, IconEye, IconRefresh } from '@tabler/icons';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Bot } from '../../models/Bot';
@@ -67,6 +68,11 @@ export const BotsListPage = () => {
       <Text size="xl" weight={700} mb="md">
         Список ботов
       </Text>
+
+      {/* <Group position="apart" mb="md">
+        <TreePositionedToggler value={filter} onChange={handleFilterChange} />
+      </Group> */}
+
       <Table>
         <thead>
           <tr>

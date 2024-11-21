@@ -11,4 +11,8 @@ export const statusesRowVariants = [
     label: 'Ошибка',
     value: 'error',
   },
+  {
+    label: 'Запрос отправлен',
+    value: 'request_sent',
+  },
 ];

@@ -8,6 +8,8 @@ export const mapStatus = (status: string) => {
       return 'Неактивен';
     case 'error':
       return 'Ошибка';
+    case 'request_sent':
+      return 'Запрос отправлен';
     default:
       return 'Неизвестный статус';
   }
