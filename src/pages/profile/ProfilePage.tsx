@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   Center,
+  Checkbox,
   Divider,
   Flex,
   Group,
@@ -49,7 +50,7 @@ export const ProfilePage = () => {
         message: 'Настройки сохранены',
         description: 'Максимальная длина изменена',
       },
-    });
+    }).then(() => refetchUser());
 
   const saveMaxMessageLength = () => {
     console.log(maxMessageLength, 'maxMessageLength');
@@ -87,6 +88,19 @@ export const ProfilePage = () => {
       }
     />
   );
+  console.log(user, 'user');
+
+  const shouldIgnoreMixedLanguageCheckbox = (
+    <Checkbox
+      label="Игнорировать сообщения со словами, написанными с обходом стоп-слов"
+      checked={user.userSetting?.shouldIgnoreMixedLanguage}
+      onChange={(event) => {
+        updateUserSettings(user.userSetting?.id, {
+          shouldIgnoreMixedLanguage: event.currentTarget.checked,
+        });
+      }}
+    />
+  );
 
   const { keywordsCount, groupsCount, accountsCount } = user;
   const { maxGroups } = user.tariff;
@@ -121,7 +135,10 @@ export const ProfilePage = () => {
             <Title order={5} mb="sm" sx={{ textAlign: 'center' }}>
               Сообщения
             </Title>
-            {numberInputElement}
+            <Stack>
+              {numberInputElement}
+              {shouldIgnoreMixedLanguageCheckbox}
+            </Stack>
           </div>
         </div>
       </Modal>
