@@ -29,7 +29,7 @@ export const TreePositionedToggler = ({
 
   return (
     <SegmentedControl
-      color={value === 'good' ? 'green' : value === 'bad' ? 'red' : 'gray'}
+      color={value === 'good' ? 'green' : value === 'bad' ? 'red' : 'yellow'}
       value={value}
       onChange={(value) => {
         setValue(value);

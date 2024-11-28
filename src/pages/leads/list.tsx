@@ -4,16 +4,16 @@ import { IResourceComponentsProps, useDeleteMany, useTranslate, useUpdate } from
 import { DeleteButton, ExportButton, List, useSelect } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
 import { ColumnDef } from '@tanstack/react-table';
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { Tour } from '../../components/Tour/Tour';
+import { api } from '../../shared/api';
 import { TreePositionedToggler } from '../../shared/ui/TreePositionedToggler';
 import { handleDownload } from '../../utils/downloadResource';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 
 export const LeadList: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
-  const { mutate: updateLead } = useUpdate();
 
   const { mutate } = useDeleteMany();
 
@@ -35,19 +35,9 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
     resource: 'leads',
   });
 
-  const handleChangeQuality = useCallback(
-    (id: number, quality: string) => {
-      updateLead({
-        resource: 'leads',
-        id,
-        values: { quality },
-        invalidates: [],
-        mutationMode: 'optimistic',
-        successNotification: false,
-      });
-    },
-    [updateLead]
-  );
+  const handleChangeQuality = (id: number, quality: string) => {
+    api.patch(`/leads/${id}`, { quality });
+  };
 
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
@@ -74,9 +64,6 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
                   onClick={() => {
                     const ids = table.getSelectedRowModel().flatRows.map((row) => +row.id);
                     deleteSelectedItems(ids);
-                    // deleteSelectedItems(
-                    //   table.getSelectedRowModel().flatRows.map(({ original }) => original.id)
-                    // )
                   }}
                 >
                   Удалить
@@ -125,22 +112,6 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
           );
         },
       },
-      // {
-      //   id: 'link',
-      //   accessorKey: 'link',
-      //   header: translate('leads.fields.link'),
-      //   meta: {
-      //     filterOperator: 'contains',
-      //   },
-      //   cell: function render({ getValue }) {
-      //     const value = getValue() as string;
-      //     return (
-      //       <Anchor href={value} target="_blank">
-      //         {value}
-      //       </Anchor>
-      //     );
-      //   },
-      // },
       {
         id: 'date',
         accessorKey: 'date',
@@ -217,7 +188,7 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
         },
       },
     ],
-    [filterSelectProps.data, handleChangeQuality]
+    [filterSelectProps.data]
   );
   const isMobile = useMediaQuery('(max-width: 600px)');
 
