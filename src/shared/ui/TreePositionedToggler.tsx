@@ -39,7 +39,7 @@ export const TreePositionedToggler = ({
       data={[
         {
           label: (
-            <div>
+            <div title="Плохое">
               <IconMoodSad size={14} style={{ marginTop: 5 }} />
             </div>
           ),
@@ -47,7 +47,7 @@ export const TreePositionedToggler = ({
         },
         {
           label: (
-            <div>
+            <div title="Нейтральное">
               <IconMoodEmpty size={14} style={{ marginTop: 5 }} />
             </div>
           ),
@@ -55,7 +55,7 @@ export const TreePositionedToggler = ({
         },
         {
           label: (
-            <div>
+            <div title="Хорошее">
               <IconMoodSmile size={14} style={{ marginTop: 5 }} />
             </div>
           ),
