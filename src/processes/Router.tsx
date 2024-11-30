@@ -1,6 +1,8 @@
+import { Loader } from '@mantine/core';
 import { Authenticated } from '@refinedev/core';
 import { ErrorComponent, ThemedLayoutV2 } from '@refinedev/mantine';
 import { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6';
+import { lazy, Suspense } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
 // import { ForgotPassword } from '../pages/forgotPassword';
@@ -27,6 +29,8 @@ import { UserCreate, UserEdit, UserList, UserShow } from '../pages/users';
 import { Logo } from '../shared/ui/Logo';
 import { ForRegisteredInBot } from '../widgets';
 import { Sider } from '../widgets/Sider';
+
+const AnalyticsList = lazy(() => import('../pages/analytics/list'));
 
 export const Router = () => {
   return (
@@ -144,6 +148,14 @@ export const Router = () => {
         <Route path="/subscribe" element={<SubscribePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route
+          path="/analytics"
+          element={
+            <Suspense fallback={<Loader />}>
+              <AnalyticsList />
+            </Suspense>
+          }
+        />
         <Route path="*" element={<ErrorComponent />} />
       </Route>
       <Route

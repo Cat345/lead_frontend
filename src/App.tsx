@@ -4,6 +4,7 @@ import { useLocalStorage } from '@mantine/hooks';
 import { I18nProvider, Refine } from '@refinedev/core';
 import { RefineThemes } from '@refinedev/mantine';
 import routerBindings from '@refinedev/react-router-v6';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
 import { useSaveUtmAndReferral } from './features/utm/lib/useSaveUtmAndReferral';
@@ -16,6 +17,7 @@ import { notificationProvider } from './refine/notificationProvider';
 import { useResources } from './refine/resources/useResources';
 import { api } from './shared/api';
 
+const queryClient = new QueryClient();
 function App() {
   useSaveUtmAndReferral();
 
@@ -66,7 +68,9 @@ function App() {
           disableTelemetry: true,
         }}
       >
-        <Router />
+        <QueryClientProvider client={queryClient}>
+          <Router />
+        </QueryClientProvider>
       </Refine>
     </Providers>
   );

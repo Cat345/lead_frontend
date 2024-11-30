@@ -23,6 +23,7 @@ export const PricingPage = () => {
   const otherTariffs =
     currentTariffId === 3 ? tariffs?.data?.filter((tariff) => tariff.id === 3) : tariffs?.data;
 
+  console.log(otherTariffs);
   if (isLoading) {
     return <Loading />;
   }

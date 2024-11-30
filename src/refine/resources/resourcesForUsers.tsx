@@ -75,6 +75,14 @@ export const resourcesForUsers: ResourceProps[] = [
       canDelete: true,
     },
   },
+  // {
+  //   name: 'Аналитика',
+  //   list: '/analytics',
+  //   meta: {
+  //     label: 'Аналитика',
+  //     icon: <IconChartBar />,
+  //   },
+  // },
   {
     name: 'Профиль',
     list: '/profile',
