@@ -1,6 +1,6 @@
 import { ActionIcon, Badge, Table } from '@mantine/core';
 import { useTable } from '@refinedev/react-table';
-import { IconChevronDown, IconChevronRight, IconFold } from '@tabler/icons-react';
+import { IconChevronDown, IconChevronRight, IconFold } from '@tabler/icons';
 import {
   ColumnDef,
   flexRender,
