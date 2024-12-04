@@ -25,13 +25,6 @@ export const AnalyticsTable = ({ analyticsData }: { analyticsData: AnalyticsData
         header: ({ column }) => (
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <span>Ключевик</span>
-            <ActionIcon
-              onClick={() => column.toggleGrouping()}
-              variant={column.getIsGrouped() ? 'filled' : 'subtle'}
-              size="sm"
-            >
-              <IconFold size={16} />
-            </ActionIcon>
           </div>
         ),
         cell: ({ row, getValue }) => {
@@ -74,6 +67,7 @@ export const AnalyticsTable = ({ analyticsData }: { analyticsData: AnalyticsData
         header: 'Качество',
         cell: ({ getValue }) => {
           const value = getValue();
+          if (!value) return null;
           const qualityName =
             value === 'good' ? 'Хороший' : value === 'bad' ? 'Плохой' : 'Нейтральный';
           return (
