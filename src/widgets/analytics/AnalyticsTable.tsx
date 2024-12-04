@@ -1,6 +1,13 @@
-import { Badge } from '@mantine/core';
-import { MantineReactTable, MRT_ColumnDef, useMantineReactTable } from 'mantine-react-table';
-import { MRT_Localization_RU } from 'mantine-react-table/locales/ru';
+import { ActionIcon, Badge, Table } from '@mantine/core';
+import { useTable } from '@refinedev/react-table';
+import { IconChevronDown, IconChevronRight, IconFold } from '@tabler/icons-react';
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+  getGroupedRowModel,
+} from '@tanstack/react-table';
 import { useMemo } from 'react';
 
 type AnalyticsData = {
@@ -9,30 +16,64 @@ type AnalyticsData = {
   quality: string;
   leadText: string;
 };
+
 export const AnalyticsTable = ({ analyticsData }: { analyticsData: AnalyticsData[] }) => {
-  const columns = useMemo<MRT_ColumnDef<AnalyticsData>[]>(
+  const columns = useMemo<ColumnDef<AnalyticsData>[]>(
     () => [
       {
         accessorKey: 'keywordName',
-        header: 'Ключевик',
+        header: ({ column }) => (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span>Ключевик</span>
+            <ActionIcon
+              onClick={() => column.toggleGrouping()}
+              variant={column.getIsGrouped() ? 'filled' : 'subtle'}
+              size="sm"
+            >
+              <IconFold size={16} />
+            </ActionIcon>
+          </div>
+        ),
+        cell: ({ row, getValue }) => {
+          return (
+            <div
+              style={{ paddingLeft: `${row.depth * 2}rem`, display: 'flex', alignItems: 'center' }}
+            >
+              {row.getCanExpand() && (
+                <ActionIcon
+                  onClick={row.getToggleExpandedHandler()}
+                  variant="subtle"
+                  size="sm"
+                  style={{ marginRight: '0.5rem' }}
+                >
+                  {row.getIsExpanded() ? (
+                    <IconChevronDown size={16} />
+                  ) : (
+                    <IconChevronRight size={16} />
+                  )}
+                </ActionIcon>
+              )}
+              {getValue() as string}
+            </div>
+          );
+        },
       },
       {
         accessorKey: 'groupName',
         header: 'Группа',
       },
-
       {
         accessorKey: 'leadText',
         header: 'Лид',
-        Cell: ({ renderedCellValue }) => {
-          return <div dangerouslySetInnerHTML={{ __html: renderedCellValue?.toString() || '' }} />;
+        cell: ({ getValue }) => {
+          return <div dangerouslySetInnerHTML={{ __html: getValue()?.toString() || '' }} />;
         },
       },
       {
         accessorKey: 'quality',
         header: 'Качество',
-        Cell: ({ renderedCellValue }) => {
-          const value = renderedCellValue;
+        cell: ({ getValue }) => {
+          const value = getValue();
           const qualityName =
             value === 'good' ? 'Хороший' : value === 'bad' ? 'Плохой' : 'Нейтральный';
           return (
@@ -46,126 +87,51 @@ export const AnalyticsTable = ({ analyticsData }: { analyticsData: AnalyticsData
     []
   );
 
-  const table = useMantineReactTable({
+  const table = useTable({
     columns,
     data: analyticsData,
-    enablePagination: true,
     enableGlobalFilter: false,
-    enableDensityToggle: false,
     enableHiding: false,
-    enableFullScreenToggle: false,
     enableGrouping: true,
     enableFilters: false,
-    enableRowDragging: false,
     enablePinning: false,
-    enableColumnDragging: false,
-    mantineTableProps: {
-      highlightOnHover: false,
-      withColumnBorders: true,
-    },
+    enableExpanding: true,
+    getCoreRowModel: getCoreRowModel(),
+    getGroupedRowModel: getGroupedRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
     initialState: {
       pagination: {
         pageIndex: 0,
         pageSize: 100,
       },
       grouping: ['keywordName'],
+      expanded: true,
     },
-    mantinePaginationProps: {
-      rowsPerPageOptions: ['10', '50', '100'],
-    },
-    enableBottomToolbar: true,
-    paginationDisplayMode: 'pages',
     paginateExpandedRows: true,
-    localization: {
-      actions: 'Действия',
-      and: 'И',
-      cancel: 'Отмена',
-      changeFilterMode: 'Изменить режим фильтрации',
-      changeSearchMode: 'Изменить режим поиска',
-      clearFilter: 'Очистить фильтр',
-      clearSearch: 'Очистить поиск',
-      clearSort: 'Очистить сортировку',
-      clickToCopy: 'Нажмите для копирования',
-      collapse: 'Свернуть',
-      collapseAll: 'Свернуть все',
-      columnActions: 'Действия',
-      copiedToClipboard: 'Скопировано в буфер обмена',
-      create: 'Создать',
-      dropToGroupBy: 'Перетащить для группировки',
-      edit: 'Редактировать',
-      expand: 'Развернуть',
-      expandAll: 'Развернуть все',
-      filterArrIncludes: 'Фильтр включает',
-      filterArrIncludesAll: 'Фильтр включает все',
-      filterArrIncludesSome: 'Фильтр включает некоторые',
-      filterBetween: 'Фильтр между',
-      filterBetweenInclusive: 'Фильтр между включительно',
-      filterByColumn: 'Фильтр по столбцу',
-      filterContains: 'Фильтр содержит',
-      filterEmpty: 'Фильтр пуст',
-      filterEndsWith: 'Фильтр заканчивается',
-      filterEquals: 'Фильтр равен',
-      filterEqualsString: 'Фильтр равен строке',
-      filterFuzzy: 'Фильтр похож',
-      filterGreaterThan: 'Фильтр больше',
-      filterGreaterThanOrEqualTo: 'Фильтр больше или равен',
-      filterInNumberRange: 'Фильтр в диапазоне',
-      filterIncludesString: 'Фильтр включает строку',
-      filterIncludesStringSensitive: 'Фильтр включает строку (чувствительно к регистру)',
-      filterLessThan: 'Фильтр меньше',
-      filterLessThanOrEqualTo: 'Фильтр меньше или равен',
-      filterMode: 'Режим фильтрации',
-      filterNotEmpty: 'Фильтр не пуст',
-      filterNotEquals: 'Фильтр не равен',
-      filterStartsWith: 'Фильтр начинается',
-      filterWeakEquals: 'Фильтр приблизительно равен',
-      filteringByColumn: 'Фильтрация по столбцу',
-      goToFirstPage: 'Перейти к первой странице',
-      goToLastPage: 'Перейти к последней странице',
-      goToNextPage: 'Перейти к следующей странице',
-      goToPreviousPage: 'Перейти к предыдущей странице',
-      grab: 'Перетащить',
-      groupByColumn: 'Сгруппировать по столбцу',
-      groupedBy: 'Сгруппировано по',
-      hideAll: 'Скрыть все',
-      hideColumn: 'Скрыть столбец',
-      max: 'Максимум',
-      min: 'Минимум',
-      move: 'Переместить',
-      noRecordsToDisplay: 'Нет данных для отображения',
-      noResultsFound: 'Ничего не найдено',
-      of: 'из',
-      or: 'или',
-      pinToLeft: 'Закрепить слева',
-      pinToRight: 'Закрепить справа',
-      resetColumnSize: 'Сбросить размер столбца',
-      resetOrder: 'Сбросить порядок',
-      rowActions: 'Действия',
-      rowNumber: 'Номер строки',
-      rowNumbers: 'Номера строк',
-      rowsPerPage: 'Строк на странице',
-      save: 'Сохранить',
-      search: 'Поиск',
-      select: 'Выбрать',
-      selectedCountOfRowCountRowsSelected: 'Выбрано {selectedCount} из {rowCount} строк',
-      showAll: 'Показать все',
-      showAllColumns: 'Показать все столбцы',
-      showHideColumns: 'Показать/скрыть столбцы',
-      showHideFilters: 'Показать/скрыть фильтры',
-      showHideSearch: 'Показать/скрыть поиск',
-      sortByColumnAsc: 'Сортировать по столбцу по возрастанию',
-      sortByColumnDesc: 'Сортировать по столбцу по убыванию',
-      sortedByColumnAsc: 'Отсортировано по возрастанию',
-      sortedByColumnDesc: 'Отсортировано по убыванию',
-      thenBy: 'Затем по',
-      toggleDensity: 'Изменить плотность',
-      toggleFullScreen: 'Перейти в полноэкранный режим',
-      toggleSelectAll: 'Выбрать все',
-      toggleSelectRow: 'Выбрать строку',
-      toggleVisibility: 'Показать/скрыть',
-      ungroupByColumn: 'Разгруппировать по столбцу',
-    },
   });
 
-  return <MantineReactTable table={table} />;
+  return (
+    <Table striped highlightOnHover>
+      <thead>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <th key={header.id}>
+                {flexRender(header.column.columnDef.header, header.getContext())}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody>
+        {table.getRowModel().rows.map((row) => (
+          <tr key={row.id}>
+            {row.getVisibleCells().map((cell) => (
+              <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+  );
 };
