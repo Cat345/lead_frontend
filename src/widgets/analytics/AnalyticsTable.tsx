@@ -1,6 +1,6 @@
 import { ActionIcon, Badge, Table } from '@mantine/core';
 import { useTable } from '@refinedev/react-table';
-import { IconChevronDown, IconChevronRight, IconFold } from '@tabler/icons';
+import { IconChevronDown, IconChevronRight } from '@tabler/icons';
 import {
   ColumnDef,
   flexRender,
@@ -10,72 +10,55 @@ import {
 } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
+import { mapQualityName } from '../../utils/mapQualityName';
+
 type AnalyticsData = {
-  groupName: string;
-  keywordName: string;
   quality: string;
-  leadText: string;
+  text: string;
+  date: string;
 };
 
 export const AnalyticsTable = ({ analyticsData }: { analyticsData: AnalyticsData[] }) => {
   const columns = useMemo<ColumnDef<AnalyticsData>[]>(
     () => [
       {
-        accessorKey: 'keywordName',
-        header: ({ column }) => (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span>Ключевик</span>
-          </div>
-        ),
-        cell: ({ row, getValue }) => {
-          return (
-            <div
-              style={{ paddingLeft: `${row.depth * 2}rem`, display: 'flex', alignItems: 'center' }}
-            >
-              {row.getCanExpand() && (
-                <ActionIcon
-                  onClick={row.getToggleExpandedHandler()}
-                  variant="subtle"
-                  size="sm"
-                  style={{ marginRight: '0.5rem' }}
-                >
-                  {row.getIsExpanded() ? (
-                    <IconChevronDown size={16} />
-                  ) : (
-                    <IconChevronRight size={16} />
-                  )}
-                </ActionIcon>
-              )}
-              {getValue() as string}
-            </div>
-          );
-        },
-      },
-      {
-        accessorKey: 'groupName',
-        header: 'Группа',
-      },
-      {
-        accessorKey: 'leadText',
-        header: 'Лид',
-        cell: ({ getValue }) => {
-          return <div dangerouslySetInnerHTML={{ __html: getValue()?.toString() || '' }} />;
-        },
-      },
-      {
         accessorKey: 'quality',
         header: 'Качество',
-        cell: ({ getValue }) => {
-          const value = getValue();
-          if (!value) return null;
-          const qualityName =
-            value === 'good' ? 'Хороший' : value === 'bad' ? 'Плохой' : 'Нейтральный';
-          return (
-            <Badge color={value === 'good' ? 'green' : value === 'bad' ? 'red' : 'yellow'}>
-              {qualityName}
-            </Badge>
-          );
+        cell: ({ row, getValue }) => {
+          const value = getValue() as string;
+          const valueText = mapQualityName(value);
+          const badgeColor = value === 'good' ? 'green' : value === 'bad' ? 'red' : 'yellow';
+          const element = <Badge color={badgeColor}>{valueText}</Badge>;
+          if (row.getIsGrouped()) {
+            return (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ActionIcon size="sm" variant="subtle" onClick={row.getToggleExpandedHandler()}>
+                  {row.getIsExpanded() ? (
+                    <IconChevronDown size={18} />
+                  ) : (
+                    <IconChevronRight size={18} />
+                  )}
+                </ActionIcon>
+                {element}
+                <span>({row.subRows.length})</span>
+              </div>
+            );
+          }
+          return element;
         },
+      },
+      {
+        accessorKey: 'date',
+        header: 'Дата',
+        cell: ({ row }) => {
+          if (!row.getIsGrouped()) {
+            return <div>{new Date(row.original.date).toLocaleDateString('ru-RU')}</div>;
+          }
+        },
+      },
+      {
+        accessorKey: 'text',
+        header: 'Текст',
       },
     ],
     []
@@ -98,8 +81,8 @@ export const AnalyticsTable = ({ analyticsData }: { analyticsData: AnalyticsData
         pageIndex: 0,
         pageSize: 100,
       },
-      grouping: ['keywordName'],
-      expanded: true,
+      grouping: ['quality'],
+      expanded: {},
     },
     paginateExpandedRows: true,
   });
