@@ -10,7 +10,7 @@ import {
 } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-import { mapQualityName } from '../../utils/mapQualityName';
+import { mapQualityName } from '../../../utils/mapQualityName';
 
 type AnalyticsData = {
   quality: string;
@@ -18,7 +18,7 @@ type AnalyticsData = {
   date: string;
 };
 
-export const AnalyticsTable = ({ analyticsData }: { analyticsData: AnalyticsData[] }) => {
+export const AnalyticsByQualityTable = ({ analyticsData }: { analyticsData: AnalyticsData[] }) => {
   const columns = useMemo<ColumnDef<AnalyticsData>[]>(
     () => [
       {
