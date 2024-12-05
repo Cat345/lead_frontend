@@ -32,7 +32,7 @@ export const AnalyticsByQuality = () => {
 
   return (
     <Box>
-      <SimpleGrid cols={4} sx={{ columnGap: '1rem' }}>
+      <SimpleGrid mb="md" cols={4} sx={{ columnGap: '1rem' }}>
         {totalCount && <StatsItem icon={null} title="Всего" value={totalCount} />}
         {qualityIndicatorsData?.map((indicator) => (
           <StatsItem

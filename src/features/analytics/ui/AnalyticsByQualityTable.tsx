@@ -88,7 +88,7 @@ export const AnalyticsByQualityTable = ({ analyticsData }: { analyticsData: Anal
   });
 
   return (
-    <Table striped highlightOnHover>
+    <Table highlightOnHover bg="white">
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>

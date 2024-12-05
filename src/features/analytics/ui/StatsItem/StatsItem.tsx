@@ -6,29 +6,30 @@ interface StatsItemProps {
   value: number;
 }
 export const StatsItem = ({ icon, title, value }: StatsItemProps) => {
+  let color = 'gray';
+  switch (title) {
+    case 'Хорошее':
+      color = 'green';
+      break;
+    case 'Нейтральное':
+      color = 'yellow';
+      break;
+    case 'Плохое':
+      color = 'red';
+      break;
+  }
   return (
-    <Paper withBorder p="md" radius="md" miw={100}>
+    <Paper p="md" radius="md" miw={100} bg={color + '.1'}>
       <Group sx={{ justifyContent: 'space-between' }}>
-        <Text size="xs" c="dimmed">
-          {title}
-        </Text>
+        <Text size="xs">{title}</Text>
         {icon}
       </Group>
 
       <Group align="flex-end" sx={{ justifyContent: 'space-between' }}>
-        <Text weight={500}>{value}</Text>
-      </Group>
-      {/* <Group align="flex-end" gap="xs" mt={25}>
-        <Text className={classes.value}>{stat.value}</Text>
-        <Text c={stat.diff > 0 ? 'teal' : 'red'} fz="sm" fw={500} className={classes.diff}>
-          <span>{stat.diff}%</span>
-          <DiffIcon size={16} stroke={1.5} />
+        <Text c={color + '.9'} weight={500} fz="lg">
+          {value}
         </Text>
-      </Group> */}
-
-      {/* <Text fz="xs" c="dimmed" mt={7}>
-        Compared to previous month
-      </Text> */}
+      </Group>
     </Paper>
   );
 };
