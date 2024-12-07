@@ -26,22 +26,15 @@ export const ForRegisteredInBot: React.FC<{ children: ReactNode }> = ({ children
           <div
             style={{
               position: 'absolute',
-              top: 0,
+              top: '150px',
               left: 0,
               right: 0,
-              bottom: 0,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
             }}
           >
-            <Paper
-              style={{ zIndex: 500, borderRadius: '10px' }}
-              p="lg"
-              bg="white"
-              shadow="lg"
-              withBorder
-            >
+            <Paper style={{ zIndex: 500, borderRadius: '10px' }} p="lg" shadow="lg" withBorder>
               <Stack align="center">
                 <Text>Чтобы просмотреть страницу, необходимо зарегистрироваться в боте</Text>
                 {/* <Button onClick={(tgUser: TelegramUser) => handleAddTelegramAccountToDb(tgUser, user)}>

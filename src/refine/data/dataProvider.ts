@@ -16,6 +16,8 @@ export const dataProvider = (
   httpClient: AxiosInstance
 ): Omit<Required<DataProvider>, 'createMany' | 'updateMany' | 'deleteMany'> => ({
   getList: async ({ resource, filters, sorters, meta, pagination }) => {
+    if (resource === 'Аналитика') return [];
+
     const url = `${apiUrl}${resource}`;
 
     const { current = 1, pageSize = 100, mode = 'server' } = pagination ?? {};

@@ -6,7 +6,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/header';
 import { AccountCreate, AccountEdit, AccountList, AccountShow } from '../pages/accounts';
-import AnalyticsList from '../pages/analytics/list';
+import AnalyticsList from '../pages/analytics/AnalyticsPage';
 import { ArchivedGroupList, ArchivedGroupShow } from '../pages/archivedGroups';
 import { BotsListPage, EditBotPage, ShowBotPage } from '../pages/bots';
 import { ForgotPasswordPage } from '../pages/forgotPassword';
@@ -26,6 +26,7 @@ import { UpdatePasswordPage } from '../pages/updatePassword';
 import { UserCreate, UserEdit, UserList, UserShow } from '../pages/users';
 import { Logo } from '../shared/ui/Logo';
 import { ForRegisteredInBot } from '../widgets';
+import { ForSubscribedUser } from '../widgets/ForSubscribedUser';
 import { Sider } from '../widgets/Sider';
 
 export const Router = () => {
@@ -49,9 +50,11 @@ export const Router = () => {
           <Route
             index
             element={
-              <ForRegisteredInBot>
-                <UserList />
-              </ForRegisteredInBot>
+              <ForSubscribedUser>
+                <ForRegisteredInBot>
+                  <UserList />
+                </ForRegisteredInBot>
+              </ForSubscribedUser>
             }
           />
           <Route path="create" element={<UserCreate />} />
@@ -60,7 +63,14 @@ export const Router = () => {
         </Route>
 
         <Route path="/bots">
-          <Route index element={<BotsListPage />} />
+          <Route
+            index
+            element={
+              <ForSubscribedUser>
+                <BotsListPage />
+              </ForSubscribedUser>
+            }
+          />
           <Route path="edit/:id" element={<EditBotPage />} />
           <Route path="show/:id" element={<ShowBotPage />} />
         </Route>
@@ -69,9 +79,11 @@ export const Router = () => {
           <Route
             index
             element={
-              <ForRegisteredInBot>
-                <AccountList />
-              </ForRegisteredInBot>
+              <ForSubscribedUser>
+                <ForRegisteredInBot>
+                  <AccountList />
+                </ForRegisteredInBot>
+              </ForSubscribedUser>
             }
           />
           <Route path="create" element={<AccountCreate />} />
@@ -82,9 +94,11 @@ export const Router = () => {
           <Route
             index
             element={
-              <ForRegisteredInBot>
-                <GroupList />
-              </ForRegisteredInBot>
+              <ForSubscribedUser>
+                <ForRegisteredInBot>
+                  <GroupList />
+                </ForRegisteredInBot>
+              </ForSubscribedUser>
             }
           />
           <Route path="create" element={<GroupCreate />} />
@@ -95,9 +109,11 @@ export const Router = () => {
           <Route
             index
             element={
-              <ForRegisteredInBot>
-                <ArchivedGroupList />
-              </ForRegisteredInBot>
+              <ForSubscribedUser>
+                <ForRegisteredInBot>
+                  <ArchivedGroupList />
+                </ForRegisteredInBot>
+              </ForSubscribedUser>
             }
           />
           <Route path="show/:id" element={<ArchivedGroupShow />} />
@@ -106,9 +122,11 @@ export const Router = () => {
           <Route
             index
             element={
-              <ForRegisteredInBot>
-                <KeywordList />
-              </ForRegisteredInBot>
+              <ForSubscribedUser>
+                <ForRegisteredInBot>
+                  <KeywordList />
+                </ForRegisteredInBot>
+              </ForSubscribedUser>
             }
           />
           <Route path="create" element={<KeywordCreate />} />
@@ -119,9 +137,11 @@ export const Router = () => {
           <Route
             index
             element={
-              <ForRegisteredInBot>
-                <StopwordList />
-              </ForRegisteredInBot>
+              <ForSubscribedUser>
+                <ForRegisteredInBot>
+                  <StopwordList />
+                </ForRegisteredInBot>
+              </ForSubscribedUser>
             }
           />
           <Route path="create" element={<StopwordCreate />} />
@@ -132,9 +152,11 @@ export const Router = () => {
           <Route
             index
             element={
-              <ForRegisteredInBot>
-                <LeadList />
-              </ForRegisteredInBot>
+              <ForSubscribedUser>
+                <ForRegisteredInBot>
+                  <LeadList />
+                </ForRegisteredInBot>
+              </ForSubscribedUser>
             }
           />
           <Route path="create" element={<LeadsCreate />} />
@@ -144,7 +166,16 @@ export const Router = () => {
         <Route path="/subscribe" element={<SubscribePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/analytics" element={<AnalyticsList />} />
+        <Route
+          path="/analytics"
+          element={
+            <ForSubscribedUser>
+              <ForRegisteredInBot>
+                <AnalyticsList />
+              </ForRegisteredInBot>
+            </ForSubscribedUser>
+          }
+        />
         <Route path="*" element={<ErrorComponent />} />
       </Route>
       <Route

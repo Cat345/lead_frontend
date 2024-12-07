@@ -6,16 +6,16 @@ import { useLocalStorage } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
 import SuperJSON from 'superjson';
 
-import { AnalyticsByQualityTable } from '../../features/analytics/ui/AnalyticsByQualityTable';
+import { AnalyticsByKeywordTable } from '../../features/analytics/ui/AnalyticsByKeywordTable';
 import { StatsItem } from '../../features/analytics/ui/StatsItem/StatsItem';
 import { api } from '../../shared/api';
 import { Loading } from '../../shared/ui/Loading';
 import { mapQualityName } from '../../utils/mapQualityName';
 
-export const AnalyticsByQuality = () => {
+export const AnalyticsByKeyword = () => {
   const defaultValue: DateRangePickerValue = [new Date(), new Date()];
   const [value, setValue] = useLocalStorage({
-    key: 'analytics-by-quality-date-range',
+    key: 'analytics-by-keyword-date-range',
     defaultValue,
     serialize: SuperJSON.stringify,
     deserialize: (str) => {
@@ -23,10 +23,10 @@ export const AnalyticsByQuality = () => {
     },
   });
   const analyticsQuery = useQuery({
-    queryKey: ['analytics', new Date(value[0]).getTime(), new Date(value[1]).getTime()],
+    queryKey: ['keyword', new Date(value[0]).getTime(), new Date(value[1]).getTime()],
     enabled: !!value[0] && !!value[1],
     queryFn: async () => {
-      const response = await api.get('/analytics/by-quality', {
+      const response = await api.get('/analytics/by-keyword', {
         params: {
           startDate: value[0].toISOString(),
           endDate: value[1].toISOString(),
@@ -76,7 +76,7 @@ export const AnalyticsByQuality = () => {
           />
         ))}
       </SimpleGrid>
-      <AnalyticsByQualityTable analyticsData={analyticsData} />
+      <AnalyticsByKeywordTable analyticsData={analyticsData} />
     </Stack>
   );
 };

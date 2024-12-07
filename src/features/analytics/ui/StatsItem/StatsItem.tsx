@@ -8,20 +8,22 @@ interface StatsItemProps {
 export const StatsItem = ({ icon, title, value }: StatsItemProps) => {
   let color = 'gray';
   switch (title) {
-    case 'Хорошее':
+    case 'Хороших':
       color = 'green';
       break;
-    case 'Нейтральное':
+    case 'Нейтральных':
       color = 'yellow';
       break;
-    case 'Плохое':
+    case 'Плохих':
       color = 'red';
       break;
   }
   return (
     <Paper p="md" radius="md" miw={100} bg={color + '.1'}>
       <Group sx={{ justifyContent: 'space-between' }}>
-        <Text size="xs">{title}</Text>
+        <Text size="xs" color="black">
+          {title}
+        </Text>
         {icon}
       </Group>
 
