@@ -59,6 +59,9 @@ export const AnalyticsByQualityTable = ({ analyticsData }: { analyticsData: Anal
       {
         accessorKey: 'text',
         header: 'Текст',
+        cell: ({ row }) => {
+          return <div dangerouslySetInnerHTML={{ __html: row.original.text }} />;
+        },
       },
     ],
     []
