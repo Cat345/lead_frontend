@@ -1,8 +1,9 @@
 import { Anchor, Button, Checkbox, Group, Pagination, Table, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IResourceComponentsProps, useDeleteMany, useTranslate, useUpdate } from '@refinedev/core';
+import { IResourceComponentsProps, useDeleteMany, useTranslate } from '@refinedev/core';
 import { DeleteButton, ExportButton, List, useSelect } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
+import { IconHandFinger } from '@tabler/icons';
 import { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 
@@ -97,7 +98,7 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
         cell: function render({ getValue, row }) {
           const value = getValue() as string;
           if (!row.original.link) {
-            return <Text>{value}</Text>;
+            return <Text dangerouslySetInnerHTML={{ __html: value }} />;
           }
           return (
             <Text>
@@ -105,9 +106,8 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
                 href={row.original.link}
                 target="_blank"
                 sx={{ textDecoration: 'underline', color: 'inherit' }}
-              >
-                {value}
-              </Anchor>
+                dangerouslySetInnerHTML={{ __html: value }}
+              />
             </Text>
           );
         },
@@ -165,13 +165,30 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
         meta: {
           filterOperator: 'eq',
         },
-        cell: function render({ getValue, row }) {
-          const value = getValue() as string;
+        cell: function render({ row }) {
+          const { quality, isQualityChangedAutomatically } = row.original;
           return (
-            <TreePositionedToggler
-              value={value}
-              onChange={(value) => handleChangeQuality(row.original.id, value)}
-            />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <span
+                title="Изменён вручную"
+                style={{
+                  height: '1.2rem',
+                  width: '1.2rem',
+                  display: isQualityChangedAutomatically ? 'none' : 'flex',
+                  border: '1px solid gray',
+                  borderRadius: '50%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '1px',
+                }}
+              >
+                <IconHandFinger color="gray" />
+              </span>
+              <TreePositionedToggler
+                value={quality}
+                onChange={(value) => handleChangeQuality(row.original.id, value)}
+              />
+            </div>
           );
         },
       },
