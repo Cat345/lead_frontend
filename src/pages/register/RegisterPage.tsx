@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   CardProps,
+  Checkbox,
   Divider,
   Group,
   PasswordInput,
@@ -28,7 +29,7 @@ import {
   useTranslate,
 } from '@refinedev/core';
 import { FormContext, FormPropsType, ThemedTitleV2 } from '@refinedev/mantine';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Tour } from '../../components/Tour/Tour';
 import { useUtmStore } from '../../features/utm/useUtmStore';
@@ -46,6 +47,9 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   providers,
   title,
 }) => {
+  const [isConfirmPolicy, setIsConfirmPolicy] = useState(true);
+  const [isMailingConfirmed, setIsMailingConfirmed] = useState(false);
+
   const utm = useUtmStore((store) => store.utm);
   const referral = useUtmStore((store) => store.referral);
 
@@ -131,6 +135,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               ...values,
               utm,
               referral,
+              isMailingConfirmed,
             };
             if (onSubmitProp) {
               return onSubmitProp(registerValues);
@@ -153,16 +158,42 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             placeholder="●●●●●●●●"
             {...getInputProps('password')}
           />
-          <Button
-            id="button-register"
+          <Checkbox
+            required
+            size="xs"
             mt="md"
-            fullWidth
-            size="md"
-            type="submit"
-            loading={isLoading}
-          >
-            {translate('pages.register.buttons.submit', 'Sign up')}
-          </Button>
+            error={!isConfirmPolicy ? 'Обязательное поле' : null}
+            label={
+              <Text size="xs">
+                Согласен с политикой конфиденциальности и офертой
+                {/* <Anchor href="https://mantine.dev" target="_blank" inherit>
+                  terms and conditions
+                </Anchor> */}
+              </Text>
+            }
+            checked={isConfirmPolicy}
+            onChange={(e) => setIsConfirmPolicy(e.target.checked)}
+          />
+          <Checkbox
+            size="xs"
+            mt="xs"
+            label="Подписаться на новости"
+            checked={isMailingConfirmed}
+            onChange={(e) => setIsMailingConfirmed(e.target.checked)}
+          />
+          <Box>
+            <Button
+              disabled={!isConfirmPolicy}
+              id="button-register"
+              mt="md"
+              fullWidth
+              size="md"
+              type="submit"
+              loading={isLoading}
+            >
+              {translate('pages.register.buttons.submit', 'Sign up')}
+            </Button>
+          </Box>
 
           {loginLink ?? (
             <Group mt="md" position="center">

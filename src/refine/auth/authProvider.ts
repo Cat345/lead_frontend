@@ -25,7 +25,7 @@ export type AuthBindings = {
 export const TOKEN_KEY = 'auth';
 const BASE_URL = getConfig().BACKEND_URL;
 export const authProvider: AuthBindings = {
-  register: async ({ email, password, utm, referral }) => {
+  register: async ({ email, password, utm, referral, isMailingConfirmed }) => {
     if (!(email && password)) {
       return {
         success: false,
@@ -43,6 +43,7 @@ export const authProvider: AuthBindings = {
       password,
       utm,
       referral,
+      isMailingConfirmed,
     });
 
     localStorage.setItem(TOKEN_KEY, tokenKey);

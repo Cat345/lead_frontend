@@ -48,8 +48,10 @@ function App() {
         ...RefineThemes.Red,
         colorScheme: colorScheme,
         colors: {
+          //@ts-ignore
           brand: generateColors('#9B2142'),
         },
+        cursorType: 'pointer',
       }}
     >
       <Refine
