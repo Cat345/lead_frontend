@@ -55,7 +55,9 @@ export const PricingPage = () => {
               <CommonPricingCard
                 isFirstChild={index === 0}
                 isLastChild={otherTariffs.length === index + 1}
-                isActive={currentTariffId === tariff.id}
+                isActive={
+                  currentTariffId === tariff.id || (tariff.id !== 4 && currentTariffId > tariff.id)
+                }
                 tariff={tariff}
                 theme={theme}
                 key={tariff.id}
