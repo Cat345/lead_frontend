@@ -1,6 +1,6 @@
 import { Box, Button, Stack, Text, Title } from '@mantine/core';
 
-import { usePurchaseModal } from '../hooks/usePurchaseModal';
+import { usePurchase } from '../hooks/usePurchase';
 import { PricingCardProps } from './PricingCardProps';
 import { TariffBenefits } from './TariffBenefits';
 
@@ -11,7 +11,8 @@ export const CommonPricingCard = ({
   isFirstChild,
   isLastChild,
 }: PricingCardProps) => {
-  const handleOpenModal = usePurchaseModal();
+  const { purchase, isPurchasing } = usePurchase();
+
   // const borderRadius = isFirstCard ? '0.7rem 0 0 0.7rem' : '0 0.7rem 0.7rem 0';
 
   let borderRadius = '0';
@@ -47,7 +48,6 @@ export const CommonPricingCard = ({
     >
       <Stack w={'100%'} align={'center'} spacing={20}>
         <Text
-          order={5}
           sx={{
             fontWeight: 700,
             color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : 'hsl(233, 13%, 49%)',
@@ -70,18 +70,21 @@ export const CommonPricingCard = ({
         </Title>
         <TariffBenefits benefits={tariff.benefits} theme={theme} />
         <Text sx={{ textAlign: 'center' }}>{tariff.description}</Text>
-        <Button
-          onClick={() => {
-            if (isActive) {
-              return;
-            }
-            handleOpenModal(tariff);
-          }}
-          fullWidth
-          variant="light"
-        >
-          {isActive ? 'Активен' : 'Подписаться'}
-        </Button>
+        {tariff.id === 4 && !isActive ? null : (
+          <Button
+            onClick={() => {
+              if (isActive) {
+                return;
+              }
+              purchase(tariff.id);
+            }}
+            fullWidth
+            variant="light"
+            loading={isPurchasing}
+          >
+            {isActive ? 'Активен' : 'Подписаться'}
+          </Button>
+        )}
       </Stack>
     </Box>
   );
