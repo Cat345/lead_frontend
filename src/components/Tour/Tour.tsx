@@ -1,12 +1,15 @@
+import { useGetIdentity } from '@refinedev/core';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import useLs from 'use-local-storage';
 import { Walktour } from 'walktour';
 
+import { User } from '../../models/User';
 import { JoyrideTooltip } from '../Tour/JoyrideTooltip';
 import tour from './tour.json';
 
 export const Tour = () => {
+  const { data: user } = useGetIdentity<User>();
   const [isOpen, setIsOpen] = useState(false);
   const [steps, setSteps] = useState([]);
   const { pathname } = useLocation();
@@ -46,6 +49,10 @@ export const Tour = () => {
       [pathname]: false,
     });
   };
+
+  if (!user?.telegramAccount || user.remainingSubscribeDays <= 0) {
+    return null;
+  }
 
   return (
     <Walktour
