@@ -12,6 +12,14 @@ import {
 
 export const resourcesForUsers: ResourceProps[] = [
   {
+    name: 'Профиль',
+    list: '/profile',
+    meta: {
+      label: 'Профиль',
+      icon: <IconUser />,
+    },
+  },
+  {
     icon: <IconUserCircle />,
     name: 'accounts',
     list: '/accounts',
@@ -83,14 +91,7 @@ export const resourcesForUsers: ResourceProps[] = [
   //     icon: <IconChartBar />,
   //   },
   // },
-  {
-    name: 'Профиль',
-    list: '/profile',
-    meta: {
-      label: 'Профиль',
-      icon: <IconUser />,
-    },
-  },
+
   {
     name: 'Подписка',
     list: '/pricing',
