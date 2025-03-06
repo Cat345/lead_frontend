@@ -13,7 +13,7 @@ export const JoyrideTooltip = ({
 }: WalktourLogic & { disableTour: () => void; closeTour: () => {} }) => {
   return (
     <Box p="xl" bg="white" color="black" sx={{ borderRadius: '7px', zIndex: 1000 }}>
-      <Text color="#333">{stepContent.description}</Text>
+      <Text color="#333" dangerouslySetInnerHTML={{ __html: stepContent.description }} />
       <Group mt="sm">
         {stepIndex > 0 && (
           <Button onClick={() => prev()} aria-label="Назад">

@@ -2,7 +2,7 @@
   "/groups": [
     {
       "selector": ".refine-create-button",
-      "description": "Можно создать новую группу"
+      "description": "Можно создать <b>новую</b> группу"
     },
     {
       "selector": "#import-button",
