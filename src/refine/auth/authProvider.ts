@@ -25,7 +25,7 @@ export type AuthBindings = {
 export const TOKEN_KEY = 'auth';
 const BASE_URL = getConfig().BACKEND_URL;
 export const authProvider: AuthBindings = {
-  register: async ({ email, password, utm, referral, isMailingConfirmed }) => {
+  register: async ({ email, password, utm, referral, isMailingConfirmed, check }) => {
     if (!(email && password)) {
       return {
         success: false,
@@ -39,6 +39,7 @@ export const authProvider: AuthBindings = {
     const {
       data: { access_token: tokenKey },
     } = await api.post(BASE_URL + 'auth/register', {
+      check,
       email,
       password,
       utm,

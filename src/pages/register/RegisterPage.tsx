@@ -67,6 +67,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
     initialValues: {
       email: '',
       password: '',
+      check: '',
     },
     validate: {
       email: (value: any) =>
@@ -157,6 +158,12 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             label={translate('pages.register.fields.password', 'Password')}
             placeholder="●●●●●●●●"
             {...getInputProps('password')}
+          />
+          <TextInput
+            style={{ position: 'absolute', left: '-9500px' }}
+            label="check"
+            placeholder="check"
+            {...getInputProps('check')}
           />
           <Checkbox
             required
