@@ -1,4 +1,3 @@
-import { useLocalStorage } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import useLs from 'use-local-storage';
@@ -27,8 +26,12 @@ export const Tour = () => {
     const steps = tour[pathname];
 
     if (steps && steps.length) {
-      setSteps(steps);
-      setIsOpen(ls[pathname]);
+      const timer = setTimeout(() => {
+        setSteps(steps);
+        setIsOpen(ls[pathname]);
+      }, 2000);
+
+      return () => clearTimeout(timer);
     }
   }, [pathname, ls[pathname]]);
 
