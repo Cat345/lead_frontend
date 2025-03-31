@@ -25,7 +25,7 @@ export type AuthBindings = {
 export const TOKEN_KEY = 'auth';
 const BASE_URL = getConfig().BACKEND_URL;
 export const authProvider: AuthBindings = {
-  register: async ({ email, password, utm, referral, isMailingConfirmed, check }) => {
+  register: async ({ email, password, utm, referral, isMailingConfirmed, check, phone }) => {
     if (!(email && password)) {
       return {
         success: false,
@@ -36,22 +36,27 @@ export const authProvider: AuthBindings = {
       };
     }
 
-    const {
-      data: { access_token: tokenKey },
-    } = await api.post(BASE_URL + 'auth/register', {
-      check,
-      email,
-      password,
-      utm,
-      referral,
-      isMailingConfirmed,
-    });
+    try {
+      const {
+        data: { access_token: tokenKey },
+      } = await api.post(BASE_URL + 'auth/register', {
+        check,
+        email,
+        password,
+        utm,
+        referral,
+        isMailingConfirmed,
+        phone,
+      });
 
-    localStorage.setItem(TOKEN_KEY, tokenKey);
-    return {
-      success: true,
-      redirectTo: '/',
-    };
+      localStorage.setItem(TOKEN_KEY, tokenKey);
+      return {
+        success: true,
+        redirectTo: '/',
+      };
+    } catch (error) {
+      throw new Error('Что-то пошло не так, попробуйте снова');
+    }
   },
   login: async ({ email, password }) => {
     if (!(email && password)) {

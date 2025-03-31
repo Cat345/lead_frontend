@@ -10,6 +10,7 @@ import {
   Checkbox,
   Divider,
   Group,
+  Input,
   PasswordInput,
   Space,
   Stack,
@@ -30,11 +31,13 @@ import {
 } from '@refinedev/core';
 import { FormContext, FormPropsType, ThemedTitleV2 } from '@refinedev/mantine';
 import React, { useState } from 'react';
+import { IMaskInput } from 'react-imask';
 
 import { Tour } from '../../components/Tour/Tour';
 import { useUtmStore } from '../../features/utm/useUtmStore';
 // import { FormPropsType } from '../..';
 import { cardStyles, layoutStyles, pageTitleStyles, titleStyles } from './styles';
+import { isPhoneValid } from '../../shared/validations/isPhoneValid';
 
 type RegisterProps = RegisterPageProps<BoxProps, CardProps, FormPropsType>;
 
@@ -66,15 +69,17 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   const form = useForm({
     initialValues: {
       email: '',
+      phone: '',
       password: '',
       check: '',
     },
     validate: {
-      email: (value: any) =>
+      email: (value: string) =>
         /^\S+@\S+$/.test(value)
           ? null
           : translate('pages.register.errors.validEmail', 'Неверный email'),
-      password: (value: any) => value === '',
+      password: (value: string) => value === '',
+      phone: (value: string) => isPhoneValid(value),
     },
     ...useFormProps,
   });
@@ -150,10 +155,22 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             label={translate('pages.register.fields.email', 'Email')}
             placeholder={translate('pages.register.fields.email', 'Email')}
             {...getInputProps('email')}
+            required
           />
+          <Input.Wrapper label="Телефон" mt="sm" required {...getInputProps('phone')}>
+            <Input
+              {...getInputProps('phone')}
+              id="input-phone"
+              name="phone"
+              component={IMaskInput}
+              mask="+0 (000) 000-00-00"
+              placeholder="+7 (...) ...-..-.."
+            />
+          </Input.Wrapper>
           <PasswordInput
+            required
             id="input-password"
-            mt="md"
+            mt="sm"
             name="password"
             label={translate('pages.register.fields.password', 'Password')}
             placeholder="●●●●●●●●"
@@ -168,7 +185,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
           <Checkbox
             required
             size="xs"
-            mt="md"
+            mt="sm"
             error={!isConfirmPolicy ? 'Обязательное поле' : null}
             label={
               <Text size="xs">

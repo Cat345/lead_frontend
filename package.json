@@ -37,7 +37,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-i18next": "^13.5.0",
-    "react-imask": "^7.5.0",
+    "react-imask": "^7.6.1",
     "react-input-mask": "^2.0.4",
     "react-joyride": "^2.7.2",
     "react-jwt": "^1.2.0",
