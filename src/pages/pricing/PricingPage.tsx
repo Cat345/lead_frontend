@@ -56,7 +56,9 @@ export const PricingPage = () => {
                 isFirstChild={index === 0}
                 isLastChild={otherTariffs.length === index + 1}
                 isActive={
-                  currentTariffId === tariff.id || (tariff.id !== 4 && currentTariffId > tariff.id)
+                  user?.remainingSubscribeDays >= 0 &&
+                  (currentTariffId === tariff.id ||
+                    (tariff.id !== 4 && currentTariffId > tariff.id))
                 }
                 tariff={tariff}
                 theme={theme}
