@@ -1,10 +1,10 @@
 import { Title } from '@mantine/core';
-import { IResourceComponentsProps, useShow, useTranslate } from '@refinedev/core';
+import { useShow, useTranslate } from '@refinedev/core';
 import { BooleanField, DeleteButton, EditButton, Show, TextField } from '@refinedev/mantine';
 
 import { Tour } from '../../components/Tour/Tour';
 
-export const KeywordShow: React.FC<IResourceComponentsProps> = () => {
+export default function KeywordShow() {
   const translate = useTranslate();
   const { queryResult } = useShow();
   const { data, isLoading } = queryResult;
@@ -24,4 +24,4 @@ export const KeywordShow: React.FC<IResourceComponentsProps> = () => {
       <BooleanField id="checkbox-is-active" value={record?.isActive} />
     </Show>
   );
-};
+}

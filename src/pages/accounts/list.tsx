@@ -11,7 +11,7 @@ import { statusesRowVariants } from '../../constants/statuses';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 import { RestartButton } from './RestartButton';
 
-export const AccountList: React.FC = () => {
+export default function AccountList() {
   const translate = useTranslate();
   const isMobile = useMediaQuery('(max-width: 600px)');
 
@@ -153,4 +153,4 @@ export const AccountList: React.FC = () => {
       </div>
     </CanAccess>
   );
-};
+}

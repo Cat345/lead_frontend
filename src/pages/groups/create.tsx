@@ -1,12 +1,12 @@
 import { TextInput } from '@mantine/core';
-import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { useTranslate } from '@refinedev/core';
 import { Create, useForm } from '@refinedev/mantine';
 
 import { Tour } from '../../components/Tour/Tour';
 import { isEmpty } from '../../shared/validations/isEmpty';
 import { isGroupLinkValid } from '../../shared/validations/isGroupLinkValid';
 
-export const GroupCreate: React.FC<IResourceComponentsProps> = () => {
+export default function GroupCreate() {
   const translate = useTranslate();
   const {
     getInputProps,
@@ -42,4 +42,4 @@ export const GroupCreate: React.FC<IResourceComponentsProps> = () => {
       />
     </Create>
   );
-};
+}

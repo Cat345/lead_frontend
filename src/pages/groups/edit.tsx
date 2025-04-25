@@ -1,12 +1,12 @@
 import { Select, TextInput } from '@mantine/core';
-import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { useTranslate } from '@refinedev/core';
 import { Edit, useForm } from '@refinedev/mantine';
 
 import { Tour } from '../../components/Tour/Tour';
 import { statusesRowVariants } from '../../constants/statuses';
 import { isEmpty } from '../../shared/validations/isEmpty';
 
-export const GroupEdit: React.FC<IResourceComponentsProps> = () => {
+export default function GroupEdit() {
   const translate = useTranslate();
   const { getInputProps, saveButtonProps } = useForm({
     initialValues: { name: '', status: statusesRowVariants[0].value, username: '' },
@@ -41,4 +41,4 @@ export const GroupEdit: React.FC<IResourceComponentsProps> = () => {
       />
     </Edit>
   );
-};
+}

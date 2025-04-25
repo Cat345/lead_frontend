@@ -1,10 +1,10 @@
 import { Title } from '@mantine/core';
-import { IResourceComponentsProps, useShow, useTranslate } from '@refinedev/core';
+import { useShow, useTranslate } from '@refinedev/core';
 import { DeleteButton, EditButton, Show, TextField } from '@refinedev/mantine';
 
 import { Tour } from '../../components/Tour/Tour';
 
-export const LeadShow: React.FC<IResourceComponentsProps> = () => {
+export default function LeadShow() {
   const translate = useTranslate();
   const { queryResult } = useShow();
   const { data, isLoading } = queryResult;
@@ -24,4 +24,4 @@ export const LeadShow: React.FC<IResourceComponentsProps> = () => {
       <TextField id="lead-keywords" value={record?.keywords} />
     </Show>
   );
-};
+}

@@ -25,7 +25,7 @@ import { Loading } from '../../shared/ui/Loading';
 import { usePurchase } from './hooks/usePurchase';
 import { CommonPricingCard } from './PricingCard/CommonPricingCard';
 
-export const PricingPage = () => {
+export default function PricingPage() {
   const isMobile = useMediaQuery('(max-width: 600px)');
   const [isPurchaseModalOpened, setIsPurchaseModalOpened] = useState(false);
   const [selectedTariff, setSelectedTariff] = useState<Tariff | null>(null);
@@ -128,4 +128,4 @@ export const PricingPage = () => {
       </Modal>
     </Box>
   );
-};
+}

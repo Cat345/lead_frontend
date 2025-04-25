@@ -33,14 +33,14 @@ type ResetPassworProps = ForgotPasswordPageProps<BoxProps, CardProps>;
  * The forgotPassword type is a page that allows users to reset their passwords. You can use this page to reset your password.
  * @see {@link https://refine.dev/docs/api-reference/mantine/components/mantine-auth-page/#forgot-password} for more details.
  */
-export const ForgotPasswordPage: React.FC<ResetPassworProps> = ({
+export default function ForgotPasswordPage({
   loginLink,
   contentProps,
   wrapperProps,
   renderContent,
   formProps,
   title,
-}) => {
+}: ResetPassworProps) {
   const notifications = useNotification();
   const theme = useMantineTheme();
   const { useForm, FormProvider } = FormContext;
@@ -143,4 +143,4 @@ export const ForgotPasswordPage: React.FC<ResetPassworProps> = ({
       )}
     </Box>
   );
-};
+}

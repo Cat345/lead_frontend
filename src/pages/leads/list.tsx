@@ -13,7 +13,7 @@ import { TreePositionedToggler } from '../../shared/ui/TreePositionedToggler';
 import { handleDownload } from '../../utils/downloadResource';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 
-export const LeadList: React.FC<IResourceComponentsProps> = () => {
+export default function LeadList() {
   const translate = useTranslate();
 
   const { mutate } = useDeleteMany();
@@ -259,4 +259,4 @@ export const LeadList: React.FC<IResourceComponentsProps> = () => {
       </List>
     </div>
   );
-};
+}

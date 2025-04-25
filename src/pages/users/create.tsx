@@ -1,10 +1,10 @@
 import { TextInput } from '@mantine/core';
-import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { useTranslate } from '@refinedev/core';
 import { Create, useForm } from '@refinedev/mantine';
 
 import { isEmailValid } from '../../shared/validations/isEmailValid';
 
-export const UserCreate: React.FC<IResourceComponentsProps> = () => {
+export default function UserCreate() {
   const translate = useTranslate();
   const {
     getInputProps,
@@ -47,4 +47,4 @@ export const UserCreate: React.FC<IResourceComponentsProps> = () => {
       />
     </Create>
   );
-};
+}

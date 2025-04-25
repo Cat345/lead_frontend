@@ -1,12 +1,12 @@
 import { Checkbox, TextInput } from '@mantine/core';
-import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { useTranslate } from '@refinedev/core';
 import { Create, useForm } from '@refinedev/mantine';
 
 import { Tour } from '../../components/Tour/Tour';
 import { isEmpty } from '../../shared/validations/isEmpty';
 
 const DEFAULT_IS_ACTIVE = true;
-export const KeywordCreate: React.FC<IResourceComponentsProps> = () => {
+export default function KeywordCreate() {
   const translate = useTranslate();
 
   const {
@@ -40,4 +40,4 @@ export const KeywordCreate: React.FC<IResourceComponentsProps> = () => {
       />
     </Create>
   );
-};
+}

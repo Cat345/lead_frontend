@@ -1,32 +1,51 @@
 import { Authenticated } from '@refinedev/core';
 import { ErrorComponent, ThemedLayoutV2 } from '@refinedev/mantine';
 import { CatchAllNavigate, NavigateToResource } from '@refinedev/react-router-v6';
+import { lazy } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
 import { Footer } from '../components/Footer/Footer';
 import { Header } from '../components/header';
-import { AccountCreate, AccountEdit, AccountList, AccountShow } from '../pages/accounts';
-import AnalyticsList from '../pages/analytics/AnalyticsPage';
-import { ArchivedGroupList, ArchivedGroupShow } from '../pages/archivedGroups';
-import { BotsListPage, EditBotPage, ShowBotPage } from '../pages/bots';
-import { ForgotPasswordPage } from '../pages/forgotPassword';
-import { GroupCreate, GroupEdit, GroupList, GroupShow } from '../pages/groups';
-import { KeywordCreate, KeywordEdit, KeywordList, KeywordShow } from '../pages/keywords';
-import { LeadsCreate } from '../pages/leads/create';
-import { LeadEdit } from '../pages/leads/edit';
-import { LeadList } from '../pages/leads/list';
-import { LeadShow } from '../pages/leads/show';
 import { LoginPage } from '../pages/login/LoginPage';
-import { PricingPage } from '../pages/pricing/PricingPage';
-import { ProfilePage } from '../pages/profile/ProfilePage';
-import { RegisterPage } from '../pages/register/RegisterPage';
-import { StopwordCreate, StopwordEdit, StopwordList, StopwordShow } from '../pages/stopwords';
-import { UpdatePasswordPage } from '../pages/updatePassword';
-import { UserCreate, UserEdit, UserList, UserShow } from '../pages/users';
 import { Logo } from '../shared/ui/Logo';
 import { ForRegisteredInBot } from '../widgets';
 import { ForSubscribedUser } from '../widgets/ForSubscribedUser';
 import { Sider } from '../widgets/Sider';
+
+const UpdatePasswordPage = lazy(() => import('../pages/updatePassword'));
+const KeywordCreate = lazy(() => import('../pages/keywords/create'));
+const KeywordEdit = lazy(() => import('../pages/keywords/edit'));
+const KeywordList = lazy(() => import('../pages/keywords/list'));
+const KeywordShow = lazy(() => import('../pages/keywords/show'));
+const GroupCreate = lazy(() => import('../pages/groups/create'));
+const GroupEdit = lazy(() => import('../pages/groups/edit'));
+const GroupList = lazy(() => import('../pages/groups/list'));
+const GroupShow = lazy(() => import('../pages/groups/show'));
+const ArchivedGroupList = lazy(() => import('../pages/archivedGroups/list'));
+const ArchivedGroupShow = lazy(() => import('../pages/archivedGroups/show'));
+const BotsListPage = lazy(() => import('../pages/bots/list'));
+const ShowBotPage = lazy(() => import('../pages/bots/show'));
+const AnalyticsList = lazy(() => import('../pages/analytics/AnalyticsPage'));
+const UserCreate = lazy(() => import('../pages/users/create'));
+const UserEdit = lazy(() => import('../pages/users/edit'));
+const UserList = lazy(() => import('../pages/users/list'));
+const UserShow = lazy(() => import('../pages/users/show'));
+const AccountCreate = lazy(() => import('../pages/accounts/create'));
+const AccountEdit = lazy(() => import('../pages/accounts/edit'));
+const AccountList = lazy(() => import('../pages/accounts/list'));
+const AccountShow = lazy(() => import('../pages/accounts/show'));
+const LeadEdit = lazy(() => import('../pages/leads/edit'));
+const LeadList = lazy(() => import('../pages/leads/list'));
+const LeadShow = lazy(() => import('../pages/leads/show'));
+const LeadsCreate = lazy(() => import('../pages/leads/create'));
+const StopwordCreate = lazy(() => import('../pages/stopwords/create'));
+const StopwordEdit = lazy(() => import('../pages/stopwords/edit'));
+const StopwordList = lazy(() => import('../pages/stopwords/list'));
+const StopwordShow = lazy(() => import('../pages/stopwords/show'));
+const PricingPage = lazy(() => import('../pages/pricing/PricingPage'));
+const ProfilePage = lazy(() => import('../pages/profile/ProfilePage'));
+const RegisterPage = lazy(() => import('../pages/register/RegisterPage'));
+const ForgotPasswordPage = lazy(() => import('../pages/forgotPassword'));
 
 export const Router = () => {
   return (
@@ -70,7 +89,6 @@ export const Router = () => {
               </ForSubscribedUser>
             }
           />
-          <Route path="edit/:id" element={<EditBotPage />} />
           <Route path="show/:id" element={<ShowBotPage />} />
         </Route>
 

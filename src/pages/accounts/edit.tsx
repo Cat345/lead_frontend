@@ -1,12 +1,12 @@
 import { InputBase, Select } from '@mantine/core';
-import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { useTranslate } from '@refinedev/core';
 import { Edit, useForm } from '@refinedev/mantine';
 import InputMask from 'react-input-mask';
 
 import { Tour } from '../../components/Tour/Tour';
 import { isPhoneValid } from '../../shared/validations/isPhoneValid';
 
-export const AccountEdit: React.FC<IResourceComponentsProps> = () => {
+export default function AccountEdit() {
   const translate = useTranslate();
   const { getInputProps, saveButtonProps } = useForm({
     initialValues: { phone: '', type: '', status: '' },
@@ -44,4 +44,4 @@ export const AccountEdit: React.FC<IResourceComponentsProps> = () => {
       />
     </Edit>
   );
-};
+}

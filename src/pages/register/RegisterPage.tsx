@@ -41,7 +41,7 @@ import { cardStyles, layoutStyles, pageTitleStyles, titleStyles } from './styles
 
 type RegisterProps = RegisterPageProps<BoxProps, CardProps, FormPropsType>;
 
-export const RegisterPage: React.FC<RegisterProps> = ({
+export default function RegisterPage({
   loginLink,
   contentProps,
   wrapperProps,
@@ -49,7 +49,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   formProps,
   providers,
   title,
-}) => {
+}: RegisterProps) {
   const [isConfirmPolicy, setIsConfirmPolicy] = useState(true);
   const [isMailingConfirmed, setIsMailingConfirmed] = useState(true);
 
@@ -247,4 +247,4 @@ export const RegisterPage: React.FC<RegisterProps> = ({
       )}
     </Box>
   );
-};
+}

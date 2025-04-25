@@ -1,7 +1,7 @@
 import { useList } from '@refinedev/core';
 import { useParams } from 'react-router-dom';
 
-export const ShowBotPage = () => {
+export default function ShowBotPage() {
   const { id } = useParams();
 
   const logsRequest = useList({
@@ -22,4 +22,4 @@ export const ShowBotPage = () => {
       ))}
     </div>
   );
-};
+}

@@ -13,12 +13,13 @@ import {
   UpdatePasswordFormTypes,
   UpdatePasswordPageProps,
   useActiveAuthProvider,
- useTranslate,useUpdatePassword } from '@refinedev/core';
+  useTranslate,
+  useUpdatePassword,
+} from '@refinedev/core';
 import { FormContext, FormPropsType, ThemedTitleV2 } from '@refinedev/mantine';
-import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { cardStyles, layoutStyles, pageTitleStyles,titleStyles } from './styles';
+import { cardStyles, layoutStyles, pageTitleStyles, titleStyles } from './styles';
 
 type UpdatePassworProps = UpdatePasswordPageProps<BoxProps, CardProps, FormPropsType>;
 
@@ -26,13 +27,13 @@ type UpdatePassworProps = UpdatePasswordPageProps<BoxProps, CardProps, FormProps
  * The updatePassword type is the page used to update the password of the user.
  * @see {@link https://refine.dev/docs/api-reference/mantine/components/mantine-auth-page/#update-password} for more details.
  */
-export const UpdatePasswordPage: React.FC<UpdatePassworProps> = ({
+export default function UpdatePasswordPage({
   contentProps,
   wrapperProps,
   renderContent,
   formProps,
   title,
-}) => {
+}: UpdatePassworProps) {
   const { uuid } = useParams();
   const theme = useMantineTheme();
   const { useForm, FormProvider } = FormContext;
@@ -118,4 +119,4 @@ export const UpdatePasswordPage: React.FC<UpdatePassworProps> = ({
       )}
     </Box>
   );
-};
+}

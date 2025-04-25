@@ -5,6 +5,7 @@ import { I18nProvider, Refine } from '@refinedev/core';
 import { RefineThemes } from '@refinedev/mantine';
 import routerBindings from '@refinedev/react-router-v6';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useSaveUtmAndReferral } from './features/utm/lib/useSaveUtmAndReferral';
@@ -16,6 +17,7 @@ import { dataProvider } from './refine/data/dataProvider';
 import { notificationProvider } from './refine/notificationProvider';
 import { useResources } from './refine/resources/useResources';
 import { api } from './shared/api';
+import { Loading } from './shared/ui/Loading';
 
 const queryClient = new QueryClient();
 function App() {
@@ -54,26 +56,28 @@ function App() {
         cursorType: 'pointer',
       }}
     >
-      <Refine
-        accessControlProvider={accessControlProvider}
-        i18nProvider={i18nProvider}
-        dataProvider={dataProvider('', api)}
-        notificationProvider={notificationProvider}
-        routerProvider={routerBindings}
-        authProvider={authProvider}
-        resources={resources}
-        options={{
-          syncWithLocation: true,
-          warnWhenUnsavedChanges: true,
-          useNewQueryKeys: true,
-          projectId: 'nOZiSu-KRKJsd-WEJrDY',
-          disableTelemetry: true,
-        }}
-      >
-        <QueryClientProvider client={queryClient}>
-          <Router />
-        </QueryClientProvider>
-      </Refine>
+      <React.Suspense fallback={<Loading />}>
+        <Refine
+          accessControlProvider={accessControlProvider}
+          i18nProvider={i18nProvider}
+          dataProvider={dataProvider('', api)}
+          notificationProvider={notificationProvider}
+          routerProvider={routerBindings}
+          authProvider={authProvider}
+          resources={resources}
+          options={{
+            syncWithLocation: true,
+            warnWhenUnsavedChanges: true,
+            useNewQueryKeys: true,
+            projectId: 'nOZiSu-KRKJsd-WEJrDY',
+            disableTelemetry: true,
+          }}
+        >
+          <QueryClientProvider client={queryClient}>
+            <Router />
+          </QueryClientProvider>
+        </Refine>
+      </React.Suspense>
     </Providers>
   );
 }

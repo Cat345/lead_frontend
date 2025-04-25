@@ -21,7 +21,7 @@ import { ImportButton } from '../../features/import';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 import { keywordsSchema } from './keywordsSchema';
 
-export const KeywordList: React.FC<IResourceComponentsProps> = () => {
+export default function KeywordList() {
   const translate = useTranslate();
   const { mutate } = useDeleteMany();
 
@@ -232,4 +232,4 @@ export const KeywordList: React.FC<IResourceComponentsProps> = () => {
       </List>
     </div>
   );
-};
+}

@@ -1,8 +1,8 @@
 import { TextInput } from '@mantine/core';
-import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { useTranslate } from '@refinedev/core';
 import { Edit, useForm } from '@refinedev/mantine';
 
-export const UserEdit: React.FC<IResourceComponentsProps> = () => {
+export default function UserEdit() {
   const translate = useTranslate();
   const { getInputProps, saveButtonProps } = useForm({
     initialValues: { id: '', email: '', password: '', role: '' },
@@ -30,4 +30,4 @@ export const UserEdit: React.FC<IResourceComponentsProps> = () => {
       />
     </Edit>
   );
-};
+}

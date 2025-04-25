@@ -1,6 +1,6 @@
 import { Button, Checkbox, Group, Pagination, Table } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IResourceComponentsProps, useDeleteMany, useTranslate } from '@refinedev/core';
+import { useDeleteMany, useTranslate } from '@refinedev/core';
 import { BooleanField, CreateButton, DeleteButton, EditButton, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
 import { IconCheck, IconFileImport, IconX } from '@tabler/icons';
@@ -12,7 +12,7 @@ import { ImportButton } from '../../features/import';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 import { stopwordsSchema } from './stopwordsSchema';
 
-export const StopwordList: React.FC<IResourceComponentsProps> = () => {
+export default function StopwordList() {
   const translate = useTranslate();
   const { mutate } = useDeleteMany();
 
@@ -179,4 +179,4 @@ export const StopwordList: React.FC<IResourceComponentsProps> = () => {
       </List>
     </div>
   );
-};
+}

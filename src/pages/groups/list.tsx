@@ -1,6 +1,6 @@
 import { Badge, Button, Checkbox, Group, HoverCard, Pagination, Table, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IResourceComponentsProps, useDeleteMany, useTranslate } from '@refinedev/core';
+import { useDeleteMany, useTranslate } from '@refinedev/core';
 import { CreateButton, DeleteButton, EditButton, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
 import { ColumnDef } from '@tanstack/react-table';
@@ -10,7 +10,7 @@ import { Tour } from '../../components/Tour/Tour';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 import { mapStatus } from './lib/mapStatus';
 
-export const GroupList: React.FC<IResourceComponentsProps> = () => {
+export default function GroupList() {
   const translate = useTranslate();
   const { mutate } = useDeleteMany();
 
@@ -192,4 +192,4 @@ export const GroupList: React.FC<IResourceComponentsProps> = () => {
       </List>
     </div>
   );
-};
+}

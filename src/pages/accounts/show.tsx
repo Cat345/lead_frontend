@@ -1,10 +1,10 @@
 import { Title } from '@mantine/core';
-import { IResourceComponentsProps, useShow, useTranslate } from '@refinedev/core';
+import { useShow, useTranslate } from '@refinedev/core';
 import { Show, TextField } from '@refinedev/mantine';
 
 import { Tour } from '../../components/Tour/Tour';
 
-export const AccountShow: React.FC<IResourceComponentsProps> = () => {
+export default function AccountShow() {
   const translate = useTranslate();
   const { queryResult } = useShow();
   const { data, isLoading } = queryResult;
@@ -28,4 +28,4 @@ export const AccountShow: React.FC<IResourceComponentsProps> = () => {
       <TextField value={record?.status} id="input-phone" />
     </Show>
   );
-};
+}

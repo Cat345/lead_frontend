@@ -15,7 +15,7 @@ import { Tour } from '../../components/Tour/Tour';
 import { UnarchiveButton } from '../../features/unarchive/ui/UnarchiveButton';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 
-export const ArchivedGroupList: React.FC<IResourceComponentsProps> = () => {
+export default function ArchivedGroupList() {
   const translate = useTranslate();
   const { mutate } = useDeleteMany();
   const invalidate = useInvalidate();
@@ -177,4 +177,4 @@ export const ArchivedGroupList: React.FC<IResourceComponentsProps> = () => {
       </List>
     </div>
   );
-};
+}

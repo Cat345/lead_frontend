@@ -1,8 +1,8 @@
 import { Title } from '@mantine/core';
-import { IResourceComponentsProps, useShow, useTranslate } from '@refinedev/core';
+import { useShow, useTranslate } from '@refinedev/core';
 import { EmailField, NumberField, Show, TextField } from '@refinedev/mantine';
 
-export const UserShow: React.FC<IResourceComponentsProps> = () => {
+export default function UserShow() {
   const translate = useTranslate();
   const { queryResult } = useShow();
   const { data, isLoading } = queryResult;
@@ -29,4 +29,4 @@ export const UserShow: React.FC<IResourceComponentsProps> = () => {
       <TextField value={record?.role} />
     </Show>
   );
-};
+}

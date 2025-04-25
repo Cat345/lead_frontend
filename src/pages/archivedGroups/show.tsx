@@ -1,10 +1,10 @@
 import { Title } from '@mantine/core';
-import { IResourceComponentsProps, useShow, useTranslate } from '@refinedev/core';
+import { useShow, useTranslate } from '@refinedev/core';
 import { Show, TextField } from '@refinedev/mantine';
 
 import { Tour } from '../../components/Tour/Tour';
 
-export const ArchivedGroupShow: React.FC<IResourceComponentsProps> = () => {
+export default function ArchivedGroupShow() {
   const translate = useTranslate();
   const { queryResult } = useShow();
   const { data, isLoading } = queryResult;
@@ -24,4 +24,4 @@ export const ArchivedGroupShow: React.FC<IResourceComponentsProps> = () => {
       <TextField id="input-status" value={record?.status} />
     </Show>
   );
-};
+}

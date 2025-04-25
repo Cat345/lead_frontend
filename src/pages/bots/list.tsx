@@ -1,13 +1,12 @@
 import { ActionIcon, Box, Group, Table, Text } from '@mantine/core';
 import { useCreate, useList } from '@refinedev/core';
 import { IconEdit, IconEye, IconRefresh } from '@tabler/icons';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Bot } from '../../models/Bot';
 import { Loading } from '../../shared/ui/Loading';
 
-export const BotsListPage = () => {
+export default function BotsListPage() {
   const { mutate } = useCreate();
   const botsQuery = useList<Bot>({
     resource: 'bots',
@@ -86,4 +85,4 @@ export const BotsListPage = () => {
       </Table>
     </Box>
   );
-};
+}

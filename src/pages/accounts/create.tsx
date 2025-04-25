@@ -1,21 +1,14 @@
 import { Button, Group, InputBase, Stepper, Title } from '@mantine/core';
-import {
-  BaseKey,
-  IResourceComponentsProps,
-  useCreate,
-  useTranslate,
-  useUpdate,
-} from '@refinedev/core';
+import { BaseKey, useCreate, useTranslate, useUpdate } from '@refinedev/core';
 import { useForm } from '@refinedev/mantine';
 import { useState } from 'react';
 import { IMaskInput } from 'react-imask';
-import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 
 import { Tour } from '../../components/Tour/Tour';
 import { isPhoneValid } from '../../shared/validations/isPhoneValid';
 
-export const AccountCreate: React.FC<IResourceComponentsProps> = () => {
+export default function AccountCreate() {
   const navigate = useNavigate();
   const [createdAccountId, setCreatedAccontId] = useState<BaseKey | null>(0);
   const translate = useTranslate();
@@ -139,4 +132,4 @@ export const AccountCreate: React.FC<IResourceComponentsProps> = () => {
       </Group>
     </div>
   );
-};
+}

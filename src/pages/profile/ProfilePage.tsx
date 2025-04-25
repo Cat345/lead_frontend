@@ -24,7 +24,7 @@ import { User } from '../../models/User';
 import { UserSetting } from '../../models/UserSetting';
 import { getConfig } from '../../shared/getConfig';
 
-export const ProfilePage = () => {
+export default function ProfilePage() {
   const { data: user, refetch: refetchUser } = useGetIdentity<User>();
   const { mutateAsync: update } = useUpdate();
   const addTelegramAccountToDb = useAddTelegramAccountToDb();
@@ -197,4 +197,4 @@ export const ProfilePage = () => {
       </Card>
     </Center>
   );
-};
+}

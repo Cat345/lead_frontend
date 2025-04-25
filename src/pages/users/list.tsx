@@ -1,6 +1,6 @@
 import { Button, Group, Pagination, Table } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
+import { useTranslate } from '@refinedev/core';
 import { DeleteButton, EditButton, EmailField, List } from '@refinedev/mantine';
 import { useTable } from '@refinedev/react-table';
 import { ColumnDef } from '@tanstack/react-table';
@@ -10,7 +10,7 @@ import { TOKEN_KEY } from '../../refine/auth/authProvider';
 import { api } from '../../shared/api';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 
-export const UserList: React.FC<IResourceComponentsProps> = () => {
+export default function UserList() {
   const translate = useTranslate();
   const isMobile = useMediaQuery('(max-width: 600px)');
 
@@ -104,4 +104,4 @@ export const UserList: React.FC<IResourceComponentsProps> = () => {
       </List>
     </div>
   );
-};
+}
