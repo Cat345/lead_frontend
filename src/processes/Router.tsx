@@ -21,7 +21,6 @@ import { PricingPage } from '../pages/pricing/PricingPage';
 import { ProfilePage } from '../pages/profile/ProfilePage';
 import { RegisterPage } from '../pages/register/RegisterPage';
 import { StopwordCreate, StopwordEdit, StopwordList, StopwordShow } from '../pages/stopwords';
-import { SubscribePage } from '../pages/subscribe/SubscribePage';
 import { UpdatePasswordPage } from '../pages/updatePassword';
 import { UserCreate, UserEdit, UserList, UserShow } from '../pages/users';
 import { Logo } from '../shared/ui/Logo';
@@ -163,7 +162,6 @@ export const Router = () => {
           <Route path="edit/:id" element={<LeadEdit />} />
           <Route path="show/:id" element={<LeadShow />} />
         </Route>
-        <Route path="/subscribe" element={<SubscribePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route
