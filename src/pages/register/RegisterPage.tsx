@@ -35,9 +35,9 @@ import { IMaskInput } from 'react-imask';
 
 import { Tour } from '../../components/Tour/Tour';
 import { useUtmStore } from '../../features/utm/useUtmStore';
+import { isPhoneValid } from '../../shared/validations/isPhoneValid';
 // import { FormPropsType } from '../..';
 import { cardStyles, layoutStyles, pageTitleStyles, titleStyles } from './styles';
-import { isPhoneValid } from '../../shared/validations/isPhoneValid';
 
 type RegisterProps = RegisterPageProps<BoxProps, CardProps, FormPropsType>;
 
@@ -51,7 +51,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   title,
 }) => {
   const [isConfirmPolicy, setIsConfirmPolicy] = useState(true);
-  const [isMailingConfirmed, setIsMailingConfirmed] = useState(false);
+  const [isMailingConfirmed, setIsMailingConfirmed] = useState(true);
 
   const utm = useUtmStore((store) => store.utm);
   const referral = useUtmStore((store) => store.referral);
