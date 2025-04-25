@@ -1,4 +1,4 @@
-import { Group, Pagination, Table } from '@mantine/core';
+import { Button, Group, Pagination, Table } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { IResourceComponentsProps, useTranslate } from '@refinedev/core';
 import { DeleteButton, EditButton, EmailField, List } from '@refinedev/mantine';
@@ -6,12 +6,20 @@ import { useTable } from '@refinedev/react-table';
 import { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
 
+import { TOKEN_KEY } from '../../refine/auth/authProvider';
+import { api } from '../../shared/api';
 import { TableBody, TableBodyMobile, TableHeader } from '../../widgets';
 
 export const UserList: React.FC<IResourceComponentsProps> = () => {
   const translate = useTranslate();
   const isMobile = useMediaQuery('(max-width: 600px)');
 
+  const impersonate = (userId: string) => {
+    api.post(`/admin/impersonate/${userId}`).then((response) => {
+      localStorage.setItem(TOKEN_KEY, response.data.access_token);
+      window.location.reload();
+    });
+  };
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
@@ -42,6 +50,9 @@ export const UserList: React.FC<IResourceComponentsProps> = () => {
               {/* <ShowButton hideText recordItemId={getValue() as string} /> */}
               <EditButton hideText recordItemId={getValue() as string} />
               <DeleteButton hideText recordItemId={getValue() as string} />
+              <Button variant="outline" onClick={() => impersonate(getValue())} size="xs">
+                Войти
+              </Button>
             </Group>
           );
         },
