@@ -16,7 +16,11 @@ export const UnarchiveButton = ({
   const invalidate = useInvalidate();
 
   const unarcvhie = () => {
-    mutateAsync({ resource, id: recordItemId, values: { isArchived: false } }).then(() => {
+    mutateAsync({
+      resource,
+      id: recordItemId,
+      values: { isArchived: false, status: 'active' },
+    }).then(() => {
       invalidate({ invalidates: ['all'], resource });
     });
   };
