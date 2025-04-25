@@ -9,4 +9,6 @@ export type PricingCardProps = {
 
   isFirstChild?: boolean;
   isLastChild?: boolean;
+
+  onClick: () => void;
 };

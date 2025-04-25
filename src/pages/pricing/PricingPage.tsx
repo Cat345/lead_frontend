@@ -1,18 +1,35 @@
 import './styles.css';
 
 import { Carousel } from '@mantine/carousel';
-import { Box, Center, Title, useMantineTheme } from '@mantine/core';
+import {
+  Box,
+  Button,
+  Center,
+  Group,
+  Modal,
+  Stack,
+  Text,
+  ThemeIcon,
+  Title,
+  useMantineTheme,
+} from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useGetIdentity, useList } from '@refinedev/core';
+import { IconCheck } from '@tabler/icons';
+import { useState } from 'react';
 
 import { Tour } from '../../components/Tour/Tour';
 import { Tariff } from '../../models/Tariff';
 import { User } from '../../models/User';
 import { Loading } from '../../shared/ui/Loading';
+import { usePurchase } from './hooks/usePurchase';
 import { CommonPricingCard } from './PricingCard/CommonPricingCard';
 
 export const PricingPage = () => {
   const isMobile = useMediaQuery('(max-width: 600px)');
+  const [isPurchaseModalOpened, setIsPurchaseModalOpened] = useState(false);
+  const [selectedTariff, setSelectedTariff] = useState<Tariff | null>(null);
+  const { purchase, isPurchasing } = usePurchase();
 
   const { data: user } = useGetIdentity<User>();
   const currentTariffId = user?.tariff.id;
@@ -33,7 +50,7 @@ export const PricingPage = () => {
       <Center mb="md">
         <Title order={2}>Подписка</Title>
       </Center>
-      <div style={{ height: 500, display: 'flex' }}>
+      <div style={{ height: 480, display: 'flex' }}>
         <Carousel
           // nextControlIcon={<IconArrowRight size={16} style= />}
           // previousControlIcon={<IconArrowLeft size={16} style= />}
@@ -63,11 +80,52 @@ export const PricingPage = () => {
                 tariff={tariff}
                 theme={theme}
                 key={tariff.id}
+                onClick={() => {
+                  setSelectedTariff(tariff);
+                  setIsPurchaseModalOpened(true);
+                }}
               />
             </Carousel.Slide>
           ))}
         </Carousel>
       </div>
+      <Modal
+        opened={isPurchaseModalOpened}
+        onClose={() => setIsPurchaseModalOpened(false)}
+        title={
+          <Title order={3} sx={{ textAlign: 'center' }}>
+            {selectedTariff?.name}
+          </Title>
+        }
+        size="lg"
+      >
+        <Box sx={{ padding: '20px' }}>
+          <Text size="lg" weight={500} align="center" mb="md">
+            {selectedTariff?.description}
+          </Text>
+
+          <Stack spacing="md">
+            {selectedTariff?.benefits.split('\\n')?.map((feature, index) => (
+              <Group key={index} noWrap spacing="xs">
+                <ThemeIcon size={24} radius="xl" variant="light" color={theme.primaryColor}>
+                  <IconCheck size={16} />
+                </ThemeIcon>
+                <Text>{feature}</Text>
+              </Group>
+            ))}
+          </Stack>
+
+          <Group position="center" mt="xl">
+            <Button
+              size="lg"
+              loading={isPurchasing}
+              onClick={() => selectedTariff && purchase(selectedTariff.id)}
+            >
+              Оформить подписку
+            </Button>
+          </Group>
+        </Box>
+      </Modal>
     </Box>
   );
 };
