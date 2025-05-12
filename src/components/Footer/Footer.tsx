@@ -8,7 +8,7 @@ export const Footer = () => {
     <Button
       id="follow-tg"
       component={Link}
-      to="https://t.me/lead_pro_service"
+      to="https://t.me/leadpro_service"
       target="_blank"
       sx={{
         ':hover': {

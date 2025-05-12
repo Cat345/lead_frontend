@@ -19,7 +19,7 @@ export default function GroupCreate() {
       username: (username) => {
         if (isEmpty(username)) return 'Название не может быть пустым';
         if (!isGroupLinkValid(username))
-          return 'Ссылка должна быть вида https://t.me/lead_pro_service или https://t.me/+gg-wW-_h5RkMTAy';
+          return 'Ссылка должна быть вида https://t.me/leadpro_service или https://t.me/+gg-wW-_h5RkMTAy';
         return null;
       },
     },
